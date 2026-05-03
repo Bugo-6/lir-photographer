@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ליר צלם — צילום ספורט ואקשן מקצועי</title>
+  <meta name="description" content="ליר צלם — צילום ספורט ואקשן מקצועי. כדורגל, כדורסל, אירועים. תמונות מרהיבות שמדברות בעד עצמן." />
+
+  <!-- ===== SECURITY HEADERS ===== -->
+  <!-- CSP: whitelist only required origins; frame-ancestors blocks clickjacking -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 style-src  'self' 'unsafe-inline' https://fonts.googleapis.com;
+                 font-src   'self' https://fonts.gstatic.com;
+                 img-src    'self' data: blob:;
+                 script-src 'self' 'unsafe-inline';
+                 connect-src 'none';
+                 object-src  'none';
+                 base-uri    'self';
+                 frame-ancestors 'none';">
+  <!-- Prevent MIME-type sniffing & control referrer leakage -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  <!-- Deny permission to sensitive browser APIs -->
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --black:   #060608;
+      --deep:    #0d0d10;
+      --surface: #111116;
+      --card:    #18181e;
+      --border:  #2a2a32;
+      --muted:   #555566;
+      --text:    #e8e8f0;
+      --light:   #f5f5fa;
+      --gold:    #c9a84c;
+      --white:   #ffffff;
+      --font-display: 'Cormorant Garamond', serif;
+      --font-ui:      'Heebo', sans-serif;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--black);
+      color: var(--text);
+      font-family: var(--font-ui);
+      overflow-x: hidden;
+      direction: rtl;
+    }
+    body.loading { overflow: hidden; }
+    img { display: block; width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* cursor: default */
+    #cursor-dot, #cursor-ring { display: none; }
+
+    /* Noise */
+    body::after {
+      content:''; position: fixed; inset: 0; z-index: 9990;
+      pointer-events: none; opacity: .025;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* ===== LOADER ===== */
+    #loader {
+      position: fixed; inset: 0; z-index: 9997;
+      background: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 20px;
+      transition: opacity .9s .2s var(--ease), visibility .9s .2s;
+    }
+    #loader.hide { opacity: 0; visibility: hidden; }
+    .loader-logo {
+      font-family: var(--font-display);
+      font-size: clamp(64px,12vw,112px);
+      font-weight: 300; letter-spacing: .28em;
+      color: var(--light); display: flex; overflow: hidden;
+      direction: ltr;
+    }
+    .loader-logo span {
+      display: inline-block;
+      transform: translateY(110%);
+      animation: ltr .85s var(--ease) forwards;
+    }
+    .loader-logo span:nth-child(1){animation-delay:.1s}
+    .loader-logo span:nth-child(2){animation-delay:.22s}
+    .loader-logo span:nth-child(3){animation-delay:.34s}
+    @keyframes ltr { to { transform: translateY(0); } }
+    .loader-bar-wrap { width: 100px; height: 1px; background: rgba(255,255,255,.08); overflow: hidden; }
+    .loader-bar { height: 100%; width: 0%; background: var(--gold); animation: lbar 1.5s .5s var(--ease) forwards; }
+    @keyframes lbar { to { width: 100%; } }
+    .loader-sub {
+      font-family: var(--font-ui); font-size: 11px;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--muted); opacity: 0; animation: fin .6s .8s forwards;
+    }
+    @keyframes fin { to { opacity: 1; } }
+
+    /* ===== NAVBAR ===== */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 26px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: padding .4s, background .4s, border-color .4s;
+      border-bottom: 1px solid transparent;
+    }
+    #navbar.scrolled {
+      padding: 14px 52px;
+      background: rgba(6,6,8,.92);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom-color: var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-size: 26px;
+      font-weight: 500; letter-spacing: .12em;
+      color: var(--white); direction: ltr;
+    }
+    .nav-logo em { font-style: normal; color: var(--gold); }
+    .nav-links {
+      display: flex; gap: 40px; list-style: none; align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-ui); font-size: 14px;
+      font-weight: 500; color: rgba(255,255,255,.65);
+      transition: color .25s; position: relative;
+    }
+    .nav-links a::after {
+      content:''; position: absolute; bottom: -4px; right: 0;
+      width: 0; height: 1px; background: var(--gold);
+      transition: width .35s var(--ease);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      font-family: var(--font-ui); font-size: 13px;
+      font-weight: 600; padding: 11px 26px;
+      border: 1px solid var(--gold); color: var(--gold);
+      border-radius: 2px; transition: background .3s, color .3s;
+    }
+    .nav-cta:hover { background: var(--gold); color: var(--black); }
+    .nav-ham {
+      display: none; flex-direction: column; gap: 6px;
+      background: none; border: none; cursor: pointer; padding: 4px;
+    }
+    .nav-ham span {
+      display: block; width: 24px; height: 1.5px;
+      background: var(--white); transition: transform .3s, opacity .3s;
+    }
+
+    /* Mobile menu */
+    #mob-menu {
+      position: fixed; inset: 0; z-index: 999;
+      background: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 32px;
+      opacity: 0; visibility: hidden; transition: opacity .4s, visibility .4s;
+    }
+    #mob-menu.open { opacity: 1; visibility: visible; }
+    .mob-links { list-style: none; text-align: center; }
+    .mob-links li { margin-bottom: 28px; }
+    .mob-links a {
+      font-family: var(--font-display); font-size: 52px;
+      font-weight: 300; color: var(--light);
+      transition: color .25s;
+    }
+    .mob-links a:hover { color: var(--gold); }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative; height: 100vh; min-height: 640px;
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('gallery/lir_05.jpg');
+      background-size: cover; background-position: center 40%;
+      will-change: transform;
+    }
+    .hero-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(125deg, rgba(6,6,8,.9) 0%, rgba(6,6,8,.5) 55%, rgba(6,6,8,.75) 100%);
+    }
+    .hero-grad-btm {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 45%;
+      background: linear-gradient(to top, var(--black), transparent);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 52px; max-width: 900px;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--font-ui); font-size: 12px;
+      font-weight: 500; letter-spacing: .2em;
+      color: var(--gold); margin-bottom: 26px;
+      opacity: 0; transform: translateY(18px);
+      animation: hin .7s 1.9s var(--ease) forwards;
+    }
+    .hero-tag::before { content:''; width: 28px; height: 1px; background: var(--gold); }
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(60px, 10.5vw, 144px);
+      font-weight: 300; line-height: .92;
+      color: var(--white); letter-spacing: -.01em;
+      opacity: 0; transform: translateY(40px);
+      animation: hin 1s 2.1s var(--ease) forwards;
+    }
+    .hero-h1 em { font-style: italic; color: var(--gold); display: block; }
+    .hero-sub {
+      font-family: var(--font-ui); font-size: clamp(13px, 1.5vw, 16px);
+      font-weight: 300; letter-spacing: .1em;
+      color: rgba(232,232,240,.65); margin-top: 22px;
+      opacity: 0; transform: translateY(18px);
+      animation: hin .7s 2.4s var(--ease) forwards;
+    }
+    .hero-btns {
+      display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+      margin-top: 46px;
+      opacity: 0; transform: translateY(18px);
+      animation: hin .7s 2.65s var(--ease) forwards;
+    }
+    @keyframes hin { to { opacity: 1; transform: translateY(0); } }
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-ui); font-size: 13px;
+      font-weight: 700; padding: 17px 40px;
+      background: var(--gold); color: var(--black);
+      border-radius: 2px;
+      transition: background .3s, transform .25s, box-shadow .3s;
+    }
+    .btn-gold:hover { background: #dfc05e; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,.32); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-ui); font-size: 13px;
+      font-weight: 500; color: rgba(232,232,240,.8);
+      transition: color .25s, gap .3s;
+    }
+    .btn-ghost:hover { color: var(--white); gap: 16px; }
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      opacity: 0; animation: hin .6s 3s var(--ease) forwards;
+    }
+    .scroll-txt {
+      font-family: var(--font-ui); font-size: 10px;
+      letter-spacing: .28em; color: rgba(232,232,240,.35);
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, rgba(201,168,76,.7), transparent);
+      animation: spulse 2.2s ease-in-out infinite;
+    }
+    @keyframes spulse { 0%,100%{opacity:.3;transform:scaleY(.7)} 50%{opacity:1;transform:scaleY(1)} }
+
+    /* Side strip */
+    .hero-strip {
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: clamp(200px, 28%, 360px);
+      display: grid; grid-template-rows: 1fr 1fr 1fr; gap: 3px;
+      opacity: 0; animation: hin 1.2s 2.2s var(--ease) forwards;
+    }
+    .strip-img { overflow: hidden; }
+    .strip-img img { height: 100%; object-fit: cover; filter: brightness(.62) saturate(.75); }
+
+    /* ===== TICKER ===== */
+    .ticker-bar {
+      background: var(--gold); padding: 13px 0;
+      overflow: hidden; white-space: nowrap;
+    }
+    .ticker-inner { display: inline-flex; animation: tick 28s linear infinite; }
+    .tick-item {
+      font-family: var(--font-ui); font-size: 11px;
+      font-weight: 700; letter-spacing: .2em;
+      color: var(--black); padding: 0 26px;
+    }
+    .tick-dot {
+      display: inline-block; width: 4px; height: 4px;
+      background: rgba(0,0,0,.3); border-radius: 50%;
+      vertical-align: middle; margin-left: 26px;
+    }
+    @keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* ===== COMMONS ===== */
+    .eyebrow {
+      font-family: var(--font-ui); font-size: 11px;
+      font-weight: 600; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+    }
+    .stitle {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 6.5vw, 90px);
+      font-weight: 300; line-height: .95; color: var(--light);
+    }
+    .stitle em { font-style: italic; color: var(--gold); }
+    .reveal {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease);
+    }
+    .reveal.vis { opacity: 1; transform: none; }
+    .d1{transition-delay:.1s} .d2{transition-delay:.2s}
+    .d3{transition-delay:.3s} .d4{transition-delay:.4s} .d5{transition-delay:.5s}
+
+    /* ===== GALLERY ===== */
+    #gallery { padding: 100px 0 120px; background: var(--deep); }
+    .gal-head {
+      padding: 0 52px 52px;
+      display: flex; align-items: flex-end; justify-content: space-between;
+      flex-wrap: wrap; gap: 28px;
+    }
+    .gal-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+    .fbtn {
+      font-family: var(--font-ui); font-size: 13px;
+      font-weight: 500; padding: 9px 20px;
+      border: 1px solid var(--border); background: none;
+      color: var(--muted); border-radius: 100px; cursor: pointer;
+      transition: all .25s;
+    }
+    .fbtn:hover { border-color: rgba(201,168,76,.5); color: var(--gold); }
+    .fbtn.act { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    .gal-cnt {
+      font-family: var(--font-ui); font-size: 14px;
+      letter-spacing: .06em; color: var(--muted);
+    }
+    .gal-cnt b { color: var(--gold); font-weight: 400; }
+
+    /* Masonry */
+    .masonry { padding: 0 52px; columns: 4; column-gap: 8px; }
+    .mi {
+      break-inside: avoid; margin-bottom: 8px;
+      position: relative; overflow: hidden;
+      cursor: pointer; border-radius: 2px; background: var(--card);
+      transition: opacity .4s, transform .4s;
+    }
+    .mi.out { opacity: 0; transform: scale(.95); pointer-events: none; }
+    .mi img {
+      width: 100%; height: auto; display: block;
+      transition: transform .65s var(--ease), filter .5s;
+      filter: brightness(.9) saturate(.82);
+    }
+    .mi:hover img { transform: scale(1.07); filter: brightness(1.02) saturate(1.05); }
+    .mi-ov {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(6,6,8,.72) 0%, transparent 55%);
+      opacity: 0; transition: opacity .4s;
+      display: flex; align-items: flex-end; justify-content: space-between; padding: 18px;
+    }
+    .mi:hover .mi-ov { opacity: 1; }
+    .mi-cat {
+      font-family: var(--font-ui); font-size: 10px;
+      font-weight: 700; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .mi-plus {
+      width: 32px; height: 32px; border: 1px solid rgba(255,255,255,.5);
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; color: var(--white); font-size: 18px;
+      transform: scale(.8) rotate(-90deg);
+      transition: transform .35s var(--ease), background .3s;
+    }
+    .mi:hover .mi-plus { transform: scale(1) rotate(0deg); background: rgba(255,255,255,.12); }
+
+    /* ===== LIGHTBOX ===== */
+    #lb {
+      position: fixed; inset: 0; z-index: 9995;
+      background: rgba(6,6,8,.97);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden; transition: opacity .4s, visibility .4s;
+    }
+    #lb.open { opacity: 1; visibility: visible; }
+    .lb-wrap { max-width: 92vw; max-height: 92vh; position: relative; }
+    .lb-wrap img {
+      max-width: 88vw; max-height: 88vh;
+      width: auto; height: auto; object-fit: contain; border-radius: 2px;
+      transform: scale(.94); transition: transform .45s var(--ease);
+    }
+    #lb.open .lb-wrap img { transform: scale(1); }
+    .lb-x {
+      position: fixed; top: 24px; left: 28px;
+      width: 46px; height: 46px; border-radius: 50%;
+      border: 1px solid var(--border); background: rgba(17,17,22,.85);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text); font-size: 18px;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .lb-x:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    .lb-nav {
+      position: fixed; top: 50%; transform: translateY(-50%);
+      width: 50px; height: 50px; border-radius: 50%;
+      border: 1px solid var(--border); background: rgba(17,17,22,.85);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--text); font-size: 22px;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .lb-nav:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    #lb-prev { right: 20px; }
+    #lb-next { left: 20px; }
+    .lb-cnt {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      font-family: var(--font-ui); font-size: 12px;
+      letter-spacing: .15em; color: var(--muted);
+    }
+
+    /* ===== WHY US ===== */
+    #why { position: relative; padding: 120px 52px; overflow: hidden; }
+    .why-bg {
+      position: absolute; inset: 0;
+      background-image: url('gallery/lir_09.jpg');
+      background-size: cover; background-position: center;
+      background-attachment: fixed;
+      filter: brightness(.12) saturate(.3);
+    }
+    .why-rel { position: relative; z-index: 2; }
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; margin-bottom: 80px;
+    }
+    .why-pull {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4.5vw, 58px);
+      font-weight: 300; font-style: italic;
+      line-height: 1.2; color: var(--light);
+    }
+    .why-pull strong { font-style: normal; font-weight: 700; color: var(--gold); }
+    .why-right p {
+      font-size: 15px; line-height: 1.85;
+      color: rgba(232,232,240,.62); margin-bottom: 20px; max-width: 420px;
+    }
+    .why-nums { display: flex; gap: 48px; margin-top: 36px; }
+    .wn-n {
+      font-family: var(--font-display); font-size: 52px;
+      font-weight: 300; color: var(--gold); line-height: 1;
+    }
+    .wn-l {
+      font-family: var(--font-ui); font-size: 11px;
+      font-weight: 500; letter-spacing: .15em;
+      color: var(--muted); margin-top: 6px;
+    }
+    .why-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+    .wcard {
+      background: rgba(14,14,20,.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      padding: 42px 32px; position: relative; overflow: hidden;
+      transition: border-color .4s, background .4s;
+    }
+    .wcard::before {
+      content:''; position: absolute;
+      top: 0; right: 0; left: 0; height: 2px;
+      background: linear-gradient(270deg, var(--gold), transparent);
+      transform: scaleX(0); transform-origin: right;
+      transition: transform .55s var(--ease);
+    }
+    .wcard:hover { border-color: rgba(201,168,76,.28); background: rgba(20,20,28,.96); }
+    .wcard:hover::before { transform: scaleX(1); }
+    .wcard-icon { font-size: 34px; margin-bottom: 22px; display: block; }
+    .wcard-big {
+      font-family: var(--font-display); font-size: 48px;
+      font-weight: 300; color: var(--gold); line-height: 1;
+      margin-bottom: 12px; display: block;
+    }
+    .wcard-title {
+      font-family: var(--font-display); font-size: 24px;
+      font-weight: 400; color: var(--light); margin-bottom: 12px;
+    }
+    .wcard-body { font-size: 13px; line-height: 1.75; color: rgba(232,232,240,.5); }
+    .why-bigq { text-align: center; padding-top: 80px; }
+    .why-bigq p {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5.5vw, 76px);
+      font-weight: 300; font-style: italic;
+      color: var(--light); line-height: 1.1;
+    }
+    .why-bigq em { color: var(--gold); }
+    .why-bigq-line { width: 48px; height: 1px; background: var(--gold); opacity: .5; margin: 28px auto 0; }
+
+    /* ===== ABOUT ===== */
+    #about {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+      padding: 120px 52px; background: var(--surface);
+    }
+    .about-img-wrap { position: relative; order: 2; }
+    .about-img {
+      width: 100%; aspect-ratio: 3/4; object-fit: cover;
+      border-radius: 2px; filter: brightness(.88) saturate(.82);
+    }
+    .about-badge {
+      position: absolute; bottom: -24px; left: -20px;
+      width: 136px; height: 136px; border-radius: 50%;
+      background: var(--gold);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+    }
+    .about-badge-n {
+      font-family: var(--font-display); font-size: 44px;
+      font-weight: 300; color: var(--black); line-height: 1;
+    }
+    .about-badge-t {
+      font-family: var(--font-ui); font-size: 9px;
+      font-weight: 700; letter-spacing: .14em;
+      color: rgba(0,0,0,.65);
+    }
+    .about-corner {
+      position: absolute; top: -14px; right: -14px;
+      width: 72px; height: 72px;
+      border: 1px solid var(--border); border-radius: 2px; z-index: -1;
+    }
+    .about-text { order: 1; }
+    .about-name {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 5.5vw, 76px);
+      font-weight: 300; line-height: .95;
+      color: var(--light); margin-bottom: 28px;
+    }
+    .about-name em { font-style: italic; color: var(--gold); display: block; }
+    .about-p { font-size: 15px; line-height: 1.85; color: rgba(232,232,240,.62); margin-bottom: 18px; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0; }
+    .atag {
+      font-family: var(--font-ui); font-size: 12px;
+      font-weight: 500; padding: 8px 16px;
+      border: 1px solid var(--border); color: var(--muted); border-radius: 100px;
+    }
+    .about-socials { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
+    .soc-link {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-ui); font-size: 13px;
+      font-weight: 500; color: rgba(232,232,240,.6);
+      padding: 13px 22px; border: 1px solid var(--border); border-radius: 2px;
+      transition: border-color .3s, color .3s, background .3s;
+    }
+    .soc-link:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,.04); }
+
+    /* ===== CTA ===== */
+    #cta { position: relative; padding: 160px 52px; text-align: center; overflow: hidden; }
+    .cta-bg {
+      position: absolute; inset: 0;
+      background-image: url('gallery/lir_12.jpg');
+      background-size: cover; background-position: center;
+      background-attachment: fixed;
+      filter: brightness(.14) saturate(.4);
+    }
+    .cta-rel { position: relative; z-index: 2; }
+    .cta-eye {
+      font-family: var(--font-ui); font-size: 11px;
+      font-weight: 600; letter-spacing: .35em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
+    }
+    .cta-h {
+      font-family: var(--font-display);
+      font-size: clamp(44px, 7.5vw, 108px);
+      font-weight: 300; line-height: .92;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .cta-h em { font-style: italic; color: var(--gold); }
+    .cta-sub {
+      font-size: 16px; color: rgba(232,232,240,.5);
+      max-width: 400px; margin: 0 auto 56px; line-height: 1.75;
+    }
+    .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--font-ui); font-size: 13px;
+      font-weight: 700; padding: 20px 48px;
+      background: #25D366; color: #000; border-radius: 2px;
+      transition: transform .3s, filter .3s, box-shadow .3s;
+    }
+    .btn-wa:hover { transform: translateY(-3px); filter: brightness(1.08); box-shadow: 0 10px 30px rgba(37,211,102,.3); }
+    .btn-ig {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-family: var(--font-ui); font-size: 13px;
+      font-weight: 700; padding: 20px 48px;
+      background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
+      color: white; border-radius: 2px;
+      transition: transform .3s, filter .3s, box-shadow .3s;
+    }
+    .btn-ig:hover { transform: translateY(-3px); filter: brightness(1.08); box-shadow: 0 10px 30px rgba(220,39,67,.3); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--black); border-top: 1px solid var(--border);
+      padding: 44px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .flogo {
+      font-family: var(--font-display); font-size: 20px;
+      font-weight: 300; letter-spacing: .18em;
+      color: var(--light); direction: ltr;
+    }
+    .flogo em { font-style: normal; color: var(--gold); }
+    .flinks { display: flex; gap: 28px; list-style: none; }
+    .flinks a {
+      font-family: var(--font-ui); font-size: 13px;
+      font-weight: 500; color: var(--muted);
+      transition: color .25s;
+    }
+    .flinks a:hover { color: var(--gold); }
+    .fcopy { font-size: 12px; color: var(--muted); }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:1200px){
+      .masonry{columns:3}
+      .why-cards{grid-template-columns:repeat(2,1fr)}
+    }
+    @media(max-width:900px){
+      #navbar{padding:18px 24px}
+      #navbar.scrolled{padding:12px 24px}
+      .nav-links,.nav-cta{display:none}
+      .nav-ham{display:flex}
+      .hero-content{padding:0 24px}
+      .hero-strip{display:none}
+      .masonry{columns:2;padding:0 20px}
+      .gal-head{padding:0 20px 36px}
+      .why-grid{grid-template-columns:1fr;gap:40px}
+      #why{padding:80px 24px}
+      #about{grid-template-columns:1fr;padding:80px 24px}
+      .about-img-wrap{order:1}
+      .about-text{order:2}
+      .about-badge{left:0}
+      #cta{padding:100px 24px}
+      footer{padding:32px 24px}
+    }
+    @media(max-width:600px){
+      .masonry{columns:2;column-gap:5px}
+      .mi{margin-bottom:5px}
+      .why-cards{grid-template-columns:1fr}
+      .hero-btns{flex-direction:column;align-items:flex-start}
+    }
+
+    /* ===== IMAGE PROTECTION ===== */
+    /* Prevent right-click save / drag-and-drop on all images */
+    img {
+      -webkit-user-drag: none;
+      user-drag: none;
+      -webkit-touch-callout: none;
+      pointer-events: none;   /* parent div handles click events */
+    }
+    /* Re-enable pointer-events only on non-gallery images */
+    .about-img, .strip-img img { pointer-events: none; }
+    /* Invisible overlay stops right-click on gallery items */
+    .mi::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+    .mi-ov, .mi-plus { pointer-events: none; z-index: 2; position: relative; }
+
+    /* ===== COOKIE / CONSENT BANNER ===== */
+    #cookie-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 10000;
+      background: rgba(10,10,13,.98);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-top: 1px solid var(--border);
+      padding: 22px 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+      transform: translateY(110%);
+      transition: transform .55s var(--ease);
+      box-shadow: 0 -8px 40px rgba(0,0,0,.5);
+    }
+    #cookie-banner.show { transform: translateY(0); }
+    .ck-left { flex: 1; min-width: 240px; }
+    .ck-title {
+      font-family: var(--font-ui); font-size: 14px; font-weight: 700;
+      color: var(--light); margin-bottom: 6px; letter-spacing: .02em;
+    }
+    .ck-body {
+      font-family: var(--font-ui); font-size: 12.5px;
+      color: rgba(232,232,240,.55); line-height: 1.65;
+    }
+    .ck-body button.ck-policy-link {
+      background: none; border: none; padding: 0;
+      color: var(--gold); font-size: 12.5px; font-family: var(--font-ui);
+      text-decoration: underline; cursor: pointer;
+      transition: color .2s;
+    }
+    .ck-body button.ck-policy-link:hover { color: #dfc05e; }
+    .ck-btns { display: flex; gap: 10px; flex-shrink: 0; align-items: center; }
+    .ck-accept {
+      font-family: var(--font-ui); font-size: 13px; font-weight: 700;
+      padding: 12px 28px; background: var(--gold); color: var(--black);
+      border: none; border-radius: 2px; cursor: pointer;
+      transition: background .25s, transform .2s;
+      white-space: nowrap;
+    }
+    .ck-accept:hover { background: #dfc05e; transform: translateY(-1px); }
+    .ck-decline {
+      font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+      padding: 12px 18px; background: none; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 2px; cursor: pointer;
+      transition: color .25s, border-color .25s;
+      white-space: nowrap;
+    }
+    .ck-decline:hover { color: var(--text); border-color: var(--muted); }
+    @media(max-width:600px){
+      #cookie-banner { padding: 18px 20px; }
+      .ck-btns { width: 100%; }
+      .ck-accept, .ck-decline { flex: 1; text-align: center; }
+    }
+
+    /* ===== POLICY MODAL ===== */
+    #policy-modal {
+      position: fixed; inset: 0; z-index: 10001;
+      background: rgba(6,6,8,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; visibility: hidden;
+      transition: opacity .35s var(--ease), visibility .35s;
+    }
+    #policy-modal.open { opacity: 1; visibility: visible; }
+    .policy-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      width: 100%; max-width: 680px;
+      max-height: 85vh;
+      display: flex; flex-direction: column;
+      transform: translateY(20px);
+      transition: transform .35s var(--ease);
+      overflow: hidden;
+    }
+    #policy-modal.open .policy-box { transform: translateY(0); }
+    .policy-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 32px; border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .policy-header h3 {
+      font-family: var(--font-display); font-size: 28px;
+      font-weight: 400; color: var(--light);
+    }
+    .policy-header h3 em { font-style: italic; color: var(--gold); }
+    .policy-close {
+      width: 40px; height: 40px; border-radius: 50%;
+      border: 1px solid var(--border); background: none;
+      color: var(--muted); font-size: 18px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, color .2s, border-color .2s; flex-shrink: 0;
+    }
+    .policy-close:hover { background: var(--gold); color: var(--black); border-color: var(--gold); }
+    .policy-body {
+      padding: 28px 32px; overflow-y: auto; flex: 1;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+    }
+    .policy-body::-webkit-scrollbar { width: 4px; }
+    .policy-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .policy-section { margin-bottom: 28px; }
+    .policy-section h4 {
+      font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 10px;
+    }
+    .policy-section p, .policy-section li {
+      font-family: var(--font-ui); font-size: 13.5px;
+      color: rgba(232,232,240,.62); line-height: 1.8;
+    }
+    .policy-section ul { padding-right: 18px; }
+    .policy-section li { margin-bottom: 6px; }
+    .policy-footer {
+      padding: 18px 32px; border-top: 1px solid var(--border);
+      display: flex; justify-content: flex-start; gap: 10px;
+      flex-shrink: 0; flex-wrap: wrap;
+    }
+    @media(max-width:600px){
+      .policy-header { padding: 18px 20px; }
+      .policy-body { padding: 20px; }
+      .policy-footer { padding: 14px 20px; }
+    }
+  </style>
+</head>
+<body class="loading">
+
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-logo"><span>L</span><span>I</span><span>R</span></div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+    <div class="loader-sub">צילום ספורט ואקשן מקצועי</div>
+  </div>
+
+  <!-- Navbar -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">L<em>I</em>R</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">עבודות</a></li>
+      <li><a href="#why">למה אני?</a></li>
+      <li><a href="#about">עליי</a></li>
+    </ul>
+    <a href="https://wa.me/972505527855?text=היי%20ליר!%20אני%20רוצה%20להזמין%20צילום." target="_blank" class="nav-cta">הזמן צילום</a>
+    <button class="nav-ham" id="ham" aria-label="תפריט">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mob-menu">
+    <ul class="mob-links">
+      <li><a href="#gallery" class="mlink">עבודות</a></li>
+      <li><a href="#why" class="mlink">למה אני?</a></li>
+      <li><a href="#about" class="mlink">עליי</a></li>
+      <li><a href="#cta" class="mlink">הזמן</a></li>
+    </ul>
+  </div>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grad"></div>
+    <div class="hero-grad-btm"></div>
+    <div class="hero-content">
+      <div class="hero-tag">ישראל · צילום ספורט ואקשן</div>
+      <h1 class="hero-h1">Lir<br /><em>Photographer</em></h1>
+      <p class="hero-sub">צילום ספורט ואקשן מקצועי</p>
+      <div class="hero-btns">
+        <a href="#gallery" class="btn-gold">לגלריה ←</a>
+        <a href="#cta" class="btn-ghost">הזמן צילום ←</a>
+      </div>
+    </div>
+    <div class="hero-strip">
+      <div class="strip-img"><img src="gallery/lir_01.jpg" alt="ספורט" loading="eager"/></div>
+      <div class="strip-img"><img src="gallery/lir_03.jpg" alt="אקשן" loading="eager"/></div>
+      <div class="strip-img"><img src="gallery/lir_07.jpg" alt="כדורגל" loading="eager"/></div>
+    </div>
+    <div class="hero-scroll">
+      <span class="scroll-txt">גלול</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker-bar" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="tick-item">כדורגל</span><span class="tick-dot"></span>
+      <span class="tick-item">כדורסל</span><span class="tick-dot"></span>
+      <span class="tick-item">אירועי ספורט</span><span class="tick-dot"></span>
+      <span class="tick-item">צילום אקשן</span><span class="tick-dot"></span>
+      <span class="tick-item">פורטרטים</span><span class="tick-dot"></span>
+      <span class="tick-item">900–1350 תמונות לסשן</span><span class="tick-dot"></span>
+      <span class="tick-item">איכות פרימיום</span><span class="tick-dot"></span>
+      <span class="tick-item">טורנירים</span><span class="tick-dot"></span>
+      <span class="tick-item">כדורגל</span><span class="tick-dot"></span>
+      <span class="tick-item">כדורסל</span><span class="tick-dot"></span>
+      <span class="tick-item">אירועי ספורט</span><span class="tick-dot"></span>
+      <span class="tick-item">צילום אקשן</span><span class="tick-dot"></span>
+      <span class="tick-item">פורטרטים</span><span class="tick-dot"></span>
+      <span class="tick-item">900–1350 תמונות לסשן</span><span class="tick-dot"></span>
+      <span class="tick-item">איכות פרימיום</span><span class="tick-dot"></span>
+      <span class="tick-item">טורנירים</span><span class="tick-dot"></span>
+    </div>
+  </div>
+
+  <!-- Gallery -->
+  <section id="gallery">
+    <div class="gal-head">
+      <div>
+        <div class="eyebrow reveal">— פורטפוליו</div>
+        <h2 class="stitle reveal d1">ה<em>עבודות</em></h2>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:10px">
+        <div class="gal-filters reveal d2">
+          <button class="fbtn act" data-f="all">הכל</button>
+          <button class="fbtn" data-f="football">כדורגל</button>
+          <button class="fbtn" data-f="general">כללי</button>
+        </div>
+        <div class="gal-cnt reveal d3">מציג <b id="pcnt">50</b> תמונות</div>
+      </div>
+    </div>
+    <div class="masonry" id="masonry"></div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lb" role="dialog" aria-label="תצוגת תמונה">
+    <button class="lb-x" id="lb-x">✕</button>
+    <button class="lb-nav" id="lb-prev">›</button>
+    <div class="lb-wrap"><img id="lb-img" src="" alt="תמונה" /></div>
+    <button class="lb-nav" id="lb-next">‹</button>
+    <div class="lb-cnt" id="lb-cnt">1 / 12</div>
+  </div>
+
+  <!-- Why Us -->
+  <section id="why">
+    <div class="why-bg"></div>
+    <div class="why-rel">
+      <div class="why-grid">
+        <div>
+          <div class="eyebrow reveal">— למה ליר?</div>
+          <blockquote class="why-pull reveal d1">
+            התמונות<br />
+            <strong>מדברות</strong><br />
+            בעד עצמן.
+          </blockquote>
+          <div class="why-nums reveal d2">
+            <div>
+              <div class="wn-n" data-count="1350">0</div>
+              <div class="wn-l">תמונות לסשן</div>
+            </div>
+            <div>
+              <div class="wn-n" data-count="5">0</div>
+              <div class="wn-l">שנות ניסיון</div>
+            </div>
+            <div>
+              <div class="wn-n" data-count="800">0</div>
+              <div class="wn-l">משחקים שצולמו</div>
+            </div>
+          </div>
+        </div>
+        <div class="why-right reveal d2">
+          <p>ליר מביא עין קולנועית ייחודית לכל סשן — מקפיא את הרגעים שמגדירים ספורטאים גדולים. בין אם זה הגול המכריע, הדאנק הבלתי אפשרי או הרגש הגולמי של התחרות — כל פריים מצולם עם דיוק וראייה אמנותית.</p>
+          <p>אנחנו לא סתם מצלמים תמונות. אנחנו יוצרים סיפורים ויזואליים שספורטאים גאים לשתף, שקבוצות משתמשות בהם לבנות מותג, ושאוהדים זוכרים לנצח.</p>
+        </div>
+      </div>
+      <div class="why-cards">
+        <div class="wcard reveal">
+          <span class="wcard-icon">⚡</span>
+          <span class="wcard-big">1350</span>
+          <div class="wcard-title">תמונות לסשן</div>
+          <p class="wcard-body">לעולם לא תפספס את הרגע. אנחנו מספקים מאות תמונות ברזולוציה גבוהה מכל סשן — כך שתמיד יהיה לך את הרגע המושלם.</p>
+        </div>
+        <div class="wcard reveal d1">
+          <span class="wcard-icon">📸</span>
+          <span class="wcard-big">פרו</span>
+          <div class="wcard-title">ציוד מקצועי</div>
+          <p class="wcard-body">Canon ברמה הגבוהה והחדשה ביותר, עם עדשות טלה מקצועיות. מהירות צילום קיצונית שתופסת תנועה שרוב הצלמים פשוט מפספסים.</p>
+        </div>
+        <div class="wcard reveal d2">
+          <span class="wcard-icon">🎯</span>
+          <span class="wcard-big">100%</span>
+          <div class="wcard-title">מומחה ספורט</div>
+          <p class="wcard-body">שנים שמוקדשות אך ורק לצילום ספורט — אנחנו קוראים את המשחק, מצפים לרגע ומתמקמים בדיוק לפני שזה קורה.</p>
+        </div>
+        <div class="wcard reveal d3">
+          <span class="wcard-icon">💎</span>
+          <span class="wcard-big">הכי</span>
+          <div class="wcard-title">שווה את הכסף</div>
+          <p class="wcard-body">תוצאות פרימיום במחירים תחרותיים. מחירים שקופים, חבילות גמישות — ואפס פשרות על המוצר הסופי.</p>
+        </div>
+      </div>
+      <div class="why-bigq reveal">
+        <p>"כל ספורטאי ראוי לתמונות<br /><em>טובות כמו המשחק שלו."</em></p>
+        <div class="why-bigq-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="about-img-wrap reveal">
+      <img class="about-img" src="gallery/lir_06.jpg" alt="ליר צלם" />
+      <div class="about-badge">
+        <div class="about-badge-n">5+</div>
+        <div class="about-badge-t">שנות ניסיון</div>
+      </div>
+      <div class="about-corner"></div>
+    </div>
+    <div class="about-text">
+      <div class="eyebrow reveal">— עליי</div>
+      <h2 class="about-name reveal d1">העין<br /><em>מאחורי העדשה</em></h2>
+      <p class="about-p reveal d2">אני ליר — צלם ספורט ואקשן מישראל, עם 5 שנות ניסיון, מעל 800 משחקים שצולמו, ו-900 עד 1,350 תמונות שאני מספק בכל סשן.</p>
+      <p class="about-p reveal d3">הסגנון שלי קולנועי ודרמטי: אני מחפש את רגע השיא — אותו שבריר שנייה שמספר את כל סיפור המשחק. כדורגל וכל ענף ספורט תחרותי — אני מוצא זוויות שרוב הצלמים אף פעם לא רואים.</p>
+      <p class="about-p reveal d4">עם Canon ברמה הגבוהה והחדשה ביותר והבנה עמוקה של דינמיקת הספורט, אני מספק תמונות שקבוצות, ספורטאים וארגונים גאים להציג — ברשתות חברתיות, בפרסומים ועל קירות האצטדיון.</p>
+      <div class="about-tags reveal d3">
+        <span class="atag">כדורגל</span>
+        <span class="atag">כדורסל</span>
+        <span class="atag">אירועי ספורט</span>
+        <span class="atag">אקשן</span>
+        <span class="atag">פורטרטים</span>
+        <span class="atag">טורנירים</span>
+      </div>
+      <div class="about-socials reveal d4">
+        <a href="https://www.instagram.com/lir.photographer/" target="_blank" class="soc-link">📸 אינסטגרם</a>
+        <a href="https://wa.me/972505527855" target="_blank" class="soc-link">💬 וואטסאפ</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="cta">
+    <div class="cta-bg"></div>
+    <div class="cta-rel">
+      <div class="cta-eye reveal">— בואו נעבוד יחד</div>
+      <h2 class="cta-h reveal d1">מוכן ליצור<br />משהו <em>אגדי?</em></h2>
+      <p class="cta-sub reveal d2">הזמן סשן צילום היום. בואו נתפוס רגעים שיישארו לנצח.</p>
+      <div class="cta-btns reveal d3">
+        <a href="https://wa.me/972505527855?text=היי%20ליר!%20אני%20רוצה%20להזמין%20סשן%20צילום." target="_blank" class="btn-wa">📲 הזמן דרך וואטסאפ</a>
+        <a href="https://www.instagram.com/lir.photographer/" target="_blank" class="btn-ig">📸 עקוב באינסטגרם</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="flogo">L<em>I</em>R Photographer</div>
+    <ul class="flinks">
+      <li><a href="#gallery">עבודות</a></li>
+      <li><a href="#why">למה אני?</a></li>
+      <li><a href="#about">עליי</a></li>
+      <li><a href="#cta">צור קשר</a></li>
+    </ul>
+    <div class="fcopy">© 2025 ליר צלם · כל הזכויות שמורות</div>
+  </footer>
+
+  <!-- ══ הסכמה לתנאים ועוגיות ══ -->
+  <div id="cookie-banner" role="dialog" aria-labelledby="ck-title-txt">
+    <div class="ck-left">
+      <div class="ck-title" id="ck-title-txt">השימוש באתר מהווה הסכמה לתנאים שלנו</div>
+      <p class="ck-body">
+        בלחיצה על "אני מסכים" אתה מאשר שקראת והבנת את
+        <button class="ck-policy-link" id="ck-open-policy">מדיניות הפרטיות ותנאי השימוש</button>
+        שלנו, ומסכים להם במלואם.
+        האתר משתמש בגופנים של Google Fonts ובקישורים לאינסטגרם ווואטסאפ.
+      </p>
+    </div>
+    <div class="ck-btns">
+      <button class="ck-decline" id="ck-decline">לא עכשיו</button>
+      <button class="ck-accept" id="ck-accept">אני מסכים ✓</button>
+    </div>
+  </div>
+
+  <!-- ══ מודל מדיניות פרטיות ותנאי שימוש ══ -->
+  <div id="policy-modal" role="dialog" aria-modal="true" aria-labelledby="policy-title">
+    <div class="policy-box">
+      <div class="policy-header">
+        <h3 id="policy-title">מדיניות <em>פרטיות</em> ותנאי שימוש</h3>
+        <button class="policy-close" id="policy-close" aria-label="סגור">✕</button>
+      </div>
+      <div class="policy-body">
+
+        <div class="policy-section">
+          <h4>1 · מי אנחנו</h4>
+          <p>
+            ליר צלם הוא עסק עצמאי לצילום ספורט ואקשן מקצועי, הפועל בישראל.
+            אתר זה, הזמין בכתובת lir.photographer, מוצג לצורך הצגת תיק עבודות
+            ויצירת קשר עם לקוחות פוטנציאליים.
+          </p>
+        </div>
+
+        <div class="policy-section">
+          <h4>2 · מידע שנאסף</h4>
+          <p>האתר <strong style="color:var(--light)">אינו אוסף</strong> מידע אישי ישירות. עם זאת, ייתכן שהשירותים הבאים יאספו מידע מסוים:</p>
+          <ul>
+            <li><strong style="color:var(--light)">Google Fonts</strong> — גופנים נטענים משרתי Google ועשויים לכלול כתובת IP של המבקר.</li>
+            <li><strong style="color:var(--light)">Instagram</strong> — לחיצה על קישור לאינסטגרם תעביר אותך לאתר צד שלישי עם מדיניות פרטיות משלו.</li>
+            <li><strong style="color:var(--light)">WhatsApp</strong> — לחיצה על כפתור הזמנת צילום תפתח שיחה ישירה בוואטסאפ.</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h4>3 · עוגיות ואחסון מקומי</h4>
+          <p>
+            האתר עצמו אינו מציב עוגיות. אנחנו שומרים את הסכמתך לתנאים אלה
+            <strong style="color:var(--light)">בזיכרון המקומי של הדפדפן בלבד</strong> (localStorage)
+            — המידע נשאר אצלך ואינו נשלח לשום שרת.
+          </p>
+        </div>
+
+        <div class="policy-section">
+          <h4>4 · שימוש בתמונות</h4>
+          <p>
+            כל התמונות באתר הן רכושו הבלעדי של ליר צלם.
+            <strong style="color:var(--light)">חל איסור מוחלט</strong> להעתיק, להפיץ,
+            לפרסם מחדש או לעשות כל שימוש מסחרי בתמונות ללא אישור בכתב מראש.
+            הפרת זכויות יוצרים עלולה לגרור הליכים משפטיים.
+          </p>
+        </div>
+
+        <div class="policy-section">
+          <h4>5 · תנאי שימוש כלליים</h4>
+          <ul>
+            <li>האתר מיועד לצפייה ויצירת קשר בלבד.</li>
+            <li>אין לעשות שימוש לרעה, לנסות לפרוץ, או לגרוע מתפקוד האתר.</li>
+            <li>ליר צלם שומר את הזכות לשנות את תנאי השימוש בכל עת.</li>
+            <li>השימוש באתר לאחר עדכון התנאים מהווה הסכמה לתנאים החדשים.</li>
+          </ul>
+        </div>
+
+        <div class="policy-section">
+          <h4>6 · יצירת קשר</h4>
+          <p>
+            לשאלות בנוגע למדיניות הפרטיות ניתן לפנות דרך
+            <a href="https://wa.me/972505527855" target="_blank"
+               style="color:var(--gold);text-decoration:underline">וואטסאפ</a>
+            או דרך
+            <a href="https://www.instagram.com/lir.photographer/" target="_blank"
+               style="color:var(--gold);text-decoration:underline">אינסטגרם</a>.
+          </p>
+        </div>
+
+        <div class="policy-section" style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px">
+          <p style="font-size:11px;color:var(--muted)">עדכון אחרון: מאי 2025 · כל הזכויות שמורות © ליר צלם</p>
+        </div>
+
+      </div><!-- /policy-body -->
+      <div class="policy-footer">
+        <button class="ck-accept" id="policy-accept">אני מסכים לתנאים ✓</button>
+        <button class="ck-decline" id="policy-close-only">סגור</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ===== PHOTOS — תמונות אמיתיות מהאינסטגרם של ליר =====
+  const PHOTOS = [
+    // כדורגל
+    {src:'gallery/lir_01.jpg', cat:'football', alt:'מכבי תל אביב — חגיגת גול'},
+    {src:'gallery/lir_02.jpg', cat:'football', alt:'מכבי תל אביב — שליטה בכדור'},
+    {src:'gallery/lir_03.jpg', cat:'football', alt:'מכבי תל אביב — אימון'},
+    {src:'gallery/lir_04.jpg', cat:'football', alt:'כדורגל — הרמת חולצה'},
+    {src:'gallery/lir_05.jpg', cat:'football', alt:'כדורגל — אקשן'},
+    {src:'gallery/lir_06.jpg', cat:'football', alt:'הפועל — שליטה בכדור'},
+    {src:'gallery/lir_08.jpg', cat:'football', alt:'כדורגל — חגיגה'},
+    {src:'gallery/lir_12.jpg', cat:'football', alt:'כדורגל — קרב על הכדור'},
+    // כללי
+    {src:'gallery/lir_09.jpg', cat:'general',  alt:'אופניים — אירוע ספורט'},
+    // תמונות חדשות
+    {src:'gallery/lir_21.jpg', cat:'football', alt:'שחקן רץ עם כדור'},
+    {src:'gallery/lir_23.jpg', cat:'football', alt:'בעיטה על שער'},
+    {src:'gallery/lir_24.jpg', cat:'football', alt:'שחקן בשער'},
+    {src:'gallery/lir_25.jpg', cat:'football', alt:'שחקן ביתר חוגג'},
+    {src:'gallery/lir_26.jpg', cat:'football', alt:'שחקן ביתר מנופף'},
+    {src:'gallery/lir_27.jpg', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_28.jpg', cat:'football', alt:'שחקנים קרב'},
+    {src:'gallery/lir_29.jpg', cat:'football', alt:'בעיטת עקרב'},
+    {src:'gallery/lir_30.jpg', cat:'football', alt:'שחקנים חוגגים'},
+    {src:'gallery/lir_31.jpg', cat:'football', alt:'שחקנים נגד שחקן'},
+    {src:'gallery/lir_32.jpg', cat:'football', alt:'שחקן מניף ידיים'},
+    {src:'gallery/lir_33.jpg', cat:'football', alt:'נבחרת נוער כדורגל'},
+    {src:'gallery/lir_34.jpg', cat:'football', alt:'שחקן בועט חזק'},
+    {src:'gallery/lir_35.jpg', cat:'football', alt:'בעיטת עקרב'},
+    {src:'gallery/lir_36.jpg', cat:'football', alt:'שחקנים חוגגים'},
+    {src:'gallery/lir_37.jpg', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_38.jpg', cat:'football', alt:'שחקן בורח'},
+    {src:'gallery/lir_39.jpg', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_40.jpg', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_41.jpg', cat:'football', alt:'שחקן חוגג שער'},
+    {src:'gallery/lir_42.jpg', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_43.jpg', cat:'football', alt:'שחקנות נוער'},
+    {src:'gallery/lir_44.jpg', cat:'football', alt:'שחקן חוגג שער'},
+    {src:'gallery/lir_45.jpg', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_46.jpg', cat:'football', alt:'קרב על הכדור'},
+    {src:'gallery/lir_48.jpg', cat:'football', alt:'שחקן חוגג'},
+    {src:'gallery/lir_49.jpg', cat:'football', alt:'שחקנים חוגגים'},
+    {src:'gallery/lir_50.jpg', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_51.jpg', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_52.jpg', cat:'football', alt:'שחקני נוער'},
+    {src:'gallery/lir_53.jpg', cat:'football', alt:'נבחרת נשים'},
+    {src:'gallery/lir_54.jpg', cat:'football', alt:'שחקן חוגג שער'},
+    {src:'gallery/lir_55.jpg', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_56.jpg', cat:'football', alt:'קרב על הכדור'},
+    {src:'gallery/lir_57.jpg', cat:'football', alt:'נבחרת נוער'},
+    {src:'gallery/lir_58.jpg', cat:'football', alt:'קבוצת כדורגל'},
+    {src:'gallery/lir_60.jpg', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_61.jpg', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_66.jpg', cat:'general',  alt:'שחקן כדורסל'},
+    {src:'gallery/lir_67.jpg', cat:'general',  alt:'דאנק כדורסל'},
+    {src:'gallery/lir_68.jpg', cat:'general',  alt:'כדורסל נוער'},
+  ];
+
+  // Category labels in Hebrew
+  const CAT_HE = {
+    football: 'כדורגל',
+    general:  'כללי',
+    all:      'הכל'
+  };
+
+  let curFilter = 'all';
+  let visible = [];
+  let lbIdx = 0;
+  const pcnt = document.getElementById('pcnt');
+
+  const masonry = document.getElementById('masonry');
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lb-img');
+  const lbCnt = document.getElementById('lb-cnt');
+
+  // Whitelist for filter values — prevents malicious data-f injection
+  const ALLOWED_FILTERS = new Set(['all', 'football', 'general']);
+
+  function buildGallery() {
+    masonry.innerHTML = '';
+    visible = curFilter === 'all' ? PHOTOS : PHOTOS.filter(p => p.cat === curFilter);
+    pcnt.textContent = visible.length;
+    visible.forEach((p, i) => {
+      // ── XSS fix: build DOM nodes instead of injecting raw HTML strings ──
+      const el   = document.createElement('div');
+      el.className = 'mi';
+
+      const img  = document.createElement('img');
+      img.src     = p.src;           // static gallery/ path — safe
+      img.alt     = p.alt;           // textContent-equivalent via .alt property
+      img.loading = 'lazy';
+
+      const ov   = document.createElement('div');
+      ov.className = 'mi-ov';
+
+      const cat  = document.createElement('span');
+      cat.className = 'mi-cat';
+      cat.textContent = CAT_HE[p.cat] || '';  // textContent escapes HTML
+
+      const plus = document.createElement('div');
+      plus.className = 'mi-plus';
+      plus.textContent = '+';
+
+      ov.appendChild(cat);
+      ov.appendChild(plus);
+      el.appendChild(img);
+      el.appendChild(ov);
+
+      el.addEventListener('click', () => openLB(i));
+      masonry.appendChild(el);
+    });
+  }
+
+  // Lightbox
+  function openLB(i) {
+    lbIdx = i; updateLB();
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLB() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function updateLB() {
+    lbImg.src = visible[lbIdx].src;
+    lbCnt.textContent = `${lbIdx+1} / ${visible.length}`;
+  }
+  document.getElementById('lb-x').onclick = closeLB;
+  document.getElementById('lb-prev').onclick = () => { lbIdx=(lbIdx+1)%visible.length; updateLB(); };
+  document.getElementById('lb-next').onclick = () => { lbIdx=(lbIdx-1+visible.length)%visible.length; updateLB(); };
+  lb.addEventListener('click', e => { if(e.target===lb) closeLB(); });
+  document.addEventListener('keydown', e => {
+    if(!lb.classList.contains('open')) return;
+    if(e.key==='Escape') closeLB();
+    if(e.key==='ArrowLeft') { lbIdx=(lbIdx+1)%visible.length; updateLB(); }
+    if(e.key==='ArrowRight') { lbIdx=(lbIdx-1+visible.length)%visible.length; updateLB(); }
+  });
+
+  // Filters — whitelist-validated to block prototype pollution / unexpected values
+  document.querySelectorAll('.fbtn').forEach(b => {
+    b.addEventListener('click', () => {
+      const requested = b.dataset.f;
+      if (!ALLOWED_FILTERS.has(requested)) return;  // reject unknown filter
+      document.querySelectorAll('.fbtn').forEach(x => x.classList.remove('act'));
+      b.classList.add('act');
+      curFilter = requested;
+      buildGallery();
+    });
+  });
+
+  // Navbar
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY>50), {passive:true});
+
+  // Hamburger
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mob-menu');
+  ham.addEventListener('click', () => {
+    mob.classList.toggle('open');
+    const s = ham.querySelectorAll('span');
+    if(mob.classList.contains('open')) {
+      s[0].style.transform='rotate(45deg) translate(5px,5px)';
+      s[1].style.opacity='0';
+      s[2].style.transform='rotate(-45deg) translate(5px,-5px)';
+    } else {
+      s.forEach(x=>{x.style.transform='';x.style.opacity='';});
+    }
+  });
+  document.querySelectorAll('.mlink').forEach(l => l.addEventListener('click', () => {
+    mob.classList.remove('open');
+    ham.querySelectorAll('span').forEach(x=>{x.style.transform='';x.style.opacity='';});
+  }));
+
+
+  // Scroll reveal
+  const ro = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting) e.target.classList.add('vis');});
+  },{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+  // Counter animation
+  function animCount(el,target,dur=1800){
+    let st=null;
+    const plus=target>=100;
+    (function step(ts){
+      if(!st)st=ts;
+      const p=Math.min((ts-st)/dur,1);
+      const e=1-Math.pow(1-p,4);
+      el.textContent=Math.floor(e*target)+(plus?'+':'');
+      if(p<1)requestAnimationFrame(step);
+    })(performance.now());
+  }
+  const co=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        animCount(e.target,parseInt(e.target.dataset.count));
+        co.unobserve(e.target);
+      }
+    });
+  },{threshold:.5});
+  document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+
+  // Parallax
+  window.addEventListener('scroll',()=>{
+    const bg=document.querySelector('.hero-bg');
+    if(bg) bg.style.transform=`translateY(${pageYOffset*.3}px)`;
+  },{passive:true});
+
+  // Loader
+  function hideLoader(){
+    document.getElementById('loader').classList.add('hide');
+    document.body.classList.remove('loading');
+  }
+  window.addEventListener('load',()=>setTimeout(hideLoader,2100));
+  setTimeout(hideLoader,4000);
+
+  // ===== IMAGE PROTECTION =====
+  // Block right-click context menu on images (prevent easy "Save As")
+  document.addEventListener('contextmenu', e => {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
+  // Block drag-and-drop on images
+  document.addEventListener('dragstart', e => {
+    if (e.target.tagName === 'IMG') e.preventDefault();
+  });
+
+  // ===== CONSENT BANNER + POLICY MODAL =====
+  const CK_KEY       = 'lir_consent_v2';
+  const ckBanner     = document.getElementById('cookie-banner');
+  const ckAccept     = document.getElementById('ck-accept');
+  const ckDecline    = document.getElementById('ck-decline');
+  const ckOpenPolicy = document.getElementById('ck-open-policy');
+  const policyModal  = document.getElementById('policy-modal');
+  const policyClose  = document.getElementById('policy-close');
+  const policyCloseOnly = document.getElementById('policy-close-only');
+  const policyAccept = document.getElementById('policy-accept');
+
+  function showBanner() {
+    setTimeout(() => { if (ckBanner) ckBanner.classList.add('show'); }, 1500);
+  }
+  function hideBanner() { ckBanner.classList.remove('show'); }
+
+  function saveConsent(val) {
+    try { localStorage.setItem(CK_KEY, val); } catch(_) {}
+    hideBanner();
+    closePolicy();
+  }
+
+  function openPolicy() {
+    policyModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePolicy() {
+    policyModal.classList.remove('open');
+    // restore scroll only if lightbox is also closed
+    if (!document.getElementById('lb').classList.contains('open')) {
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Banner buttons
+  ckAccept.addEventListener('click',     () => saveConsent('accepted'));
+  ckDecline.addEventListener('click',    () => saveConsent('declined'));
+  ckOpenPolicy.addEventListener('click', () => openPolicy());
+
+  // Modal buttons
+  policyAccept.addEventListener('click',    () => saveConsent('accepted'));
+  policyClose.addEventListener('click',     () => closePolicy());
+  policyCloseOnly.addEventListener('click', () => closePolicy());
+
+  // Close modal on backdrop click
+  policyModal.addEventListener('click', e => {
+    if (e.target === policyModal) closePolicy();
+  });
+  // Close modal on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && policyModal.classList.contains('open')) closePolicy();
+  });
+
+  // Show banner only if no decision was stored
+  try {
+    if (!localStorage.getItem(CK_KEY)) showBanner();
+  } catch(_) {
+    showBanner();
+  }
+
+  // ===== ANTI-SPAM: throttle WhatsApp CTA clicks =====
+  let waLastClick = 0;
+  document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const now = Date.now();
+      if (now - waLastClick < 3000) { e.preventDefault(); return; }
+      waLastClick = now;
+    });
+  });
+
+  // Init
+  buildGallery();
+  </script>
+</body>
+</html>
