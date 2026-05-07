@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -77,7 +77,7 @@
     #loader.hide { opacity: 0; visibility: hidden; }
     .loader-logo {
       font-family: var(--font-display);
-      font-size: clamp(64px,12vw,112px);
+      font-size: clamp(4rem,12vw,7rem);
       font-weight: 300; letter-spacing: .28em;
       color: var(--light); display: flex; overflow: hidden;
       direction: ltr;
@@ -95,7 +95,7 @@
     .loader-bar { height: 100%; width: 0%; background: var(--gold); animation: lbar 1.5s .5s var(--ease) forwards; }
     @keyframes lbar { to { width: 100%; } }
     .loader-sub {
-      font-family: var(--font-ui); font-size: 11px;
+      font-family: var(--font-ui); font-size: 0.6875rem;
       letter-spacing: .22em; text-transform: uppercase;
       color: var(--muted); opacity: 0; animation: fin .6s .8s forwards;
     }
@@ -116,7 +116,7 @@
       border-bottom-color: var(--border);
     }
     .nav-logo {
-      font-family: var(--font-display); font-size: 26px;
+      font-family: var(--font-display); font-size: 1.625rem;
       font-weight: 500; letter-spacing: .12em;
       color: var(--white); direction: ltr;
     }
@@ -125,7 +125,7 @@
       display: flex; gap: 40px; list-style: none; align-items: center;
     }
     .nav-links a {
-      font-family: var(--font-ui); font-size: 14px;
+      font-family: var(--font-ui); font-size: 0.875rem;
       font-weight: 500; color: rgba(255,255,255,.65);
       transition: color .25s; position: relative;
     }
@@ -137,7 +137,7 @@
     .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { width: 100%; }
     .nav-cta {
-      font-family: var(--font-ui); font-size: 13px;
+      font-family: var(--font-ui); font-size: 0.8125rem;
       font-weight: 600; padding: 11px 26px;
       border: 1px solid var(--gold); color: var(--gold);
       border-radius: 2px; transition: background .3s, color .3s;
@@ -164,7 +164,7 @@
     .mob-links { list-style: none; text-align: center; }
     .mob-links li { margin-bottom: 28px; }
     .mob-links a {
-      font-family: var(--font-display); font-size: 52px;
+      font-family: var(--font-display); font-size: 3.25rem;
       font-weight: 300; color: var(--light);
       transition: color .25s;
     }
@@ -195,7 +195,7 @@
     }
     .hero-tag {
       display: inline-flex; align-items: center; gap: 12px;
-      font-family: var(--font-ui); font-size: 12px;
+      font-family: var(--font-ui); font-size: 0.75rem;
       font-weight: 500; letter-spacing: .2em;
       color: var(--gold); margin-bottom: 26px;
       opacity: 0; transform: translateY(18px);
@@ -204,7 +204,7 @@
     .hero-tag::before { content:''; width: 28px; height: 1px; background: var(--gold); }
     .hero-h1 {
       font-family: var(--font-display);
-      font-size: clamp(60px, 10.5vw, 144px);
+      font-size: clamp(3.75rem,10.5vw,9rem);
       font-weight: 300; line-height: .92;
       color: var(--white); letter-spacing: -.01em;
       opacity: 0; transform: translateY(40px);
@@ -212,7 +212,7 @@
     }
     .hero-h1 em { font-style: italic; color: var(--gold); display: block; }
     .hero-sub {
-      font-family: var(--font-ui); font-size: clamp(13px, 1.5vw, 16px);
+      font-family: var(--font-ui); font-size: clamp(0.8125rem,1.5vw,1rem);
       font-weight: 300; letter-spacing: .1em;
       color: rgba(232,232,240,.65); margin-top: 22px;
       opacity: 0; transform: translateY(18px);
@@ -227,7 +227,7 @@
     @keyframes hin { to { opacity: 1; transform: translateY(0); } }
     .btn-gold {
       display: inline-flex; align-items: center; gap: 10px;
-      font-family: var(--font-ui); font-size: 13px;
+      font-family: var(--font-ui); font-size: 0.8125rem;
       font-weight: 700; padding: 17px 40px;
       background: var(--gold); color: var(--black);
       border-radius: 2px;
@@ -236,7 +236,7 @@
     .btn-gold:hover { background: #dfc05e; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,.32); }
     .btn-ghost {
       display: inline-flex; align-items: center; gap: 10px;
-      font-family: var(--font-ui); font-size: 13px;
+      font-family: var(--font-ui); font-size: 0.8125rem;
       font-weight: 500; color: rgba(232,232,240,.8);
       transition: color .25s, gap .3s;
     }
@@ -248,7 +248,7 @@
       opacity: 0; animation: hin .6s 3s var(--ease) forwards;
     }
     .scroll-txt {
-      font-family: var(--font-ui); font-size: 10px;
+      font-family: var(--font-ui); font-size: 0.625rem;
       letter-spacing: .28em; color: rgba(232,232,240,.35);
     }
     .scroll-line {
@@ -275,7 +275,7 @@
     }
     .ticker-inner { display: inline-flex; animation: tick 28s linear infinite; }
     .tick-item {
-      font-family: var(--font-ui); font-size: 11px;
+      font-family: var(--font-ui); font-size: 0.6875rem;
       font-weight: 700; letter-spacing: .2em;
       color: var(--black); padding: 0 26px;
     }
@@ -288,13 +288,13 @@
 
     /* ===== COMMONS ===== */
     .eyebrow {
-      font-family: var(--font-ui); font-size: 11px;
+      font-family: var(--font-ui); font-size: 0.6875rem;
       font-weight: 600; letter-spacing: .3em;
       text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
     }
     .stitle {
       font-family: var(--font-display);
-      font-size: clamp(44px, 6.5vw, 90px);
+      font-size: clamp(2.75rem,6.5vw,5.625rem);
       font-weight: 300; line-height: .95; color: var(--light);
     }
     .stitle em { font-style: italic; color: var(--gold); }
@@ -315,7 +315,7 @@
     }
     .gal-filters { display: flex; gap: 6px; flex-wrap: wrap; }
     .fbtn {
-      font-family: var(--font-ui); font-size: 13px;
+      font-family: var(--font-ui); font-size: 0.8125rem;
       font-weight: 500; padding: 9px 20px;
       border: 1px solid var(--border); background: none;
       color: var(--muted); border-radius: 100px; cursor: pointer;
@@ -324,7 +324,7 @@
     .fbtn:hover { border-color: rgba(201,168,76,.5); color: var(--gold); }
     .fbtn.act { background: var(--gold); border-color: var(--gold); color: var(--black); }
     .gal-cnt {
-      font-family: var(--font-ui); font-size: 14px;
+      font-family: var(--font-ui); font-size: 0.875rem;
       letter-spacing: .06em; color: var(--muted);
     }
     .gal-cnt b { color: var(--gold); font-weight: 400; }
@@ -352,18 +352,43 @@
     }
     .mi:hover .mi-ov { opacity: 1; }
     .mi-cat {
-      font-family: var(--font-ui); font-size: 10px;
+      font-family: var(--font-ui); font-size: 0.625rem;
       font-weight: 700; letter-spacing: .18em;
       text-transform: uppercase; color: var(--gold);
     }
     .mi-plus {
       width: 32px; height: 32px; border: 1px solid rgba(255,255,255,.5);
       border-radius: 50%; display: flex; align-items: center;
-      justify-content: center; color: var(--white); font-size: 18px;
+      justify-content: center; color: var(--white); font-size: 1.125rem;
       transform: scale(.8) rotate(-90deg);
       transition: transform .35s var(--ease), background .3s;
     }
     .mi:hover .mi-plus { transform: scale(1) rotate(0deg); background: rgba(255,255,255,.12); }
+
+    /* ===== SHOW MORE BUTTON ===== */
+    .gal-more-wrap {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 12px; padding: 48px 0 20px;
+    }
+    .gal-more-wrap.hidden { display: none; }
+    .gal-more-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--font-ui); font-size: 0.875rem; font-weight: 700;
+      letter-spacing: .06em;
+      padding: 16px 48px; border: 1px solid var(--gold);
+      color: var(--gold); background: none; border-radius: 2px; cursor: pointer;
+      transition: background .3s, color .3s, transform .25s, box-shadow .3s;
+    }
+    .gal-more-btn:hover {
+      background: var(--gold); color: var(--black);
+      transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,.28);
+    }
+    .gal-more-btn svg { transition: transform .3s; }
+    .gal-more-btn:hover svg { transform: translateY(2px); }
+    .gal-more-hint {
+      font-family: var(--font-ui); font-size: 0.75rem;
+      color: var(--muted); letter-spacing: .06em;
+    }
 
     /* ===== LIGHTBOX ===== */
     #lb {
@@ -385,7 +410,7 @@
       width: 46px; height: 46px; border-radius: 50%;
       border: 1px solid var(--border); background: rgba(17,17,22,.85);
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--text); font-size: 18px;
+      cursor: pointer; color: var(--text); font-size: 1.125rem;
       transition: background .2s, border-color .2s, color .2s;
     }
     .lb-x:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
@@ -394,7 +419,7 @@
       width: 50px; height: 50px; border-radius: 50%;
       border: 1px solid var(--border); background: rgba(17,17,22,.85);
       display: flex; align-items: center; justify-content: center;
-      cursor: pointer; color: var(--text); font-size: 22px;
+      cursor: pointer; color: var(--text); font-size: 1.375rem;
       transition: background .2s, border-color .2s, color .2s;
     }
     .lb-nav:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
@@ -402,7 +427,7 @@
     #lb-next { left: 20px; }
     .lb-cnt {
       position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-      font-family: var(--font-ui); font-size: 12px;
+      font-family: var(--font-ui); font-size: 0.75rem;
       letter-spacing: .15em; color: var(--muted);
     }
 
@@ -422,22 +447,22 @@
     }
     .why-pull {
       font-family: var(--font-display);
-      font-size: clamp(32px, 4.5vw, 58px);
+      font-size: clamp(2rem,4.5vw,3.625rem);
       font-weight: 300; font-style: italic;
       line-height: 1.2; color: var(--light);
     }
     .why-pull strong { font-style: normal; font-weight: 700; color: var(--gold); }
     .why-right p {
-      font-size: 15px; line-height: 1.85;
+      font-size: 0.9375rem; line-height: 1.85;
       color: rgba(232,232,240,.62); margin-bottom: 20px; max-width: 420px;
     }
     .why-nums { display: flex; gap: 48px; margin-top: 36px; }
     .wn-n {
-      font-family: var(--font-display); font-size: 52px;
+      font-family: var(--font-display); font-size: 3.25rem;
       font-weight: 300; color: var(--gold); line-height: 1;
     }
     .wn-l {
-      font-family: var(--font-ui); font-size: 11px;
+      font-family: var(--font-ui); font-size: 0.6875rem;
       font-weight: 500; letter-spacing: .15em;
       color: var(--muted); margin-top: 6px;
     }
@@ -458,21 +483,21 @@
     }
     .wcard:hover { border-color: rgba(201,168,76,.28); background: rgba(20,20,28,.96); }
     .wcard:hover::before { transform: scaleX(1); }
-    .wcard-icon { font-size: 34px; margin-bottom: 22px; display: block; }
+    .wcard-icon { font-size: 2.125rem; margin-bottom: 22px; display: block; }
     .wcard-big {
-      font-family: var(--font-display); font-size: 48px;
+      font-family: var(--font-display); font-size: 3rem;
       font-weight: 300; color: var(--gold); line-height: 1;
       margin-bottom: 12px; display: block;
     }
     .wcard-title {
-      font-family: var(--font-display); font-size: 24px;
+      font-family: var(--font-display); font-size: 1.5rem;
       font-weight: 400; color: var(--light); margin-bottom: 12px;
     }
-    .wcard-body { font-size: 13px; line-height: 1.75; color: rgba(232,232,240,.5); }
+    .wcard-body { font-size: 0.8125rem; line-height: 1.75; color: rgba(232,232,240,.5); }
     .why-bigq { text-align: center; padding-top: 80px; }
     .why-bigq p {
       font-family: var(--font-display);
-      font-size: clamp(36px, 5.5vw, 76px);
+      font-size: clamp(2.25rem,5.5vw,4.75rem);
       font-weight: 300; font-style: italic;
       color: var(--light); line-height: 1.1;
     }
@@ -498,11 +523,11 @@
       align-items: center; justify-content: center;
     }
     .about-badge-n {
-      font-family: var(--font-display); font-size: 44px;
+      font-family: var(--font-display); font-size: 2.75rem;
       font-weight: 300; color: var(--black); line-height: 1;
     }
     .about-badge-t {
-      font-family: var(--font-ui); font-size: 9px;
+      font-family: var(--font-ui); font-size: 0.5625rem;
       font-weight: 700; letter-spacing: .14em;
       color: rgba(0,0,0,.65);
     }
@@ -514,22 +539,22 @@
     .about-text { order: 1; }
     .about-name {
       font-family: var(--font-display);
-      font-size: clamp(44px, 5.5vw, 76px);
+      font-size: clamp(2.75rem,5.5vw,4.75rem);
       font-weight: 300; line-height: .95;
       color: var(--light); margin-bottom: 28px;
     }
     .about-name em { font-style: italic; color: var(--gold); display: block; }
-    .about-p { font-size: 15px; line-height: 1.85; color: rgba(232,232,240,.62); margin-bottom: 18px; }
+    .about-p { font-size: 0.9375rem; line-height: 1.85; color: rgba(232,232,240,.62); margin-bottom: 18px; }
     .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0; }
     .atag {
-      font-family: var(--font-ui); font-size: 12px;
+      font-family: var(--font-ui); font-size: 0.75rem;
       font-weight: 500; padding: 8px 16px;
       border: 1px solid var(--border); color: var(--muted); border-radius: 100px;
     }
     .about-socials { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
     .soc-link {
       display: flex; align-items: center; gap: 10px;
-      font-family: var(--font-ui); font-size: 13px;
+      font-family: var(--font-ui); font-size: 0.8125rem;
       font-weight: 500; color: rgba(232,232,240,.6);
       padding: 13px 22px; border: 1px solid var(--border); border-radius: 2px;
       transition: border-color .3s, color .3s, background .3s;
@@ -547,25 +572,25 @@
     }
     .cta-rel { position: relative; z-index: 2; }
     .cta-eye {
-      font-family: var(--font-ui); font-size: 11px;
+      font-family: var(--font-ui); font-size: 0.6875rem;
       font-weight: 600; letter-spacing: .35em;
       text-transform: uppercase; color: var(--gold); margin-bottom: 22px;
     }
     .cta-h {
       font-family: var(--font-display);
-      font-size: clamp(44px, 7.5vw, 108px);
+      font-size: clamp(2.75rem,7.5vw,6.75rem);
       font-weight: 300; line-height: .92;
       color: var(--white); margin-bottom: 20px;
     }
     .cta-h em { font-style: italic; color: var(--gold); }
     .cta-sub {
-      font-size: 16px; color: rgba(232,232,240,.5);
+      font-size: 1rem; color: rgba(232,232,240,.5);
       max-width: 400px; margin: 0 auto 56px; line-height: 1.75;
     }
     .cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
     .btn-wa {
       display: inline-flex; align-items: center; gap: 12px;
-      font-family: var(--font-ui); font-size: 13px;
+      font-family: var(--font-ui); font-size: 0.8125rem;
       font-weight: 700; padding: 20px 48px;
       background: #25D366; color: #000; border-radius: 2px;
       transition: transform .3s, filter .3s, box-shadow .3s;
@@ -573,13 +598,211 @@
     .btn-wa:hover { transform: translateY(-3px); filter: brightness(1.08); box-shadow: 0 10px 30px rgba(37,211,102,.3); }
     .btn-ig {
       display: inline-flex; align-items: center; gap: 12px;
-      font-family: var(--font-ui); font-size: 13px;
+      font-family: var(--font-ui); font-size: 0.8125rem;
       font-weight: 700; padding: 20px 48px;
       background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
       color: white; border-radius: 2px;
       transition: transform .3s, filter .3s, box-shadow .3s;
     }
     .btn-ig:hover { transform: translateY(-3px); filter: brightness(1.08); box-shadow: 0 10px 30px rgba(220,39,67,.3); }
+
+    /* ===== BOOKING FORM ===== */
+    #booking {
+      padding: 120px 52px; background: var(--surface);
+      position: relative; overflow: hidden;
+    }
+    #booking::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 100%, rgba(201,168,76,.06), transparent);
+      pointer-events: none;
+    }
+    .booking-inner {
+      max-width: 680px; margin: 0 auto; position: relative; z-index: 1;
+    }
+    .booking-head { text-align: center; margin-bottom: 52px; }
+    .booking-head .eyebrow { margin-bottom: 14px; }
+    .booking-head .stitle { margin-bottom: 16px; }
+    .booking-desc {
+      font-family: var(--font-ui); font-size: 0.9375rem;
+      color: rgba(232,232,240,.55); line-height: 1.7;
+    }
+    .booking-form {
+      display: grid; gap: 18px;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; }
+    .form-label {
+      font-family: var(--font-ui); font-size: 0.6875rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--gold);
+    }
+    .form-label span { color: rgba(201,168,76,.5); font-size: .9em; }
+    .form-input, .form-select {
+      font-family: var(--font-ui); font-size: 0.875rem;
+      color: var(--light); background: var(--card);
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 14px 16px; width: 100%;
+      transition: border-color .25s, box-shadow .25s;
+      appearance: none; -webkit-appearance: none;
+    }
+    .form-input::placeholder { color: var(--muted); }
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.12);
+    }
+    .form-input:invalid:not(:placeholder-shown) { border-color: #e05; }
+    .form-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 14px center; padding-left: 38px; cursor: pointer; }
+    .form-select option { background: var(--card); color: var(--light); }
+    .form-privacy {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 16px; background: var(--card);
+      border: 1px solid var(--border); border-radius: 2px;
+    }
+    .form-privacy input[type="checkbox"] {
+      width: 18px; height: 18px; flex-shrink: 0;
+      accent-color: var(--gold); margin-top: 1px; cursor: pointer;
+    }
+    .form-privacy-text {
+      font-family: var(--font-ui); font-size: 0.8125rem;
+      color: rgba(232,232,240,.6); line-height: 1.55;
+    }
+    .form-privacy-text button {
+      background: none; border: none; color: var(--gold);
+      font-family: var(--font-ui); font-size: 0.8125rem;
+      cursor: pointer; text-decoration: underline; padding: 0;
+    }
+    .btn-book {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      font-family: var(--font-ui); font-size: 0.875rem; font-weight: 700;
+      padding: 18px 40px; background: var(--gold); color: var(--black);
+      border: none; border-radius: 2px; cursor: pointer; width: 100%;
+      transition: background .3s, transform .25s, box-shadow .3s;
+      letter-spacing: .04em;
+    }
+    .btn-book:hover:not(:disabled) {
+      background: #dfc05e; transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(201,168,76,.32);
+    }
+    .btn-book:disabled {
+      opacity: .45; cursor: not-allowed; transform: none; box-shadow: none;
+    }
+    @media(max-width:700px){
+      #booking { padding: 80px 20px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ===== CUSTOM PICKERS ===== */
+    .cpicker-wrap { position: relative; }
+    .cpicker-trigger {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-ui); font-size: 0.875rem;
+      color: var(--light); background: var(--card);
+      border: 1px solid var(--border); border-radius: 2px;
+      padding: 14px 16px; width: 100%; text-align: right;
+      cursor: pointer; transition: border-color .25s, box-shadow .25s;
+    }
+    .cpicker-trigger:hover,
+    .cpicker-trigger[aria-expanded="true"] {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.12);
+    }
+    .cpicker-trigger svg { flex-shrink: 0; color: var(--gold); }
+    .cpicker-val { flex: 1; }
+    .cpicker-val.filled { color: var(--gold); font-weight: 600; }
+
+    .cpicker-popup {
+      position: absolute; top: calc(100% + 8px); right: 0;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 6px; z-index: 500; width: 320px;
+      box-shadow: 0 12px 48px rgba(0,0,0,.65);
+      animation: popIn .2s var(--ease);
+    }
+    .cpicker-popup--time { width: 220px; }
+    @keyframes popIn { from { opacity:0; transform:translateY(-6px); } to { opacity:1; transform:none; } }
+
+    /* Calendar */
+    .cal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px 10px; border-bottom: 1px solid var(--border);
+    }
+    .cal-title {
+      font-family: var(--font-ui); font-size: 0.875rem;
+      font-weight: 700; color: var(--light); letter-spacing: .04em;
+    }
+    .cal-nav {
+      width: 30px; height: 30px; border-radius: 50%;
+      border: 1px solid var(--border); background: none;
+      color: var(--text); font-size: 1.125rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .cal-nav:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    .cal-days-head {
+      display: grid; grid-template-columns: repeat(7,1fr);
+      padding: 10px 12px 4px; gap: 2px;
+    }
+    .cal-days-head span {
+      font-family: var(--font-ui); font-size: 0.625rem; font-weight: 700;
+      letter-spacing: .1em; color: var(--muted); text-align: center;
+    }
+    .cal-grid {
+      display: grid; grid-template-columns: repeat(7,1fr);
+      padding: 4px 12px 12px; gap: 3px;
+    }
+    .cal-day {
+      aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-ui); font-size: 0.8125rem; font-weight: 500;
+      border-radius: 50%; cursor: pointer; border: none; background: none;
+      color: var(--text); transition: background .15s, color .15s;
+      position: relative;
+    }
+    .cal-day:hover:not(.cal-day--past):not(.cal-day--blocked):not(.cal-day--empty) {
+      background: rgba(201,168,76,.18); color: var(--gold);
+    }
+    .cal-day--today { border: 1px solid rgba(201,168,76,.45); color: var(--gold); }
+    .cal-day--selected { background: var(--gold) !important; color: var(--black) !important; font-weight: 700; }
+    .cal-day--blocked {
+      color: rgba(232,232,240,.2); cursor: not-allowed;
+      text-decoration: line-through;
+    }
+    .cal-day--blocked::after {
+      content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 4px; border-radius: 50%;
+      background: #e05555;
+    }
+    .cal-day--past { color: rgba(232,232,240,.2); cursor: not-allowed; }
+    .cal-day--empty { cursor: default; }
+    .cal-legend {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 14px 12px; font-family: var(--font-ui);
+      font-size: 0.625rem; color: var(--muted); letter-spacing: .08em;
+    }
+    .leg-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .leg-free { background: rgba(201,168,76,.4); }
+    .leg-blocked { background: #e05555; }
+
+    /* Time Slots */
+    .time-slots {
+      max-height: 240px; overflow-y: auto; padding: 8px;
+      scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4px;
+    }
+    .time-slot {
+      font-family: var(--font-ui); font-size: 0.8125rem; font-weight: 500;
+      padding: 9px 8px; border-radius: 4px; border: 1px solid var(--border);
+      background: none; color: var(--text); cursor: pointer;
+      text-align: center; transition: background .15s, border-color .15s, color .15s;
+      direction: ltr;
+    }
+    .time-slot:hover:not(.time-slot--blocked) {
+      background: rgba(201,168,76,.18); border-color: rgba(201,168,76,.4); color: var(--gold);
+    }
+    .time-slot--selected { background: var(--gold) !important; border-color: var(--gold) !important; color: var(--black) !important; font-weight: 700; }
+    .time-slot--blocked {
+      color: rgba(232,232,240,.2); cursor: not-allowed;
+      border-style: dashed; position: relative;
+    }
+    .time-slot--blocked::after { content: 'תפוס'; font-size: 0.5625rem; display: block; color: #e05555; }
 
     /* ===== FOOTER ===== */
     footer {
@@ -589,19 +812,19 @@
       flex-wrap: wrap; gap: 20px;
     }
     .flogo {
-      font-family: var(--font-display); font-size: 20px;
+      font-family: var(--font-display); font-size: 1.25rem;
       font-weight: 300; letter-spacing: .18em;
       color: var(--light); direction: ltr;
     }
     .flogo em { font-style: normal; color: var(--gold); }
     .flinks { display: flex; gap: 28px; list-style: none; }
     .flinks a {
-      font-family: var(--font-ui); font-size: 13px;
+      font-family: var(--font-ui); font-size: 0.8125rem;
       font-weight: 500; color: var(--muted);
       transition: color .25s;
     }
     .flinks a:hover { color: var(--gold); }
-    .fcopy { font-size: 12px; color: var(--muted); }
+    .fcopy { font-size: 0.75rem; color: var(--muted); }
 
     /* ===== RESPONSIVE ===== */
     @media(max-width:1200px){
@@ -668,23 +891,23 @@
     #cookie-banner.show { transform: translateY(0); }
     .ck-left { flex: 1; min-width: 240px; }
     .ck-title {
-      font-family: var(--font-ui); font-size: 14px; font-weight: 700;
+      font-family: var(--font-ui); font-size: 0.875rem; font-weight: 700;
       color: var(--light); margin-bottom: 6px; letter-spacing: .02em;
     }
     .ck-body {
-      font-family: var(--font-ui); font-size: 12.5px;
+      font-family: var(--font-ui); font-size: 0.781rem;
       color: rgba(232,232,240,.55); line-height: 1.65;
     }
     .ck-body button.ck-policy-link {
       background: none; border: none; padding: 0;
-      color: var(--gold); font-size: 12.5px; font-family: var(--font-ui);
+      color: var(--gold); font-size: 0.781rem; font-family: var(--font-ui);
       text-decoration: underline; cursor: pointer;
       transition: color .2s;
     }
     .ck-body button.ck-policy-link:hover { color: #dfc05e; }
     .ck-btns { display: flex; gap: 10px; flex-shrink: 0; align-items: center; }
     .ck-accept {
-      font-family: var(--font-ui); font-size: 13px; font-weight: 700;
+      font-family: var(--font-ui); font-size: 0.8125rem; font-weight: 700;
       padding: 12px 28px; background: var(--gold); color: var(--black);
       border: none; border-radius: 2px; cursor: pointer;
       transition: background .25s, transform .2s;
@@ -692,7 +915,7 @@
     }
     .ck-accept:hover { background: #dfc05e; transform: translateY(-1px); }
     .ck-decline {
-      font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+      font-family: var(--font-ui); font-size: 0.75rem; font-weight: 500;
       padding: 12px 18px; background: none; color: var(--muted);
       border: 1px solid var(--border); border-radius: 2px; cursor: pointer;
       transition: color .25s, border-color .25s;
@@ -703,6 +926,131 @@
       #cookie-banner { padding: 18px 20px; }
       .ck-btns { width: 100%; }
       .ck-accept, .ck-decline { flex: 1; text-align: center; }
+    }
+
+    /* ===== SKIP LINK ===== */
+    .skip-link {
+      position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: var(--black);
+      padding: 12px 28px; border-radius: 2px; z-index: 99999;
+      font-family: var(--font-ui); font-weight: 700; font-size: 0.875rem;
+      text-decoration: none; white-space: nowrap; transition: top .15s;
+    }
+    .skip-link:focus { top: 14px; }
+
+    /* ===== GLOBAL FOCUS STATES ===== */
+    *:focus-visible {
+      outline: 2px solid var(--gold) !important;
+      outline-offset: 3px; border-radius: 2px;
+    }
+
+    /* ===== FOOTER LEGAL ROW ===== */
+    footer { padding-bottom: 28px; }
+    .footer-bottom {
+      width: 100%; border-top: 1px solid var(--border); padding-top: 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .flinks-legal { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+    .flink-btn {
+      background: none; border: none; padding: 0;
+      font-family: var(--font-ui); font-size: 0.75rem;
+      font-weight: 500; color: var(--muted); cursor: pointer; transition: color .25s;
+    }
+    .flink-btn:hover { color: var(--gold); }
+    .fcontact {
+      font-family: var(--font-ui); font-size: 0.75rem;
+      color: var(--muted); display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+    }
+    .fcontact a { color: var(--muted); transition: color .25s; }
+    .fcontact a:hover { color: var(--gold); }
+
+    /* ===== SHARED LEGAL MODALS ===== */
+    .legal-modal {
+      position: fixed; inset: 0; z-index: 10001;
+      background: rgba(6,6,8,.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; opacity: 0; visibility: hidden;
+      transition: opacity .35s var(--ease), visibility .35s;
+    }
+    .legal-modal.open { opacity: 1; visibility: visible; }
+    .legal-modal .policy-box { transform: translateY(20px); transition: transform .35s var(--ease); }
+    .legal-modal.open .policy-box { transform: translateY(0); }
+
+    /* ===== ACCESSIBILITY WIDGET ===== */
+    #a11y-btn {
+      position: fixed; left: 20px; bottom: 90px; z-index: 9998;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--gold); color: var(--black);
+      border: none; cursor: pointer; font-size: 1.375rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.5);
+      display: flex; align-items: center; justify-content: center;
+      transition: transform .2s, box-shadow .2s;
+    }
+    #a11y-btn:hover { transform: scale(1.1); box-shadow: 0 6px 26px rgba(0,0,0,.6); }
+    #a11y-panel {
+      position: fixed; left: 20px; bottom: 154px; z-index: 9998;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px; width: 232px;
+      opacity: 0; visibility: hidden; transform: translateY(8px);
+      transition: opacity .3s var(--ease), visibility .3s, transform .3s var(--ease);
+      box-shadow: 0 10px 40px rgba(0,0,0,.55); direction: rtl;
+    }
+    #a11y-panel.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .a11y-title {
+      font-family: var(--font-ui); font-size: 0.625rem; font-weight: 700;
+      letter-spacing: .22em; color: var(--gold); text-transform: uppercase;
+      margin-bottom: 16px; text-align: center;
+    }
+    .a11y-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; gap: 8px; }
+    .a11y-label { font-family: var(--font-ui); font-size: 0.8125rem; color: var(--text); flex: 1; }
+    .a11y-controls { display: flex; gap: 4px; }
+    .a11y-ctrl {
+      width: 30px; height: 30px; border-radius: 4px;
+      border: 1px solid var(--border); background: var(--card);
+      color: var(--text); font-size: 0.9375rem; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, border-color .2s, color .2s;
+    }
+    .a11y-ctrl:hover { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    .a11y-toggle {
+      width: 42px; height: 24px; border-radius: 12px;
+      border: 1px solid var(--border); background: var(--card);
+      cursor: pointer; position: relative;
+      transition: background .25s, border-color .25s;
+      flex-shrink: 0; padding: 0;
+    }
+    .a11y-toggle::after {
+      content: ''; position: absolute; top: 3px; right: 3px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--muted); transition: right .25s, background .25s;
+    }
+    .a11y-toggle.on { background: var(--gold); border-color: var(--gold); }
+    .a11y-toggle.on::after { right: calc(100% - 19px); background: var(--black); }
+    .a11y-reset {
+      width: 100%; margin-top: 6px; padding: 8px;
+      font-family: var(--font-ui); font-size: 0.6875rem; font-weight: 600;
+      letter-spacing: .1em; background: none; border: 1px solid var(--border);
+      color: var(--muted); border-radius: 4px; cursor: pointer;
+      transition: color .2s, border-color .2s;
+    }
+    .a11y-reset:hover { color: var(--text); border-color: var(--muted); }
+
+    /* ===== ACCESSIBILITY MODES ===== */
+    body.hc-mode {
+      --black: #000000; --deep: #000000; --surface: #0d0d0d;
+      --card: #141414; --border: #555555; --muted: #cccccc;
+      --text: #ffffff; --light: #ffffff; --gold: #ffdd00;
+    }
+    body.hc-mode img { filter: contrast(1.15) brightness(1.05) !important; }
+    body.hl-links a,
+    body.hl-links button.ck-policy-link,
+    body.hl-links button.flink-btn { text-decoration: underline !important; text-underline-offset: 3px; }
+
+    @media(max-width:600px){
+      #a11y-panel { left: 10px; width: calc(100vw - 20px); }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
     }
 
     /* ===== POLICY MODAL ===== */
@@ -734,14 +1082,14 @@
       flex-shrink: 0;
     }
     .policy-header h3 {
-      font-family: var(--font-display); font-size: 28px;
+      font-family: var(--font-display); font-size: 1.75rem;
       font-weight: 400; color: var(--light);
     }
     .policy-header h3 em { font-style: italic; color: var(--gold); }
     .policy-close {
       width: 40px; height: 40px; border-radius: 50%;
       border: 1px solid var(--border); background: none;
-      color: var(--muted); font-size: 18px; cursor: pointer;
+      color: var(--muted); font-size: 1.125rem; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       transition: background .2s, color .2s, border-color .2s; flex-shrink: 0;
     }
@@ -754,12 +1102,12 @@
     .policy-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
     .policy-section { margin-bottom: 28px; }
     .policy-section h4 {
-      font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+      font-family: var(--font-ui); font-size: 0.6875rem; font-weight: 700;
       letter-spacing: .22em; text-transform: uppercase;
       color: var(--gold); margin-bottom: 10px;
     }
     .policy-section p, .policy-section li {
-      font-family: var(--font-ui); font-size: 13.5px;
+      font-family: var(--font-ui); font-size: 0.844rem;
       color: rgba(232,232,240,.62); line-height: 1.8;
     }
     .policy-section ul { padding-right: 18px; }
@@ -778,6 +1126,8 @@
 </head>
 <body class="loading">
 
+  <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
   <div id="cursor-dot"></div>
   <div id="cursor-ring"></div>
 
@@ -795,8 +1145,9 @@
       <li><a href="#gallery">עבודות</a></li>
       <li><a href="#why">למה אני?</a></li>
       <li><a href="#about">עליי</a></li>
+      <li><a href="#booking">קבע צילום</a></li>
     </ul>
-    <a href="https://wa.me/972505527855?text=היי%20ליר!%20אני%20רוצה%20להזמין%20צילום." target="_blank" class="nav-cta">הזמן צילום</a>
+    <a href="#booking" class="nav-cta">הזמן צילום</a>
     <button class="nav-ham" id="ham" aria-label="תפריט">
       <span></span><span></span><span></span>
     </button>
@@ -808,12 +1159,12 @@
       <li><a href="#gallery" class="mlink">עבודות</a></li>
       <li><a href="#why" class="mlink">למה אני?</a></li>
       <li><a href="#about" class="mlink">עליי</a></li>
-      <li><a href="#cta" class="mlink">הזמן</a></li>
+      <li><a href="#booking" class="mlink">קבע צילום</a></li>
     </ul>
   </div>
 
   <!-- Hero -->
-  <section id="hero">
+  <section id="hero" aria-label="עמוד הבית של ליר צלם">
     <div class="hero-bg"></div>
     <div class="hero-grad"></div>
     <div class="hero-grad-btm"></div>
@@ -860,7 +1211,7 @@
   </div>
 
   <!-- Gallery -->
-  <section id="gallery">
+  <section id="gallery" aria-label="גלריית עבודות"><span id="main-content" style="position:absolute;top:-80px"></span>
     <div class="gal-head">
       <div>
         <div class="eyebrow reveal">— פורטפוליו</div>
@@ -876,6 +1227,13 @@
       </div>
     </div>
     <div class="masonry" id="masonry"></div>
+    <div class="gal-more-wrap" id="gal-more-wrap">
+      <button class="gal-more-btn" id="gal-more-btn" aria-live="polite">
+        <span id="gal-more-label">הצג את כל התמונות</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <p class="gal-more-hint" id="gal-more-hint">מציג 15 מתוך <span id="gal-total">50</span> תמונות</p>
+    </div>
   </section>
 
   <!-- Lightbox -->
@@ -983,6 +1341,108 @@
     </div>
   </section>
 
+  <!-- Booking Form -->
+  <section id="booking" aria-labelledby="booking-title">
+    <div class="booking-inner">
+      <div class="booking-head">
+        <div class="eyebrow reveal">— קבע צילום</div>
+        <h2 class="stitle reveal d1" id="booking-title">קבע <em>צילום</em></h2>
+        <p class="booking-desc reveal d2">בחר את הפרטים שלך ונחזור אליך מיד לאישור 📸</p>
+      </div>
+
+      <form class="booking-form reveal d2" id="booking-form" novalidate aria-label="טופס הזמנת צילום">
+        <!-- שם מלא -->
+        <div class="form-group">
+          <label class="form-label" for="book-name">שם מלא <span>*חובה</span></label>
+          <input class="form-input" type="text" id="book-name" name="name"
+                 placeholder="הכנס את שמך המלא" required autocomplete="name"
+                 aria-required="true" />
+        </div>
+
+        <!-- סוג צילום -->
+        <div class="form-group">
+          <label class="form-label" for="book-type">סוג צילום <span>*חובה</span></label>
+          <select class="form-select" id="book-type" name="type" required aria-required="true">
+            <option value="" disabled selected>בחר סוג צילום...</option>
+            <option value="סשן אישי">סשן אישי</option>
+            <option value="צילום משחק">צילום משחק</option>
+            <option value="צילום אימון">צילום אימון</option>
+          </select>
+        </div>
+
+        <!-- תאריך + שעה -->
+        <div class="form-row">
+          <!-- Date Picker -->
+          <div class="form-group">
+            <label class="form-label" id="date-label">תאריך <span>*חובה</span></label>
+            <div class="cpicker-wrap" id="date-picker-wrap">
+              <button type="button" class="cpicker-trigger" id="date-trigger"
+                      aria-haspopup="dialog" aria-expanded="false" aria-labelledby="date-label">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                <span class="cpicker-val" id="date-display">בחר תאריך</span>
+              </button>
+              <div class="cpicker-popup" id="date-popup" role="dialog" aria-modal="true" aria-label="בחר תאריך" hidden>
+                <div class="cal-header">
+                  <button type="button" class="cal-nav" id="cal-prev" aria-label="חודש קודם">‹</button>
+                  <span class="cal-title" id="cal-title"></span>
+                  <button type="button" class="cal-nav" id="cal-next" aria-label="חודש הבא">›</button>
+                </div>
+                <div class="cal-days-head">
+                  <span>א׳</span><span>ב׳</span><span>ג׳</span><span>ד׳</span><span>ה׳</span><span>ו׳</span><span>ש׳</span>
+                </div>
+                <div class="cal-grid" id="cal-grid"></div>
+                <div class="cal-legend">
+                  <span class="leg-dot leg-free"></span>פנוי
+                  <span class="leg-dot leg-blocked" style="margin-right:12px"></span>תפוס
+                </div>
+              </div>
+              <input type="hidden" id="book-date" name="date" required />
+            </div>
+          </div>
+
+          <!-- Time Picker -->
+          <div class="form-group">
+            <label class="form-label" id="time-label">שעה <span>*חובה</span></label>
+            <div class="cpicker-wrap" id="time-picker-wrap">
+              <button type="button" class="cpicker-trigger" id="time-trigger"
+                      aria-haspopup="listbox" aria-expanded="false" aria-labelledby="time-label">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                <span class="cpicker-val" id="time-display">בחר שעה</span>
+              </button>
+              <div class="cpicker-popup cpicker-popup--time" id="time-popup" role="listbox" aria-label="בחר שעה" hidden>
+                <div class="time-slots" id="time-slots"></div>
+              </div>
+              <input type="hidden" id="book-time" name="time" required />
+            </div>
+          </div>
+        </div>
+
+        <!-- מיקום -->
+        <div class="form-group">
+          <label class="form-label" for="book-location">מיקום <span style="color:var(--muted);font-weight:400">אופציונלי</span></label>
+          <input class="form-input" type="text" id="book-location" name="location"
+                 placeholder="עיר / אצטדיון / כתובת" autocomplete="off" />
+        </div>
+
+        <!-- הסכמה לפרטיות -->
+        <div class="form-privacy">
+          <input type="checkbox" id="book-privacy" name="privacy" aria-required="true" />
+          <p class="form-privacy-text">
+            אני מאשר/ת שקראתי ואני מסכים/ה ל
+            <button type="button" id="book-open-privacy">מדיניות הפרטיות</button>
+            ול<button type="button" id="book-open-terms">תנאי השימוש</button>
+            של ליר צלם.
+          </p>
+        </div>
+
+        <!-- שלח -->
+        <button type="submit" class="btn-book" id="book-submit" disabled aria-label="קבע צילום דרך וואטסאפ">
+          📲 קבע צילום
+        </button>
+      </form>
+    </div>
+  </section>
+
   <!-- CTA -->
   <section id="cta">
     <div class="cta-bg"></div>
@@ -998,15 +1458,28 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="flogo">L<em>I</em>R Photographer</div>
-    <ul class="flinks">
+  <footer role="contentinfo">
+    <div class="flogo" aria-label="ליר פוטוגרפר">L<em>I</em>R Photographer</div>
+    <ul class="flinks" aria-label="ניווט מהיר">
       <li><a href="#gallery">עבודות</a></li>
       <li><a href="#why">למה אני?</a></li>
       <li><a href="#about">עליי</a></li>
       <li><a href="#cta">צור קשר</a></li>
     </ul>
     <div class="fcopy">© 2025 ליר צלם · כל הזכויות שמורות</div>
+    <div class="footer-bottom">
+      <ul class="flinks-legal" aria-label="מסמכים משפטיים">
+        <li><button class="flink-btn" id="open-privacy">מדיניות פרטיות</button></li>
+        <li><button class="flink-btn" id="open-terms">תנאי שימוש</button></li>
+        <li><button class="flink-btn" id="open-access">הצהרת נגישות</button></li>
+        <li><button class="flink-btn" id="open-cancel">מדיניות ביטולים</button></li>
+      </ul>
+      <div class="fcontact" aria-label="פרטי יצירת קשר">
+        <span>📞 050-5527855</span>
+        <a href="https://wa.me/972505527855" target="_blank" rel="noopener" aria-label="פנה אלינו בוואטסאפ">WhatsApp</a>
+        <a href="https://www.instagram.com/lir.photographer/" target="_blank" rel="noopener" aria-label="עקוב באינסטגרם">Instagram</a>
+      </div>
+    </div>
   </footer>
 
   <!-- ══ הסכמה לתנאים ועוגיות ══ -->
@@ -1027,7 +1500,7 @@
   </div>
 
   <!-- ══ מודל מדיניות פרטיות ותנאי שימוש ══ -->
-  <div id="policy-modal" role="dialog" aria-modal="true" aria-labelledby="policy-title">
+  <div id="policy-modal" class="legal-modal" role="dialog" aria-modal="true" aria-labelledby="policy-title">
     <div class="policy-box">
       <div class="policy-header">
         <h3 id="policy-title">מדיניות <em>פרטיות</em> ותנאי שימוש</h3>
@@ -1096,7 +1569,7 @@
         </div>
 
         <div class="policy-section" style="border-top:1px solid var(--border);padding-top:20px;margin-top:8px">
-          <p style="font-size:11px;color:var(--muted)">עדכון אחרון: מאי 2025 · כל הזכויות שמורות © ליר צלם</p>
+          <p style="font-size:0.6875rem;color:var(--muted)">עדכון אחרון: מאי 2025 · כל הזכויות שמורות © ליר צלם</p>
         </div>
 
       </div><!-- /policy-body -->
@@ -1105,6 +1578,175 @@
         <button class="ck-decline" id="policy-close-only">סגור</button>
       </div>
     </div>
+  </div>
+
+  <!-- ══ תנאי שימוש ══ -->
+  <div id="terms-modal" class="legal-modal" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+    <div class="policy-box">
+      <div class="policy-header">
+        <h3 id="terms-title">תנאי <em>שימוש</em></h3>
+        <button class="policy-close terms-close" aria-label="סגור חלון תנאי שימוש">✕</button>
+      </div>
+      <div class="policy-body">
+        <div class="policy-section">
+          <h4>1 · קבלת התנאים</h4>
+          <p>השימוש באתר זה מהווה הסכמה מלאה לתנאי השימוש המפורטים להלן. אם אינך מסכים לתנאים אלה, אנא הפסק את השימוש באתר. ליר צלם שומר את הזכות לעדכן תנאים אלה בכל עת.</p>
+        </div>
+        <div class="policy-section">
+          <h4>2 · שימוש מותר</h4>
+          <ul>
+            <li>האתר מיועד לצפייה בתיק עבודות ויצירת קשר בלבד.</li>
+            <li>חל איסור להעתיק, לשכפל או לאחסן תכנים מהאתר ללא אישור כתוב מראש.</li>
+            <li>חל איסור לעשות שימוש מסחרי בכל תוכן שמופיע באתר.</li>
+            <li>חל איסור לנסות לחדור, לפגוע, או לשבש את פעילות האתר בכל אמצעי.</li>
+          </ul>
+        </div>
+        <div class="policy-section">
+          <h4>3 · קניין רוחני ותמונות</h4>
+          <p>כל התמונות, הלוגו, העיצוב והתכנים באתר הם רכושו הבלעדי של ליר צלם ומוגנים בזכויות יוצרים לפי חוק זכות יוצרים, התשס"ח–2007. הפרה תגרור הליכים משפטיים.</p>
+        </div>
+        <div class="policy-section">
+          <h4>4 · הגבלת אחריות</h4>
+          <p>האתר ניתן "כמות שהוא" (As Is). ליר צלם אינו אחראי לנזקים ישירים, עקיפים או תוצאתיים הנובעים מהשימוש באתר, לרבות שגיאות טכניות, הפסקות שירות, או קישורים לאתרי צד שלישי.</p>
+        </div>
+        <div class="policy-section">
+          <h4>5 · קישורים חיצוניים</h4>
+          <p>האתר מכיל קישורים לשירותי צד שלישי (Instagram, WhatsApp). שירותים אלה כפופים למדיניות הפרטיות ותנאי השימוש שלהם בנפרד. ליר צלם אינו אחראי על תוכנם.</p>
+        </div>
+        <div class="policy-section">
+          <h4>6 · דין וסמכות שיפוט</h4>
+          <p>תנאי שימוש אלה כפופים לדיני מדינת ישראל בלבד. סמכות השיפוט הבלעדית לכל מחלוקת תהיה לבתי המשפט המוסמכים במחוז תל אביב–יפו.</p>
+        </div>
+        <div class="policy-section" style="border-top:1px solid var(--border);padding-top:18px;margin-top:8px">
+          <p style="font-size:0.6875rem;color:var(--muted)">עדכון אחרון: מאי 2025 · ליר צלם © כל הזכויות שמורות</p>
+        </div>
+      </div>
+      <div class="policy-footer">
+        <button class="ck-accept terms-close">הבנתי ✓</button>
+        <button class="ck-decline terms-close">סגור</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ הצהרת נגישות ══ -->
+  <div id="access-modal" class="legal-modal" role="dialog" aria-modal="true" aria-labelledby="access-title">
+    <div class="policy-box">
+      <div class="policy-header">
+        <h3 id="access-title">הצהרת <em>נגישות</em></h3>
+        <button class="policy-close access-close" aria-label="סגור חלון הצהרת נגישות">✕</button>
+      </div>
+      <div class="policy-body">
+        <div class="policy-section">
+          <h4>1 · מחויבות לנגישות</h4>
+          <p>ליר צלם מחויב להנגיש את אתר האינטרנט לכלל הציבור, לרבות אנשים עם מוגבלויות, בהתאם לתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות) התשע"ג–2013 ותקן WCAG 2.1 ברמה AA.</p>
+        </div>
+        <div class="policy-section">
+          <h4>2 · תכונות נגישות מיושמות</h4>
+          <ul>
+            <li>טקסט חלופי (Alt Text) לכל התמונות.</li>
+            <li>מבנה כותרות היררכי תקין (H1, H2, H3).</li>
+            <li>ניווט מקלדת מלא עם מסגרת פוקוס ברורה.</li>
+            <li>תוויות ARIA לאלמנטים אינטראקטיביים.</li>
+            <li>כפתור "דלג לתוכן הראשי" בראש הדף.</li>
+            <li>תפריט נגישות צף — הגדלת/הקטנת גופן, ניגודיות גבוהה, הדגשת קישורים.</li>
+            <li>יחסי ניגודיות צבע עומדים בדרישות WCAG AA.</li>
+            <li>האתר עובד עם קוראי מסך (screen readers).</li>
+          </ul>
+        </div>
+        <div class="policy-section">
+          <h4>3 · מגבלות ידועות</h4>
+          <p>חלק מהתמונות הישנות עשויות לא לכלול תיאור מלא. אנו עובדים על שיפור מתמיד. חלק מהסרטונים בקישורים חיצוניים (Instagram) עשויים לא להיות מלווים בכתוביות.</p>
+        </div>
+        <div class="policy-section">
+          <h4>4 · פנייה בנושא נגישות</h4>
+          <p>נתקלתם בבעיית נגישות? נשמח לשמוע ולתקן בהקדם:</p>
+          <ul>
+            <li>WhatsApp: <a href="https://wa.me/972505527855" target="_blank" rel="noopener" style="color:var(--gold)">050-5527855</a></li>
+            <li>Instagram: <a href="https://www.instagram.com/lir.photographer/" target="_blank" rel="noopener" style="color:var(--gold)">@lir.photographer</a></li>
+          </ul>
+          <p style="margin-top:12px">נשתדל להשיב תוך 5 ימי עסקים.</p>
+        </div>
+        <div class="policy-section" style="border-top:1px solid var(--border);padding-top:18px;margin-top:8px">
+          <p style="font-size:0.6875rem;color:var(--muted)">הצהרה זו עודכנה לאחרונה: מאי 2025</p>
+        </div>
+      </div>
+      <div class="policy-footer">
+        <button class="ck-accept access-close">הבנתי ✓</button>
+        <button class="ck-decline access-close">סגור</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ מדיניות ביטולים ══ -->
+  <div id="cancel-modal" class="legal-modal" role="dialog" aria-modal="true" aria-labelledby="cancel-title">
+    <div class="policy-box">
+      <div class="policy-header">
+        <h3 id="cancel-title">מדיניות <em>ביטולים</em></h3>
+        <button class="policy-close cancel-close" aria-label="סגור חלון מדיניות ביטולים">✕</button>
+      </div>
+      <div class="policy-body">
+        <div class="policy-section">
+          <h4>1 · הזמנת צילום</h4>
+          <p>הזמנת סשן צילום מתבצעת דרך WhatsApp ומאושרת בכתב בלבד. ההזמנה נכנסת לתוקף לאחר אישור ותשלום מקדמה.</p>
+        </div>
+        <div class="policy-section">
+          <h4>2 · מדיניות ביטול</h4>
+          <ul>
+            <li><strong style="color:var(--light)">ביטול עד 7 ימים לפני הסשן</strong> — החזר מלא של המקדמה.</li>
+            <li><strong style="color:var(--light)">ביטול בין 3–7 ימים לפני הסשן</strong> — החזר של 50% מהמקדמה.</li>
+            <li><strong style="color:var(--light)">ביטול פחות מ-48 שעות לפני הסשן</strong> — המקדמה אינה מוחזרת.</li>
+            <li><strong style="color:var(--light)">אי-הגעה ללא הודעה</strong> — חיוב מלא בגין הסשן.</li>
+          </ul>
+        </div>
+        <div class="policy-section">
+          <h4>3 · דחיית מועד</h4>
+          <p>ניתן לדחות את מועד הסשן פעם אחת ללא עלות, בתנאי שהבקשה תוגש לפחות 48 שעות מראש. דחייה נוספת תחויב בדמי טיפול.</p>
+        </div>
+        <div class="policy-section">
+          <h4>4 · ביטול מצד הצלם</h4>
+          <p>במקרה של ביטול מצד ליר צלם (מחלה, תקלה טכנית, אירוע חירום), יוחזר התשלום במלואו ויוצע מועד חלופי ללא תוספת מחיר.</p>
+        </div>
+        <div class="policy-section">
+          <h4>5 · כוח עליון</h4>
+          <p>בנסיבות חריגות שאינן בשליטת הצדדים (מלחמה, נגיף, אסון טבע, אירוע ביטחוני) — ניתן יהיה לבטל או לדחות את הסשן ללא קנס.</p>
+        </div>
+        <div class="policy-section">
+          <h4>6 · אופן ביטול</h4>
+          <p>כל ביטול יש לבצע בהודעה כתובה ב-WhatsApp: <a href="https://wa.me/972505527855" target="_blank" rel="noopener" style="color:var(--gold)">050-5527855</a></p>
+        </div>
+        <div class="policy-section" style="border-top:1px solid var(--border);padding-top:18px;margin-top:8px">
+          <p style="font-size:0.6875rem;color:var(--muted)">מדיניות זו עודכנה: מאי 2025 · בהתאם לחוק הגנת הצרכן, התשמ"א–1981</p>
+        </div>
+      </div>
+      <div class="policy-footer">
+        <button class="ck-accept cancel-close">הבנתי ✓</button>
+        <button class="ck-decline cancel-close">סגור</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ כפתור נגישות ══ -->
+  <button id="a11y-btn" aria-label="פתח תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">
+    ♿
+  </button>
+  <div id="a11y-panel" role="region" aria-label="אפשרויות נגישות">
+    <div class="a11y-title">נגישות</div>
+    <div class="a11y-row">
+      <span class="a11y-label">גודל טקסט</span>
+      <div class="a11y-controls">
+        <button class="a11y-ctrl" id="a11y-size-dn" aria-label="הקטן טקסט">A-</button>
+        <button class="a11y-ctrl" id="a11y-size-up" aria-label="הגדל טקסט">A+</button>
+      </div>
+    </div>
+    <div class="a11y-row">
+      <label class="a11y-label" for="a11y-hc">ניגודיות גבוהה</label>
+      <button class="a11y-toggle" id="a11y-hc" role="switch" aria-checked="false" aria-label="הפעל ניגודיות גבוהה"></button>
+    </div>
+    <div class="a11y-row">
+      <label class="a11y-label" for="a11y-hl">הדגשת קישורים</label>
+      <button class="a11y-toggle" id="a11y-hl" role="switch" aria-checked="false" aria-label="הדגש קישורים"></button>
+    </div>
+    <button class="a11y-reset" id="a11y-reset">↺ אפס הכל</button>
   </div>
 
   <script>
@@ -1184,27 +1826,37 @@
 
   // Whitelist for filter values — prevents malicious data-f injection
   const ALLOWED_FILTERS = new Set(['all', 'football', 'general']);
+  const PREVIEW_COUNT   = 15;
+  let   showAll         = false;
+
+  const galMoreWrap = document.getElementById('gal-more-wrap');
+  const galMoreBtn  = document.getElementById('gal-more-btn');
+  const galMoreLabel= document.getElementById('gal-more-label');
+  const galMoreHint = document.getElementById('gal-more-hint');
+  const galTotal    = document.getElementById('gal-total');
 
   function buildGallery() {
     masonry.innerHTML = '';
     visible = curFilter === 'all' ? PHOTOS : PHOTOS.filter(p => p.cat === curFilter);
-    pcnt.textContent = visible.length;
-    visible.forEach((p, i) => {
-      // ── XSS fix: build DOM nodes instead of injecting raw HTML strings ──
-      const el   = document.createElement('div');
+
+    const toShow = showAll ? visible : visible.slice(0, PREVIEW_COUNT);
+    pcnt.textContent = toShow.length;
+
+    toShow.forEach((p, i) => {
+      const el = document.createElement('div');
       el.className = 'mi';
 
-      const img  = document.createElement('img');
-      img.src     = p.src;           // static gallery/ path — safe
-      img.alt     = p.alt;           // textContent-equivalent via .alt property
-      img.loading = 'lazy';
+      const img = document.createElement('img');
+      img.src     = p.src;
+      img.alt     = p.alt;
+      img.loading = i < 6 ? 'eager' : 'lazy';
 
-      const ov   = document.createElement('div');
+      const ov  = document.createElement('div');
       ov.className = 'mi-ov';
 
-      const cat  = document.createElement('span');
+      const cat = document.createElement('span');
       cat.className = 'mi-cat';
-      cat.textContent = CAT_HE[p.cat] || '';  // textContent escapes HTML
+      cat.textContent = CAT_HE[p.cat] || '';
 
       const plus = document.createElement('div');
       plus.className = 'mi-plus';
@@ -1215,10 +1867,37 @@
       el.appendChild(img);
       el.appendChild(ov);
 
+      // lightbox index maps to full visible array
+      const fullIdx = showAll ? i : i;
       el.addEventListener('click', () => openLB(i));
       masonry.appendChild(el);
     });
+
+    // Show/hide the "show more" button
+    if (visible.length <= PREVIEW_COUNT) {
+      galMoreWrap.classList.add('hidden');
+    } else {
+      galMoreWrap.classList.remove('hidden');
+      galTotal.textContent = visible.length;
+      if (showAll) {
+        galMoreLabel.textContent = 'הצג פחות';
+        galMoreHint.style.display = 'none';
+        galMoreBtn.querySelector('svg').style.transform = 'rotate(180deg)';
+      } else {
+        galMoreLabel.textContent = 'הצג את כל התמונות';
+        galMoreHint.style.display = '';
+        galMoreHint.innerHTML = `מציג ${PREVIEW_COUNT} מתוך <span id="gal-total">${visible.length}</span> תמונות`;
+        galMoreBtn.querySelector('svg').style.transform = '';
+      }
+    }
   }
+
+  galMoreBtn.addEventListener('click', () => {
+    showAll = !showAll;
+    buildGallery();
+    // scroll to gallery top when collapsing
+    if (!showAll) document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+  });
 
   // Lightbox
   function openLB(i) {
@@ -1249,10 +1928,11 @@
   document.querySelectorAll('.fbtn').forEach(b => {
     b.addEventListener('click', () => {
       const requested = b.dataset.f;
-      if (!ALLOWED_FILTERS.has(requested)) return;  // reject unknown filter
+      if (!ALLOWED_FILTERS.has(requested)) return;
       document.querySelectorAll('.fbtn').forEach(x => x.classList.remove('act'));
       b.classList.add('act');
       curFilter = requested;
+      showAll = false; // reset to preview on filter change
       buildGallery();
     });
   });
@@ -1322,6 +2002,106 @@
   }
   window.addEventListener('load',()=>setTimeout(hideLoader,2100));
   setTimeout(hideLoader,4000);
+
+  // ===== LEGAL MODALS =====
+  function openLegal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLegal(id) {
+    document.getElementById(id).classList.remove('open');
+    const anyOpen = ['lb','policy-modal','terms-modal','access-modal','cancel-modal']
+      .some(i => document.getElementById(i).classList.contains('open'));
+    if (!anyOpen) document.body.style.overflow = '';
+  }
+
+  // Footer open buttons
+  document.getElementById('open-privacy').addEventListener('click', () => openLegal('policy-modal'));
+  document.getElementById('open-terms').addEventListener('click',   () => openLegal('terms-modal'));
+  document.getElementById('open-access').addEventListener('click',  () => openLegal('access-modal'));
+  document.getElementById('open-cancel').addEventListener('click',  () => openLegal('cancel-modal'));
+
+  // Close buttons for each modal
+  document.querySelectorAll('.terms-close').forEach(b  => b.addEventListener('click', () => closeLegal('terms-modal')));
+  document.querySelectorAll('.access-close').forEach(b => b.addEventListener('click', () => closeLegal('access-modal')));
+  document.querySelectorAll('.cancel-close').forEach(b => b.addEventListener('click', () => closeLegal('cancel-modal')));
+
+  // Backdrop click + Escape for legal modals
+  ['terms-modal','access-modal','cancel-modal'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('click', e => { if (e.target === el) closeLegal(id); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && el.classList.contains('open')) closeLegal(id);
+    });
+  });
+
+  // ===== ACCESSIBILITY WIDGET =====
+  const a11yBtn   = document.getElementById('a11y-btn');
+  const a11yPanel = document.getElementById('a11y-panel');
+  let   fontSize  = 100;
+
+  a11yBtn.addEventListener('click', () => {
+    const isOpen = a11yPanel.classList.toggle('open');
+    a11yBtn.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Close on outside click
+  document.addEventListener('click', e => {
+    if (!a11yBtn.contains(e.target) && !a11yPanel.contains(e.target)) {
+      a11yPanel.classList.remove('open');
+      a11yBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Text size
+  function applyFontSize(pct) {
+    fontSize = pct;
+    document.documentElement.style.fontSize = pct + '%';
+    try { localStorage.setItem('a11y-fs', pct); } catch(_){}
+  }
+  document.getElementById('a11y-size-up').addEventListener('click', () => applyFontSize(Math.min(fontSize + 10, 150)));
+  document.getElementById('a11y-size-dn').addEventListener('click', () => applyFontSize(Math.max(fontSize - 10, 75)));
+
+  // High contrast toggle
+  const hcBtn = document.getElementById('a11y-hc');
+  hcBtn.addEventListener('click', () => {
+    const on = document.body.classList.toggle('hc-mode');
+    hcBtn.classList.toggle('on', on);
+    hcBtn.setAttribute('aria-checked', on);
+    try { localStorage.setItem('a11y-hc', on); } catch(_){}
+  });
+
+  // Highlight links toggle
+  const hlBtn = document.getElementById('a11y-hl');
+  hlBtn.addEventListener('click', () => {
+    const on = document.body.classList.toggle('hl-links');
+    hlBtn.classList.toggle('on', on);
+    hlBtn.setAttribute('aria-checked', on);
+    try { localStorage.setItem('a11y-hl', on); } catch(_){}
+  });
+
+  // Reset all
+  document.getElementById('a11y-reset').addEventListener('click', () => {
+    applyFontSize(100);
+    document.body.classList.remove('hc-mode','hl-links');
+    hcBtn.classList.remove('on'); hcBtn.setAttribute('aria-checked','false');
+    hlBtn.classList.remove('on'); hlBtn.setAttribute('aria-checked','false');
+    try { localStorage.removeItem('a11y-hc'); localStorage.removeItem('a11y-hl'); localStorage.removeItem('a11y-fs'); } catch(_){}
+  });
+
+  // Restore saved preferences
+  try {
+    const savedFs = parseInt(localStorage.getItem('a11y-fs'));
+    if (savedFs && savedFs !== 100) applyFontSize(savedFs);
+    if (localStorage.getItem('a11y-hc') === 'true') {
+      document.body.classList.add('hc-mode');
+      hcBtn.classList.add('on'); hcBtn.setAttribute('aria-checked','true');
+    }
+    if (localStorage.getItem('a11y-hl') === 'true') {
+      document.body.classList.add('hl-links');
+      hlBtn.classList.add('on'); hlBtn.setAttribute('aria-checked','true');
+    }
+  } catch(_){}
 
   // ===== IMAGE PROTECTION =====
   // Block right-click context menu on images (prevent easy "Save As")
@@ -1403,8 +2183,222 @@
     });
   });
 
+  // ===== BOOKING FORM =====
+
+  // ── תאריכים ושעות תפוסות (ערוך כאן לעדכון) ──────────────────
+  const BLOCKED_DATES = [
+    // 'YYYY-MM-DD'  ← הוסף תאריכים תפוסים כאן
+  ];
+  const BLOCKED_SLOTS = {
+    // 'YYYY-MM-DD': ['10:00','14:30']  ← שעות תפוסות לפי תאריך
+  };
+  // ─────────────────────────────────────────────────────────────
+
+  const MONTHS_HE = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני',
+                     'יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+  const TIME_FROM = 8, TIME_TO = 21, TIME_STEP = 30; // slots every 30 min
+
+  let calYear, calMonth, selDate = '', selTime = '';
+  const todayStr = new Date().toISOString().split('T')[0];
+
+  function dateKey(y, m, d) {
+    return `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+  }
+
+  // ── Calendar ────────────────────────────────────────────────
+  function buildCalendar(y, m) {
+    calYear = y; calMonth = m;
+    document.getElementById('cal-title').textContent = `${MONTHS_HE[m]} ${y}`;
+
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+
+    const first = new Date(y, m, 1).getDay(); // 0=Sun
+    // start from Sunday, Hebrew calendar columns: א(Sun)…ש(Sat)
+    for (let i = 0; i < first; i++) {
+      const emp = document.createElement('button');
+      emp.type = 'button'; emp.className = 'cal-day cal-day--empty'; emp.disabled = true;
+      grid.appendChild(emp);
+    }
+
+    const daysInMonth = new Date(y, m+1, 0).getDate();
+    for (let d = 1; d <= daysInMonth; d++) {
+      const key = dateKey(y, m, d);
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.textContent = d;
+      btn.className = 'cal-day';
+      btn.setAttribute('aria-label', `${d} ${MONTHS_HE[m]} ${y}`);
+
+      const isPast    = key < todayStr;
+      const isBlocked = BLOCKED_DATES.includes(key);
+      const isToday   = key === todayStr;
+      const isSel     = key === selDate;
+
+      if (isPast)       { btn.classList.add('cal-day--past'); btn.disabled = true; }
+      else if (isBlocked){ btn.classList.add('cal-day--blocked'); btn.disabled = true;
+                           btn.setAttribute('aria-label', btn.getAttribute('aria-label') + ' — תפוס'); }
+      else              { btn.addEventListener('click', () => selectDate(key)); }
+
+      if (isToday) btn.classList.add('cal-day--today');
+      if (isSel)   btn.classList.add('cal-day--selected');
+
+      grid.appendChild(btn);
+    }
+  }
+
+  function selectDate(key) {
+    selDate = key;
+    const [y, m, d] = key.split('-');
+    const display = `${parseInt(d)} ${MONTHS_HE[parseInt(m)-1]} ${y}`;
+    document.getElementById('date-display').textContent = display;
+    document.getElementById('date-display').classList.add('filled');
+    document.getElementById('book-date').value = key;
+    closeDatePicker();
+    buildCalendar(calYear, calMonth); // re-render to show selection
+    // Reset time if date changed
+    selTime = ''; document.getElementById('book-time').value = '';
+    document.getElementById('time-display').textContent = 'בחר שעה';
+    document.getElementById('time-display').classList.remove('filled');
+    updateSubmitState();
+  }
+
+  function openDatePicker() {
+    const popup = document.getElementById('date-popup');
+    const now   = new Date();
+    buildCalendar(calYear || now.getFullYear(), calMonth !== undefined ? calMonth : now.getMonth());
+    popup.hidden = false;
+    document.getElementById('date-trigger').setAttribute('aria-expanded','true');
+    closeTimePicker();
+  }
+  function closeDatePicker() {
+    document.getElementById('date-popup').hidden = true;
+    document.getElementById('date-trigger').setAttribute('aria-expanded','false');
+  }
+
+  document.getElementById('date-trigger').addEventListener('click', () => {
+    document.getElementById('date-popup').hidden ? openDatePicker() : closeDatePicker();
+  });
+  document.getElementById('cal-prev').addEventListener('click', () => {
+    calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+    buildCalendar(calYear, calMonth);
+  });
+  document.getElementById('cal-next').addEventListener('click', () => {
+    calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
+    buildCalendar(calYear, calMonth);
+  });
+
+  // ── Time Picker ─────────────────────────────────────────────
+  function buildTimeSlots() {
+    const container = document.getElementById('time-slots');
+    container.innerHTML = '';
+    const blocked = selDate && BLOCKED_SLOTS[selDate] ? BLOCKED_SLOTS[selDate] : [];
+
+    for (let h = TIME_FROM; h <= TIME_TO; h++) {
+      for (let m = 0; m < 60; m += TIME_STEP) {
+        if (h === TIME_TO && m > 0) break;
+        const hh  = String(h).padStart(2,'0');
+        const mm  = String(m).padStart(2,'0');
+        const val = `${hh}:${mm}`;
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.textContent = val;
+        btn.className = 'time-slot';
+        btn.setAttribute('role','option');
+        btn.setAttribute('aria-label', `שעה ${val}`);
+
+        if (blocked.includes(val)) {
+          btn.classList.add('time-slot--blocked');
+          btn.disabled = true;
+          btn.setAttribute('aria-disabled','true');
+        } else {
+          if (val === selTime) btn.classList.add('time-slot--selected');
+          btn.addEventListener('click', () => selectTime(val));
+        }
+        container.appendChild(btn);
+      }
+    }
+  }
+
+  function selectTime(val) {
+    selTime = val;
+    document.getElementById('book-time').value = val;
+    document.getElementById('time-display').textContent = val;
+    document.getElementById('time-display').classList.add('filled');
+    closeTimePicker();
+    updateSubmitState();
+  }
+
+  function openTimePicker() {
+    buildTimeSlots();
+    document.getElementById('time-popup').hidden = false;
+    document.getElementById('time-trigger').setAttribute('aria-expanded','true');
+    closeDatePicker();
+    // Scroll to selected slot
+    setTimeout(() => {
+      const sel = document.querySelector('.time-slot--selected');
+      if (sel) sel.scrollIntoView({ block: 'nearest' });
+    }, 50);
+  }
+  function closeTimePicker() {
+    document.getElementById('time-popup').hidden = true;
+    document.getElementById('time-trigger').setAttribute('aria-expanded','false');
+  }
+
+  document.getElementById('time-trigger').addEventListener('click', () => {
+    document.getElementById('time-popup').hidden ? openTimePicker() : closeTimePicker();
+  });
+
+  // Close pickers on outside click
+  document.addEventListener('click', e => {
+    if (!document.getElementById('date-picker-wrap').contains(e.target)) closeDatePicker();
+    if (!document.getElementById('time-picker-wrap').contains(e.target)) closeTimePicker();
+  });
+  // Close on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') { closeDatePicker(); closeTimePicker(); }
+  });
+
+  // ── Form Submit ─────────────────────────────────────────────
+  const bookForm    = document.getElementById('booking-form');
+  const bookPrivacy = document.getElementById('book-privacy');
+  const bookSubmit  = document.getElementById('book-submit');
+
+  function updateSubmitState() {
+    const hasDate = !!document.getElementById('book-date').value;
+    const hasTime = !!document.getElementById('book-time').value;
+    bookSubmit.disabled = !(bookPrivacy.checked && hasDate && hasTime);
+  }
+  bookPrivacy.addEventListener('change', updateSubmitState);
+
+  document.getElementById('book-open-privacy').addEventListener('click', () => openLegal('policy-modal'));
+  document.getElementById('book-open-terms').addEventListener('click',   () => openLegal('terms-modal'));
+
+  bookForm.addEventListener('submit', e => {
+    e.preventDefault();
+    const name     = document.getElementById('book-name').value.trim();
+    const type     = document.getElementById('book-type').value;
+    const dateVal  = document.getElementById('book-date').value;
+    const timeVal  = document.getElementById('book-time').value;
+    const location = document.getElementById('book-location').value.trim() || 'לא צוין';
+
+    if (!name || !type || !dateVal || !timeVal) return;
+
+    const [yr, mo, dy] = dateVal.split('-');
+    const dateHe = `${parseInt(dy)}/${parseInt(mo)}/${yr}`;
+
+    const msg =
+      `היי, קוראים לי ${name} ואני רוצה לקבוע צילום.\n\n` +
+      `סוג צילום: ${type}\n` +
+      `תאריך: ${dateHe}\n` +
+      `שעה: ${timeVal}\n` +
+      `מיקום: ${location}\n\n` +
+      `אשמח לשמוע פרטים נוספים 👍`;
+
+    window.open(`https://wa.me/972505527855?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
+  });
+
   // Init
   buildGallery();
   </script>
 </body>
 </html>
+
