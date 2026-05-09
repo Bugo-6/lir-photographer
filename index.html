@@ -928,6 +928,134 @@
       .ck-accept, .ck-decline { flex: 1; text-align: center; }
     }
 
+    /* ══════════════════════════════════════════
+       PREMIUM UPGRADES
+    ══════════════════════════════════════════ */
+
+    /* 1 — Custom scrollbar */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--black); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+
+    /* 2 — Noise grain (stronger) */
+    body::after { opacity: .045; }
+
+    /* 3 — Watermark ghost text on sections */
+    .section-wm {
+      position: absolute; pointer-events: none; user-select: none; z-index: 0;
+      font-family: var(--font-display); font-weight: 700; line-height: 1;
+      white-space: nowrap; letter-spacing: .06em;
+      color: rgba(255,255,255,.028);
+      font-size: 20vw; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+    /* 4 — Button shimmer */
+    .btn-gold, .btn-book, .nav-cta { position: relative; overflow: hidden; }
+    .btn-gold::after, .btn-book::after {
+      content: ''; position: absolute; top: 0; left: -120%;
+      width: 55%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transition: left .65s var(--ease); pointer-events: none;
+    }
+    .btn-gold:hover::after, .btn-book:hover:not(:disabled)::after { left: 160%; }
+
+    /* 5 — Eyebrow with leading line */
+    .eyebrow { display: flex; align-items: center; gap: 14px; }
+    .eyebrow::before {
+      content: ''; display: block; width: 36px; height: 1px;
+      background: var(--gold); flex-shrink: 0;
+    }
+
+    /* 6 — Gallery hover: more cinematic */
+    .mi img {
+      filter: brightness(.82) saturate(.7) contrast(1.08);
+      transition: transform .75s var(--ease), filter .6s;
+    }
+    .mi:hover img { transform: scale(1.09); filter: brightness(1.02) saturate(1.12) contrast(1.05); }
+    .mi-ov {
+      background: linear-gradient(to top, rgba(6,6,8,.88) 0%, rgba(6,6,8,.25) 55%, transparent 100%);
+    }
+    /* subtle left gold border on hover */
+    .mi::before {
+      content: ''; position: absolute; bottom: 0; right: 0;
+      width: 2px; height: 0; background: var(--gold);
+      transition: height .4s var(--ease); z-index: 3;
+    }
+    .mi:hover::before { height: 40%; }
+
+    /* 7 — Stats numbers gradient */
+    .wn-n {
+      font-size: 3.5rem;
+      background: linear-gradient(135deg, var(--gold) 30%, #f0d878 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    /* Stat label upgrade */
+    .wn-l { letter-spacing: .2em; text-transform: uppercase; font-size: 0.625rem; }
+
+    /* 8 — Cards: lift + gradient top border */
+    .wcard { transition: border-color .4s, background .4s, transform .45s var(--ease); }
+    .wcard:hover { transform: translateY(-6px); }
+    .wcard-big {
+      background: linear-gradient(135deg, var(--gold) 30%, #f0d878 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* 9 — Hero: deeper overlay + subtle vignette */
+    .hero-grad {
+      background: linear-gradient(118deg, rgba(6,6,8,.96) 0%, rgba(6,6,8,.38) 58%, rgba(6,6,8,.72) 100%);
+    }
+    /* thin gold line at bottom of hero */
+    #hero::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, var(--gold), transparent 60%);
+      z-index: 3;
+    }
+
+    /* 10 — About badge premium */
+    .about-badge {
+      background: linear-gradient(135deg, #dfc05e 0%, var(--gold) 60%);
+      box-shadow: 0 10px 40px rgba(201,168,76,.4), 0 0 0 1px rgba(201,168,76,.2);
+    }
+    .about-badge-n {
+      background: linear-gradient(135deg, #222 0%, var(--black) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* 11 — Section title underline accent */
+    .stitle { position: relative; }
+
+    /* 12 — Loader: more cinematic */
+    .loader-sub { letter-spacing: .3em; }
+
+    /* 13 — Why bigquote premium */
+    .why-bigq p {
+      text-shadow: 0 4px 60px rgba(201,168,76,.08);
+    }
+
+    /* 14 — CTA heading shadow */
+    .cta-h { text-shadow: 0 6px 50px rgba(0,0,0,.6); }
+
+    /* 15 — Nav: thinner more refined */
+    .nav-links a { letter-spacing: .08em; font-size: 0.8125rem; }
+
+    /* 16 — Ticker: refined */
+    .ticker-bar { padding: 11px 0; }
+    .tick-item { letter-spacing: .25em; font-size: 0.625rem; }
+
+    /* 17 — Pull quote italic */
+    .why-pull { letter-spacing: -.01em; }
+
+    /* 18 — Footer logo refined */
+    .flogo { letter-spacing: .22em; }
+
+    /* ══════════════════════════════════════════ */
+
     /* ===== SKIP LINK ===== */
     .skip-link {
       position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
@@ -1211,7 +1339,8 @@
   </div>
 
   <!-- Gallery -->
-  <section id="gallery" aria-label="גלריית עבודות"><span id="main-content" style="position:absolute;top:-80px"></span>
+  <section id="gallery" aria-label="גלריית עבודות" style="position:relative;overflow:hidden">
+    <span class="section-wm" aria-hidden="true">GALLERY</span><span id="main-content" style="position:absolute;top:-80px"></span>
     <div class="gal-head">
       <div>
         <div class="eyebrow reveal">— פורטפוליו</div>
@@ -1311,7 +1440,8 @@
   </section>
 
   <!-- About -->
-  <section id="about">
+  <section id="about" style="position:relative;overflow:hidden">
+    <span class="section-wm" aria-hidden="true">LIR</span>
     <div class="about-img-wrap reveal">
       <img class="about-img" src="gallery/lir_06.jpg" alt="ליר צלם" />
       <div class="about-badge">
