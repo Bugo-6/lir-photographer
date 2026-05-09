@@ -1061,6 +1061,80 @@
 
     /* ══════════════════════════════════════════ */
 
+    /* ===== SCROLL PROGRESS BAR ===== */
+    #scroll-bar {
+      position: fixed; top: 0; left: 0; z-index: 99999;
+      height: 2px; width: 0%;
+      background: linear-gradient(90deg, var(--gold), #f5e070, var(--gold));
+      background-size: 200% 100%;
+      transition: width .1s linear;
+      animation: shimmerBar 2.5s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmerBar {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ===== HERO BOKEH ===== */
+    .bokeh { position: absolute; border-radius: 50%; pointer-events: none; z-index: 1; }
+    .bokeh-1 {
+      width: 280px; height: 280px; top: 15%; right: 18%;
+      background: radial-gradient(circle, rgba(201,168,76,.12) 0%, transparent 70%);
+      filter: blur(40px);
+      animation: bokehDrift 9s ease-in-out infinite;
+    }
+    .bokeh-2 {
+      width: 180px; height: 180px; top: 55%; right: 35%;
+      background: radial-gradient(circle, rgba(201,168,76,.08) 0%, transparent 70%);
+      filter: blur(30px);
+      animation: bokehDrift 13s ease-in-out infinite reverse;
+    }
+    .bokeh-3 {
+      width: 120px; height: 120px; top: 30%; right: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,.05) 0%, transparent 70%);
+      filter: blur(20px);
+      animation: bokehDrift 7s ease-in-out infinite 2s;
+    }
+    @keyframes bokehDrift {
+      0%,100% { transform: translate(0, 0) scale(1); opacity: .7; }
+      33%      { transform: translate(-18px, -22px) scale(1.08); opacity: 1; }
+      66%      { transform: translate(14px, -10px) scale(.94); opacity: .6; }
+    }
+
+    /* ===== 3D TILT ===== */
+    .mi {
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    /* Gallery items smooth reset */
+    .mi.tilt-reset {
+      transition: transform .6s var(--ease) !important;
+    }
+
+    /* ===== MAGNETIC BUTTONS ===== */
+    .btn-gold, .btn-book, .nav-cta {
+      transition: background .3s, color .3s, transform .3s var(--ease),
+                  box-shadow .3s, filter .3s !important;
+    }
+
+    /* ===== COUNTER RING (hero) ===== */
+    .hero-counter {
+      position: absolute; bottom: 36px; right: 52px; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      opacity: 0; animation: hin .6s 3.2s var(--ease) forwards;
+    }
+    .hero-counter-num {
+      font-family: var(--font-display); font-size: 2.75rem;
+      font-weight: 300; color: var(--gold); line-height: 1;
+    }
+    .hero-counter-label {
+      font-family: var(--font-ui); font-size: 0.625rem;
+      letter-spacing: .22em; color: rgba(232,232,240,.4);
+      text-transform: uppercase;
+    }
+    @media(max-width:900px){ .hero-counter { display: none; } }
+
     /* ===== SKIP LINK ===== */
     .skip-link {
       position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
@@ -1259,6 +1333,7 @@
 </head>
 <body class="loading">
 
+  <div id="scroll-bar" aria-hidden="true"></div>
   <a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
 
   <div id="cursor-dot"></div>
@@ -1301,6 +1376,10 @@
     <div class="hero-bg"></div>
     <div class="hero-grad"></div>
     <div class="hero-grad-btm"></div>
+    <!-- Bokeh -->
+    <div class="bokeh bokeh-1" aria-hidden="true"></div>
+    <div class="bokeh bokeh-2" aria-hidden="true"></div>
+    <div class="bokeh bokeh-3" aria-hidden="true"></div>
     <div class="hero-content">
       <div class="hero-tag">ישראל · צילום ספורט ואקשן</div>
       <h1 class="hero-h1">Lir<br /><em>Photographer</em></h1>
@@ -1318,6 +1397,11 @@
     <div class="hero-scroll">
       <span class="scroll-txt">גלול</span>
       <div class="scroll-line"></div>
+    </div>
+    <!-- Counter -->
+    <div class="hero-counter" aria-hidden="true">
+      <span class="hero-counter-num">50</span>
+      <span class="hero-counter-label">תמונות</span>
     </div>
   </section>
 
@@ -2124,11 +2208,59 @@
   },{threshold:.5});
   document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
-  // Parallax
-  window.addEventListener('scroll',()=>{
-    const bg=document.querySelector('.hero-bg');
-    if(bg) bg.style.transform=`translateY(${pageYOffset*.3}px)`;
-  },{passive:true});
+  // Parallax + Scroll Progress Bar
+  const scrollBar = document.getElementById('scroll-bar');
+  window.addEventListener('scroll', () => {
+    const bg = document.querySelector('.hero-bg');
+    if (bg) bg.style.transform = `translateY(${pageYOffset * .3}px)`;
+    // Progress bar
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    scrollBar.style.width = (pageYOffset / total * 100) + '%';
+  }, {passive: true});
+
+  // ===== 3D TILT ON GALLERY CARDS =====
+  function applyTilt(card) {
+    card.addEventListener('mousemove', e => {
+      const r   = card.getBoundingClientRect();
+      const x   = e.clientX - r.left;
+      const y   = e.clientY - r.top;
+      const cx  = r.width  / 2;
+      const cy  = r.height / 2;
+      const rX  = (y - cy) / cy * -7;
+      const rY  = (x - cx) / cx *  7;
+      card.style.transform =
+        `perspective(700px) rotateX(${rX}deg) rotateY(${rY}deg) scale3d(1.04,1.04,1.04)`;
+      card.style.transition = 'transform .1s linear';
+      card.style.zIndex = '10';
+    });
+    card.addEventListener('mouseleave', () => {
+      card.classList.add('tilt-reset');
+      card.style.transform = '';
+      card.style.zIndex    = '';
+      setTimeout(() => card.classList.remove('tilt-reset'), 600);
+    });
+  }
+
+  // Apply tilt to existing + future gallery items
+  const tiltObserver = new MutationObserver(mutations => {
+    mutations.forEach(m => m.addedNodes.forEach(n => {
+      if (n.classList && n.classList.contains('mi')) applyTilt(n);
+    }));
+  });
+  tiltObserver.observe(document.getElementById('masonry'), { childList: true });
+
+  // ===== MAGNETIC BUTTONS =====
+  document.querySelectorAll('.btn-gold, .btn-book, .nav-cta').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+      const r = btn.getBoundingClientRect();
+      const x = (e.clientX - r.left - r.width  / 2) * .18;
+      const y = (e.clientY - r.top  - r.height / 2) * .18;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = '';
+    });
+  });
 
   // Loader
   function hideLoader(){
@@ -2533,6 +2665,8 @@
 
   // Init
   buildGallery();
+  // Apply tilt to initial gallery items
+  document.querySelectorAll('.mi').forEach(applyTilt);
   </script>
 </body>
 </html>
