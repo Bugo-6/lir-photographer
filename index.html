@@ -1257,6 +1257,13 @@
     .lens-rotator {
       width: 100%; height: 100%;
       position: relative;
+      transform-style: preserve-3d;
+      transition: transform .08s linear;
+      animation: lensFloat 6s ease-in-out infinite;
+    }
+    @keyframes lensFloat {
+      0%,100% { transform: translateY(0px) rotate3d(1,0,0,2deg); }
+      50%      { transform: translateY(-18px) rotate3d(1,0,0,-2deg); }
     }
     /* Camera photo — no background, transparent PNG */
     .lens-photo {
@@ -2907,13 +2914,31 @@
     const section   = document.getElementById('lens-reveal');
     if (!section) return;
 
-    const statsRow = document.getElementById('lens-stats');
-    const eyebrow  = document.getElementById('lens-eyebrow');
+    const statsRow    = document.getElementById('lens-stats');
+    const eyebrow     = document.getElementById('lens-eyebrow');
+    const lensRotator = document.getElementById('lens-rotator');
 
     function update(p) {
       if (p > 0.04) eyebrow.classList.add('vis');
       if (p > 0.5)  statsRow.classList.add('vis');
       else          statsRow.classList.remove('vis');
+    }
+
+    /* Subtle mouse-tilt on the lens (pauses float animation while tilting) */
+    const lensWrap = document.querySelector('.lens-3d-wrap');
+    if (lensWrap) {
+      lensWrap.addEventListener('mousemove', e => {
+        const r  = lensWrap.getBoundingClientRect();
+        const rx = ((e.clientY - r.top  - r.height/2) / (r.height/2)) * -10;
+        const ry = ((e.clientX - r.left - r.width /2) / (r.width /2)) *  12;
+        lensRotator.style.animation = 'none';
+        lensRotator.style.transform =
+          `perspective(800px) rotateX(${rx.toFixed(1)}deg) rotateY(${ry.toFixed(1)}deg)`;
+      });
+      lensWrap.addEventListener('mouseleave', () => {
+        lensRotator.style.transform = '';
+        lensRotator.style.animation = '';
+      });
     }
 
     /* ---- scroll driver (rAF-throttled) ---- */
