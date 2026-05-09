@@ -1230,65 +1230,6 @@
     }
 
     /* ===== LENS IRIS REVEAL ===== */
-    #lens-reveal {
-      background: var(--black); padding: 100px 0;
-    }
-    .lens-sticky {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 24px;
-    }
-    .lens-eyebrow-label {
-      font-family: 'Outfit', var(--font-ui); font-size: 0.6rem;
-      letter-spacing: .32em; color: rgba(201,168,76,.55);
-      text-transform: uppercase;
-    }
-    /* 3D lens container — holds perspective */
-    .lens-3d-wrap {
-      width: min(440px, 84vw); height: min(440px, 84vw);
-      position: relative;
-      perspective: 900px;
-    }
-    .lens-rotator {
-      width: 100%; height: 100%;
-      position: relative;
-      transform-style: preserve-3d;
-      transition: transform .08s linear;
-      animation: lensFloat 6s ease-in-out infinite;
-    }
-    @keyframes lensFloat {
-      0%,100% { transform: translateY(0px) rotate3d(1,0,0,2deg); }
-      50%      { transform: translateY(-18px) rotate3d(1,0,0,-2deg); }
-    }
-    /* Camera photo — no background, transparent PNG */
-    .lens-photo {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      object-fit: contain;
-      backface-visibility: hidden;
-      filter: drop-shadow(0 30px 60px rgba(0,0,0,.9))
-              drop-shadow(0 8px 20px rgba(0,0,0,.7));
-    }
-    .lens-stats-row {
-      display: flex; gap: 40px; align-items: center;
-    }
-    .lx-stat { text-align: center; }
-    .lx-num {
-      font-family: var(--font-display); font-size: 2rem;
-      font-weight: 300; color: var(--gold); line-height: 1;
-      letter-spacing: -.02em;
-    }
-    .lx-lbl {
-      font-family: 'Outfit', var(--font-ui); font-size: 0.6rem;
-      letter-spacing: .2em; color: var(--muted); margin-top: 5px;
-      text-transform: uppercase;
-    }
-    .lx-sep { width: 1px; height: 32px; background: var(--border); }
-    @media(max-width:600px){
-      #lens-reveal { height: 220vh; }
-      .lens-stats-row { gap: 20px; }
-      .lx-num { font-size: 1.5rem; }
-    }
 
     /* ===== COUNTER RING (hero) ===== */
     .hero-counter {
@@ -1605,40 +1546,6 @@
       <span class="tick-item">טורנירים</span><span class="tick-dot"></span>
     </div>
   </div>
-
-  <!-- Lens Iris Reveal -->
-  <section id="lens-reveal" aria-label="הציוד — Canon 400mm">
-    <div class="lens-sticky">
-      <div class="lens-eyebrow-label" id="lens-eyebrow">CANON EF 400mm f/2.8L IS III</div>
-
-      <div class="lens-3d-wrap">
-        <div class="lens-rotator" id="lens-rotator">
-
-          <!-- The actual Canon photo — clips to iris shape via JS clip-path -->
-          <img class="lens-photo" id="lens-photo"
-               src="canon.png" alt="Canon RF 400mm f/2.8" />
-
-        </div>
-      </div>
-
-      <div class="lens-stats-row" id="lens-stats">
-        <div class="lx-stat">
-          <div class="lx-num">5+</div>
-          <div class="lx-lbl">שנות ניסיון</div>
-        </div>
-        <div class="lx-sep"></div>
-        <div class="lx-stat">
-          <div class="lx-num">800+</div>
-          <div class="lx-lbl">משחקים</div>
-        </div>
-        <div class="lx-sep"></div>
-        <div class="lx-stat">
-          <div class="lx-num">400mm</div>
-          <div class="lx-lbl">Canon f/2.8</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Gallery -->
   <section id="gallery" aria-label="גלריית עבודות" style="position:relative;overflow:hidden">
@@ -2901,24 +2808,6 @@
   // Apply tilt to initial gallery items
   document.querySelectorAll('.mi').forEach(applyTilt);
 
-  /* ===== LENS MOUSE TILT ===== */
-  (function(){
-    const lensWrap    = document.querySelector('.lens-3d-wrap');
-    const lensRotator = document.getElementById('lens-rotator');
-    if (!lensWrap || !lensRotator) return;
-    lensWrap.addEventListener('mousemove', e => {
-      const r  = lensWrap.getBoundingClientRect();
-      const rx = ((e.clientY - r.top  - r.height/2) / (r.height/2)) * -10;
-      const ry = ((e.clientX - r.left - r.width /2) / (r.width /2)) *  12;
-      lensRotator.style.animation = 'none';
-      lensRotator.style.transform =
-        `perspective(800px) rotateX(${rx.toFixed(1)}deg) rotateY(${ry.toFixed(1)}deg)`;
-    });
-    lensWrap.addEventListener('mouseleave', () => {
-      lensRotator.style.transform = '';
-      lensRotator.style.animation = '';
-    });
-  })();
 
   /* ===== HERO VIDEO BACKGROUND ===== */
   (function(){
