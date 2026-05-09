@@ -1248,15 +1248,37 @@
       transition: opacity .8s var(--ease), transform .8s var(--ease);
     }
     .lens-eyebrow-label.vis { opacity: 1; transform: translateY(0); }
-    .lens-svg-wrap {
-      width: min(440px, 84vw); height: min(440px, 84vw); position: relative;
+    /* 3D lens container — holds perspective */
+    .lens-3d-wrap {
+      width: min(440px, 84vw); height: min(440px, 84vw);
+      position: relative;
+      perspective: 900px;
+    }
+    /* The rotating disc — photo + SVG rings spin together in 3D */
+    .lens-rotator {
+      width: 100%; height: 100%;
+      position: relative;
       transform-style: preserve-3d;
       will-change: transform;
-      /* initial shadow depth */
-      filter: drop-shadow(0 40px 80px rgba(0,0,0,.9))
-              drop-shadow(0 0 40px rgba(201,168,76,.08));
+      filter: drop-shadow(0 50px 90px rgba(0,0,0,.95))
+              drop-shadow(-20px 0 40px rgba(201,168,76,.06));
     }
-    .lens-aperture-svg { width: 100%; height: 100%; }
+    /* The actual camera photo — clips to iris shape */
+    .lens-photo {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      will-change: clip-path;
+      clip-path: polygon(50% 50%);   /* starts as a dot */
+      backface-visibility: hidden;
+    }
+    /* Decorative SVG rings / ticks on top */
+    .lens-deco-svg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; overflow: visible;
+    }
     .lens-stats-row {
       display: flex; gap: 40px; align-items: center;
       opacity: 0; transform: translateY(14px);
@@ -1602,85 +1624,70 @@
     <div class="lens-sticky">
       <div class="lens-eyebrow-label" id="lens-eyebrow">CANON EF 400mm f/2.8L IS III</div>
 
-      <div class="lens-svg-wrap">
-        <svg class="lens-aperture-svg" viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <!-- Iris clip — reveals camera photo -->
-            <clipPath id="iris-clip">
-              <path id="iris-clip-path" d="M 0 0 Z"/>
-            </clipPath>
-            <!-- Vignette over photo -->
-            <radialGradient id="photo-vig" cx="50%" cy="50%" r="50%">
-              <stop offset="30%"  stop-color="#060608" stop-opacity="0"/>
-              <stop offset="100%" stop-color="#060608" stop-opacity="0.82"/>
-            </radialGradient>
-            <!-- Gold glow -->
-            <radialGradient id="lns-glow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%"   stop-color="#c9a84c" stop-opacity="0.14"/>
-              <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
-            </radialGradient>
-            <!-- Glare highlight gradient -->
-            <radialGradient id="glare-grad" cx="30%" cy="30%" r="60%">
-              <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.22"/>
-              <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
-            </radialGradient>
-            <!-- Edge light (3D rim) -->
-            <radialGradient id="rim-grad" cx="10%" cy="50%" r="80%">
-              <stop offset="0%"   stop-color="#c9a84c" stop-opacity="0.3"/>
-              <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
-            </radialGradient>
-            <filter id="glare-blur">
-              <feGaussianBlur stdDeviation="8"/>
-            </filter>
-          </defs>
+      <div class="lens-3d-wrap">
+        <div class="lens-rotator" id="lens-rotator">
 
-          <!-- Lens dark body (always visible) -->
-          <circle r="192" fill="#060608"/>
-          <circle r="170" fill="#090909"/>
+          <!-- The actual Canon photo — clips to iris shape via JS clip-path -->
+          <img class="lens-photo" id="lens-photo"
+               src="canon.jpg" alt="Canon RF 400mm f/2.8" />
 
-          <!-- Canon 400mm photo — revealed through iris clip -->
-          <image id="camera-photo" href="canon.jpg"
-                 x="-170" y="-170" width="340" height="340"
-                 preserveAspectRatio="xMidYMid slice"
-                 clip-path="url(#iris-clip)"/>
+          <!-- Decorative SVG layer on top (rotates with the disc) -->
+          <svg class="lens-deco-svg" viewBox="-200 -200 400 400" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="photo-vig" cx="50%" cy="50%" r="50%">
+                <stop offset="35%"  stop-color="#060608" stop-opacity="0"/>
+                <stop offset="100%" stop-color="#060608" stop-opacity="0.78"/>
+              </radialGradient>
+              <radialGradient id="lns-glow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"   stop-color="#c9a84c" stop-opacity="0.16"/>
+                <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="glare-grad" cx="30%" cy="25%" r="55%">
+                <stop offset="0%"   stop-color="#ffffff" stop-opacity="0.25"/>
+                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="rim-grad" cx="5%" cy="50%" r="90%">
+                <stop offset="0%"   stop-color="#c9a84c" stop-opacity="0.35"/>
+                <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+              </radialGradient>
+              <filter id="glare-blur"><feGaussianBlur stdDeviation="9"/></filter>
+            </defs>
 
-          <!-- Vignette on photo -->
-          <circle r="170" fill="url(#photo-vig)" clip-path="url(#iris-clip)"/>
+            <!-- Dark lens body -->
+            <circle r="192" fill="#060608"/>
+            <circle r="170" fill="#0a0a0a" id="lens-dark-bg"/>
 
-          <!-- Gold tint on photo -->
-          <circle r="170" fill="rgba(201,168,76,0.07)" clip-path="url(#iris-clip)"/>
+            <!-- Glow in center (iris open) -->
+            <circle id="lns-glow" r="154" fill="url(#lns-glow)" opacity="0"/>
 
-          <!-- Glow -->
-          <circle id="lns-glow" r="154" fill="url(#lns-glow)" opacity="0"/>
+            <!-- Rings -->
+            <circle r="170" fill="none" stroke="#1c1c22" stroke-width="1"/>
+            <circle r="181" fill="none" stroke="#2a2a32" stroke-width="0.75"/>
+            <circle r="191" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
 
-          <!-- Decorative rings (always on top) -->
-          <circle r="170" fill="none" stroke="#1c1c22" stroke-width="1"/>
-          <circle r="181" fill="none" stroke="#2a2a32" stroke-width="0.75"/>
-          <circle r="191" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+            <!-- Tick marks -->
+            <g id="lns-ticks"></g>
+            <!-- f-stop labels -->
+            <g id="lns-fstops" font-family="Outfit,sans-serif" font-size="7.5"
+               fill="#444455" text-anchor="middle" dominant-baseline="middle"></g>
 
-          <!-- Tick marks -->
-          <g id="lns-ticks"></g>
+            <!-- Iris gold ring (follows opening) -->
+            <circle id="iris-ring" r="0" fill="none" stroke="#c9a84c"
+                    stroke-width="0.75" opacity="0"/>
 
-          <!-- f-stop labels -->
-          <g id="lns-fstops" font-family="Outfit,sans-serif" font-size="7.5"
-             fill="#444455" text-anchor="middle" dominant-baseline="middle"></g>
+            <!-- Center dot -->
+            <circle id="lns-dot" r="4.5" fill="#c9a84c" opacity="0.5"/>
 
-          <!-- Iris gold ring -->
-          <circle id="iris-ring" r="0" fill="none" stroke="#c9a84c"
-                  stroke-width="0.75" opacity="0"/>
+            <!-- 3D rim light — left edge glow when angled -->
+            <ellipse id="rim-light" cx="-168" cy="0" rx="28" ry="168"
+                     fill="url(#rim-grad)" opacity="0"/>
 
-          <!-- Center dot (hides as iris opens) -->
-          <circle id="lns-dot" r="4.5" fill="#c9a84c" opacity="0.5"/>
-
-          <!-- 3D rim light (left edge, fades as lens rotates to face-on) -->
-          <ellipse id="rim-light" cx="-170" cy="0" rx="30" ry="170"
-                   fill="url(#rim-grad)" opacity="0"/>
-
-          <!-- Glare highlight (top-left, fades as lens faces forward) -->
-          <ellipse id="lens-glare" cx="-55" cy="-70" rx="70" ry="45"
-                   fill="url(#glare-grad)" opacity="0"
-                   filter="url(#glare-blur)" transform="rotate(-25,-55,-70)"/>
-        </svg>
+            <!-- Glare highlight — top-left when angled -->
+            <ellipse id="lens-glare" cx="-50" cy="-65" rx="65" ry="42"
+                     fill="url(#glare-grad)" opacity="0"
+                     filter="url(#glare-blur)" transform="rotate(-25,-50,-65)"/>
+          </svg>
+        </div>
       </div>
 
       <div class="lens-stats-row" id="lens-stats">
@@ -2968,15 +2975,16 @@
     const section   = document.getElementById('lens-reveal');
     if (!section) return;
 
-    const irisClipPath = document.getElementById('iris-clip-path');
+    const lensRotator  = document.getElementById('lens-rotator');
+    const lensPhoto    = document.getElementById('lens-photo');
     const irisRing     = document.getElementById('iris-ring');
     const lnsGlow      = document.getElementById('lns-glow');
     const lnsDot       = document.getElementById('lns-dot');
+    const lnsDarkBg    = document.getElementById('lens-dark-bg');
     const statsRow     = document.getElementById('lens-stats');
     const eyebrow      = document.getElementById('lens-eyebrow');
     const ticksGrp     = document.getElementById('lns-ticks');
     const fstopsGrp    = document.getElementById('lns-fstops');
-    const lensWrap     = document.querySelector('.lens-svg-wrap');
     const rimLight     = document.getElementById('rim-light');
     const lensGlare    = document.getElementById('lens-glare');
 
@@ -3011,61 +3019,67 @@
       fstopsGrp.appendChild(txt);
     });
 
-    /* ---- iris path — star polygon that opens into a circle ---- */
-    function irisPath(p) {
-      const NP     = 12;          // 6 blades × 2 points each
-      const outerR = 6 + p * 164; // 6 → 170 (fills lens at p=1)
-      const innerR = p * 165;     // 0 → 165 (converges with outer → circle)
-      const rot    = p * 32;      // slight rotation as it opens
-      let d = '';
+    /* ---- CSS clip-path iris (% coords, 0-100% on the photo element) ---- */
+    function irisCSS(p) {
+      const NP     = 12;
+      const outerR = 4  + p * 196;   // SVG units: 4 → 200 (fills element)
+      const innerR = p  * 192;
+      const rot    = p  * 32;
+      const pts    = [];
       for (let i = 0; i < NP; i++) {
         const deg = (i / NP) * 360 + rot - 90;
         const rad = deg * Math.PI / 180;
         const r   = (i % 2 === 0) ? outerR : innerR;
-        d += (i === 0 ? 'M ' : ' L ') +
-             (r * Math.cos(rad)).toFixed(2) + ' ' +
-             (r * Math.sin(rad)).toFixed(2);
+        // Convert SVG -200..200 → CSS 0%..100%
+        const cx  = ((r * Math.cos(rad) + 200) / 400 * 100).toFixed(2);
+        const cy  = ((r * Math.sin(rad) + 200) / 400 * 100).toFixed(2);
+        pts.push(`${cx}% ${cy}%`);
       }
-      return d + ' Z';
+      return `polygon(${pts.join(',')})`;
     }
 
-    /* ---- easing helpers ---- */
+    /* ---- easing ---- */
     const easeOut3 = t => 1 - Math.pow(1 - t, 3);
     const clamp    = (v, a, b) => Math.max(a, Math.min(b, v));
 
-    /* ---- update all elements ---- */
+    /* ---- update ---- */
     function update(p) {
-      /* === PHASE 1 (0 → 0.35): 3D rotation — lens flies in from angle === */
-      const r3d  = clamp((p) / 0.35, 0, 1);
-      const e3d  = easeOut3(r3d);             // ease-out cubic
-      const rotY = 58 * (1 - e3d);            // 58° → 0°
-      const rotX = -16 * (1 - e3d);           // -16° → 0° (slight tilt)
-      const sc   = 0.62 + e3d * 0.38;         // 0.62 → 1.0
 
-      lensWrap.style.transform =
-        `rotateY(${rotY.toFixed(2)}deg) rotateX(${rotX.toFixed(2)}deg) scale(${sc.toFixed(3)})`;
+      /* PHASE 1 (0 → 0.36): Real 3D rotation of the whole lens disc */
+      const r3d = clamp(p / 0.36, 0, 1);
+      const e3d = easeOut3(r3d);
+      const rotY = 62  * (1 - e3d);    // 62° side → 0° face-on
+      const rotX = -18 * (1 - e3d);    // slight tilt
+      const sc   = 0.6 + e3d * 0.4;   // scale up as it faces us
 
-      // Rim light: bright on the left edge when angled, fades as it faces us
-      rimLight.setAttribute('opacity',   ((1 - e3d) * 0.7).toFixed(2));
+      // Apply 3D transform to the ROTATOR (photo + svg rings spin together)
+      lensRotator.style.transform =
+        `perspective(900px) rotateY(${rotY.toFixed(1)}deg) rotateX(${rotX.toFixed(1)}deg) scale(${sc.toFixed(3)})`;
 
-      // Glare: visible when angled, disappears facing forward
-      lensGlare.setAttribute('opacity',  ((1 - e3d) * 0.85).toFixed(2));
-      // Move glare toward center as rotation completes
-      lensGlare.setAttribute('cx', (-55 + e3d * 20).toFixed(1));
+      // Rim light (left edge glow when angled)
+      rimLight.setAttribute('opacity',  ((1 - e3d) * 0.75).toFixed(2));
+      // Glare (top-left specular when angled)
+      lensGlare.setAttribute('opacity', ((1 - e3d) * 0.9).toFixed(2));
+      lensGlare.setAttribute('cx',      (-50 + e3d * 18).toFixed(1));
 
-      /* === PHASE 2 (0.32 → 0.86): iris opens === */
-      if (p > 0.05) eyebrow.classList.add('vis');
-      const ip = clamp((p - 0.32) / 0.54, 0, 1);
+      /* PHASE 2 (0.30 → 0.87): iris opens → reveals camera photo */
+      if (p > 0.04) eyebrow.classList.add('vis');
+      const ip = clamp((p - 0.30) / 0.57, 0, 1);
 
-      irisClipPath.setAttribute('d', irisPath(ip));
-      const rr = 6 + ip * 164;
-      irisRing.setAttribute('r',       rr.toFixed(1));
-      irisRing.setAttribute('opacity', (ip * 0.5).toFixed(2));
-      lnsGlow.setAttribute('opacity',  (ip * 0.8).toFixed(2));
+      // CSS clip-path on the HTML <img> — 3D disc with iris cutout
+      lensPhoto.style.clipPath = irisCSS(ip);
+
+      // Dark bg fades out as photo is revealed
+      lnsDarkBg.setAttribute('opacity', (1 - ip * 0.95).toFixed(2));
+
+      const rr = 4 + ip * 196;
+      irisRing.setAttribute('r',       Math.min(rr, 170).toFixed(1));
+      irisRing.setAttribute('opacity', (ip * 0.45).toFixed(2));
+      lnsGlow.setAttribute('opacity',  (ip * 0.75).toFixed(2));
       lnsDot.setAttribute('opacity',   Math.max(0, 0.5 - ip * 0.7).toFixed(2));
 
-      /* === PHASE 3 (0.86 → 1): stats fade in === */
-      if (clamp((p - 0.86) / 0.14, 0, 1) > 0.05) statsRow.classList.add('vis');
+      /* PHASE 3 (0.87 → 1): stats */
+      if (clamp((p - 0.87) / 0.13, 0, 1) > 0.05) statsRow.classList.add('vis');
       else statsRow.classList.remove('vis');
     }
 
