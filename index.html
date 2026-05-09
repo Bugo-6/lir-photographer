@@ -31,7 +31,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Heebo:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -294,14 +294,15 @@
 
     /* ===== COMMONS ===== */
     .eyebrow {
-      font-family: var(--font-ui); font-size: 0.6875rem;
-      font-weight: 600; letter-spacing: .3em;
+      font-family: 'Outfit', var(--font-ui); font-size: 0.6875rem;
+      font-weight: 500; letter-spacing: .28em;
       text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
     }
     .stitle {
       font-family: var(--font-display);
       font-size: clamp(2.75rem,6.5vw,5.625rem);
       font-weight: 300; line-height: .95; color: var(--light);
+      letter-spacing: -.02em;
     }
     .stitle em { font-style: italic; color: var(--gold); }
     .reveal {
@@ -319,16 +320,33 @@
       display: flex; align-items: flex-end; justify-content: space-between;
       flex-wrap: wrap; gap: 28px;
     }
-    .gal-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+    .gal-filters { display: flex; gap: 0; flex-wrap: wrap; border-bottom: 1px solid var(--border); }
     .fbtn {
-      font-family: var(--font-ui); font-size: 0.8125rem;
-      font-weight: 500; padding: 9px 20px;
-      border: 1px solid var(--border); background: none;
-      color: var(--muted); border-radius: 100px; cursor: pointer;
-      transition: all .25s;
+      font-family: 'Outfit', var(--font-ui); font-size: 0.8rem;
+      font-weight: 500; padding: 10px 22px;
+      border: none; border-bottom: 2px solid transparent;
+      background: none; color: var(--muted);
+      cursor: pointer; letter-spacing: .06em;
+      transition: color .22s, border-color .22s;
+      margin-bottom: -1px; /* overlap the border-bottom of parent */
     }
-    .fbtn:hover { border-color: rgba(201,168,76,.5); color: var(--gold); }
-    .fbtn.act { background: var(--gold); border-color: var(--gold); color: var(--black); }
+    .fbtn:hover { color: var(--text); border-bottom-color: rgba(201,168,76,.4); }
+    .fbtn.act { color: var(--gold); border-bottom-color: var(--gold); font-weight: 600; }
+
+    /* Empty category state */
+    .gal-empty {
+      padding: 80px 52px; text-align: center;
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+    }
+    .gal-empty-icon { font-size: 2.5rem; opacity: .3; }
+    .gal-empty-title {
+      font-family: var(--font-display); font-size: 1.75rem; font-weight: 300;
+      color: var(--text); letter-spacing: -.01em;
+    }
+    .gal-empty-sub {
+      font-family: 'Outfit', var(--font-ui); font-size: 0.875rem;
+      color: var(--muted); letter-spacing: .04em;
+    }
     .gal-cnt {
       font-family: var(--font-ui); font-size: 0.875rem;
       letter-spacing: .06em; color: var(--muted);
@@ -1578,6 +1596,8 @@
         <div class="gal-filters reveal d2">
           <button class="fbtn act" data-f="all">הכל</button>
           <button class="fbtn" data-f="football">כדורגל</button>
+          <button class="fbtn" data-f="basketball">כדורסל</button>
+          <button class="fbtn" data-f="campaign">קמפיינים</button>
           <button class="fbtn" data-f="general">כללי</button>
         </div>
         <div class="gal-cnt reveal d3">מציג <b id="pcnt">50</b> תמונות</div>
@@ -2167,9 +2187,11 @@
 
   // Category labels in Hebrew
   const CAT_HE = {
-    football: 'כדורגל',
-    general:  'כללי',
-    all:      'הכל'
+    football:   'כדורגל',
+    basketball: 'כדורסל',
+    campaign:   'קמפיין',
+    general:    'כללי',
+    all:        'הכל'
   };
 
   let curFilter = 'all';
@@ -2183,7 +2205,7 @@
   const lbCnt = document.getElementById('lb-cnt');
 
   // Whitelist for filter values — prevents malicious data-f injection
-  const ALLOWED_FILTERS = new Set(['all', 'football', 'general']);
+  const ALLOWED_FILTERS = new Set(['all', 'football', 'basketball', 'campaign', 'general']);
   const PREVIEW_COUNT   = 15;
   let   showAll         = false;
 
@@ -2193,9 +2215,25 @@
   const galMoreHint = document.getElementById('gal-more-hint');
   const galTotal    = document.getElementById('gal-total');
 
+  const CAT_COMING = { basketball: 'כדורסל', campaign: 'קמפיינים' };
+
   function buildGallery() {
     masonry.innerHTML = '';
     visible = curFilter === 'all' ? PHOTOS : PHOTOS.filter(p => p.cat === curFilter);
+
+    // Empty state — category has no photos yet
+    if (visible.length === 0) {
+      const catName = CAT_HE[curFilter] || curFilter;
+      masonry.innerHTML = `
+        <div class="gal-empty">
+          <div class="gal-empty-icon">📷</div>
+          <div class="gal-empty-title">תמונות ${catName} — בקרוב</div>
+          <div class="gal-empty-sub">הגלריה תתעדכן בקרוב עם עבודות חדשות</div>
+        </div>`;
+      galMoreWrap.classList.add('hidden');
+      pcnt.textContent = '0';
+      return;
+    }
 
     const toShow = showAll ? visible : visible.slice(0, PREVIEW_COUNT);
     pcnt.textContent = toShow.length;
