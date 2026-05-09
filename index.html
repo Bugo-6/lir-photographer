@@ -1231,23 +1231,18 @@
 
     /* ===== LENS IRIS REVEAL ===== */
     #lens-reveal {
-      height: 300vh; position: relative; background: var(--black);
+      background: var(--black); padding: 100px 0;
     }
     .lens-sticky {
-      position: sticky; top: 0; height: 100vh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
-      overflow: hidden; gap: 24px;
-      perspective: 1100px; /* 3D stage */
+      gap: 24px;
     }
     .lens-eyebrow-label {
       font-family: 'Outfit', var(--font-ui); font-size: 0.6rem;
       letter-spacing: .32em; color: rgba(201,168,76,.55);
       text-transform: uppercase;
-      opacity: 0; transform: translateY(8px);
-      transition: opacity .8s var(--ease), transform .8s var(--ease);
     }
-    .lens-eyebrow-label.vis { opacity: 1; transform: translateY(0); }
     /* 3D lens container — holds perspective */
     .lens-3d-wrap {
       width: min(440px, 84vw); height: min(440px, 84vw);
@@ -1276,10 +1271,7 @@
     }
     .lens-stats-row {
       display: flex; gap: 40px; align-items: center;
-      opacity: 0; transform: translateY(14px);
-      transition: opacity .6s var(--ease), transform .6s var(--ease);
     }
-    .lens-stats-row.vis { opacity: 1; transform: translateY(0); }
     .lx-stat { text-align: center; }
     .lx-num {
       font-family: var(--font-display); font-size: 2rem;
@@ -2909,51 +2901,23 @@
   // Apply tilt to initial gallery items
   document.querySelectorAll('.mi').forEach(applyTilt);
 
-  /* ===== LENS IRIS SCROLL ANIMATION ===== */
+  /* ===== LENS MOUSE TILT ===== */
   (function(){
-    const section   = document.getElementById('lens-reveal');
-    if (!section) return;
-
-    const statsRow    = document.getElementById('lens-stats');
-    const eyebrow     = document.getElementById('lens-eyebrow');
+    const lensWrap    = document.querySelector('.lens-3d-wrap');
     const lensRotator = document.getElementById('lens-rotator');
-
-    function update(p) {
-      if (p > 0.04) eyebrow.classList.add('vis');
-      if (p > 0.5)  statsRow.classList.add('vis');
-      else          statsRow.classList.remove('vis');
-    }
-
-    /* Subtle mouse-tilt on the lens (pauses float animation while tilting) */
-    const lensWrap = document.querySelector('.lens-3d-wrap');
-    if (lensWrap) {
-      lensWrap.addEventListener('mousemove', e => {
-        const r  = lensWrap.getBoundingClientRect();
-        const rx = ((e.clientY - r.top  - r.height/2) / (r.height/2)) * -10;
-        const ry = ((e.clientX - r.left - r.width /2) / (r.width /2)) *  12;
-        lensRotator.style.animation = 'none';
-        lensRotator.style.transform =
-          `perspective(800px) rotateX(${rx.toFixed(1)}deg) rotateY(${ry.toFixed(1)}deg)`;
-      });
-      lensWrap.addEventListener('mouseleave', () => {
-        lensRotator.style.transform = '';
-        lensRotator.style.animation = '';
-      });
-    }
-
-    /* ---- scroll driver (rAF-throttled) ---- */
-    let raf = false;
-    function onScroll() {
-      if (raf) return; raf = true;
-      requestAnimationFrame(() => {
-        const rect  = section.getBoundingClientRect();
-        const total = section.offsetHeight - window.innerHeight;
-        update(Math.max(0, Math.min(1, -rect.top / total)));
-        raf = false;
-      });
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    if (!lensWrap || !lensRotator) return;
+    lensWrap.addEventListener('mousemove', e => {
+      const r  = lensWrap.getBoundingClientRect();
+      const rx = ((e.clientY - r.top  - r.height/2) / (r.height/2)) * -10;
+      const ry = ((e.clientX - r.left - r.width /2) / (r.width /2)) *  12;
+      lensRotator.style.animation = 'none';
+      lensRotator.style.transform =
+        `perspective(800px) rotateX(${rx.toFixed(1)}deg) rotateY(${ry.toFixed(1)}deg)`;
+    });
+    lensWrap.addEventListener('mouseleave', () => {
+      lensRotator.style.transform = '';
+      lensRotator.style.animation = '';
+    });
   })();
 
   /* ===== HERO VIDEO BACKGROUND ===== */
