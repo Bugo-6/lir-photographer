@@ -14,6 +14,7 @@
                  font-src   'self' https://fonts.gstatic.com;
                  img-src    'self' data: blob:;
                  script-src 'self' 'unsafe-inline';
+                 media-src  'self';
                  connect-src 'none';
                  object-src  'none';
                  base-uri    'self';
@@ -1118,6 +1119,98 @@
                   box-shadow .3s, filter .3s !important;
     }
 
+    /* ===== HERO VIDEO BACKGROUND ===== */
+    .hero-video {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center 40%;
+      z-index: 0; opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    .hero-video.loaded { opacity: 1; }
+    /* When video is loaded, dim the static bg */
+    #hero.has-video .hero-bg { opacity: 0; }
+
+    /* ===== SHOWREEL SECTION ===== */
+    #showreel {
+      padding: 120px 0; background: var(--deep); position: relative; overflow: hidden;
+    }
+    #showreel::before {
+      content: 'REEL'; position: absolute;
+      font-family: var(--font-display); font-size: clamp(8rem,22vw,18rem);
+      font-weight: 700; color: rgba(201,168,76,.04);
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      white-space: nowrap; pointer-events: none; letter-spacing: .1em;
+    }
+    .reel-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 40px;
+    }
+    .reel-head {
+      text-align: center; margin-bottom: 56px;
+    }
+    .reel-head .eyebrow { margin-bottom: 14px; }
+    .reel-title {
+      font-family: var(--font-display); font-size: clamp(2.5rem,6vw,4.5rem);
+      font-weight: 300; color: var(--white); line-height: 1;
+    }
+    .reel-title em { font-style: italic; color: var(--gold); }
+    .reel-player-wrap {
+      position: relative; border-radius: 4px; overflow: hidden;
+      background: #000;
+      box-shadow: 0 0 0 1px var(--border), 0 40px 100px rgba(0,0,0,.7),
+                  0 0 60px rgba(201,168,76,.08);
+    }
+    /* Gold corner accents */
+    .reel-player-wrap::before,
+    .reel-player-wrap::after {
+      content: ''; position: absolute; width: 32px; height: 32px; z-index: 3; pointer-events: none;
+    }
+    .reel-player-wrap::before {
+      top: 0; right: 0;
+      border-top: 2px solid var(--gold); border-right: 2px solid var(--gold);
+    }
+    .reel-player-wrap::after {
+      bottom: 0; left: 0;
+      border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold);
+    }
+    .reel-video {
+      width: 100%; display: block; aspect-ratio: 16/9;
+      object-fit: cover; cursor: pointer;
+    }
+    /* Play button overlay */
+    .reel-play-btn {
+      position: absolute; inset: 0; display: flex;
+      align-items: center; justify-content: center;
+      background: rgba(6,6,8,.35); z-index: 2;
+      cursor: pointer; transition: background .3s;
+    }
+    .reel-play-btn:hover { background: rgba(6,6,8,.2); }
+    .reel-play-btn svg {
+      width: 80px; height: 80px; transition: transform .35s var(--ease), filter .3s;
+      filter: drop-shadow(0 0 24px rgba(201,168,76,.6));
+    }
+    .reel-play-btn:hover svg { transform: scale(1.1); }
+    .reel-play-btn.hidden { display: none; }
+    /* placeholder when no video file exists */
+    .reel-placeholder {
+      aspect-ratio: 16/9; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 20px;
+      background: var(--surface);
+    }
+    .reel-placeholder-icon {
+      font-size: 3rem; opacity: .4;
+    }
+    .reel-placeholder-txt {
+      font-family: var(--font-ui); font-size: 0.875rem;
+      color: var(--muted); text-align: center; line-height: 1.7;
+    }
+    .reel-cta {
+      text-align: center; margin-top: 42px;
+    }
+    .reel-cta p {
+      font-family: var(--font-ui); font-size: 0.875rem;
+      color: var(--muted); margin-bottom: 20px; letter-spacing: .06em;
+    }
+
     /* ===== COUNTER RING (hero) ===== */
     .hero-counter {
       position: absolute; bottom: 36px; right: 52px; z-index: 2;
@@ -1351,6 +1444,7 @@
     <a href="#" class="nav-logo">L<em>I</em>R</a>
     <ul class="nav-links">
       <li><a href="#gallery">עבודות</a></li>
+      <li><a href="#showreel">שואוריל</a></li>
       <li><a href="#why">למה אני?</a></li>
       <li><a href="#about">עליי</a></li>
       <li><a href="#booking">קבע צילום</a></li>
@@ -1373,7 +1467,14 @@
 
   <!-- Hero -->
   <section id="hero" aria-label="עמוד הבית של ליר צלם">
+    <!-- Static background image (fallback) -->
     <div class="hero-bg"></div>
+    <!-- AI video background — place hero-video.mp4 in root folder to activate -->
+    <video class="hero-video" id="hero-video"
+           autoplay muted loop playsinline preload="none"
+           aria-hidden="true">
+      <source src="hero-video.mp4" type="video/mp4" />
+    </video>
     <div class="hero-grad"></div>
     <div class="hero-grad-btm"></div>
     <!-- Bokeh -->
@@ -1426,6 +1527,44 @@
       <span class="tick-item">טורנירים</span><span class="tick-dot"></span>
     </div>
   </div>
+
+  <!-- Showreel -->
+  <section id="showreel" aria-label="שואוריל — סרטון ראווה">
+    <div class="reel-inner">
+      <div class="reel-head">
+        <div class="eyebrow reveal">— ראה את העבודה</div>
+        <h2 class="reel-title reveal d1">ה<em>שואוריל</em></h2>
+      </div>
+      <div class="reel-player-wrap reveal d2" id="reel-player-wrap">
+        <!-- If showreel.mp4 exists in root folder, it will play automatically -->
+        <video class="reel-video" id="reel-video" preload="metadata" playsinline>
+          <source src="showreel.mp4" type="video/mp4" />
+        </video>
+        <!-- Play button overlay -->
+        <div class="reel-play-btn" id="reel-play-btn" aria-label="הפעל סרטון">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="40" cy="40" r="39" stroke="#c9a84c" stroke-width="1.5" opacity="0.6"/>
+            <circle cx="40" cy="40" r="39" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="245" stroke-dashoffset="245">
+              <animate attributeName="stroke-dashoffset" from="245" to="0" dur="1.8s" fill="freeze" begin="0.5s" calcMode="spline" keySplines="0.16 1 0.3 1"/>
+            </circle>
+            <polygon points="33,26 57,40 33,54" fill="#c9a84c"/>
+          </svg>
+        </div>
+        <!-- Placeholder when no video file -->
+        <div class="reel-placeholder" id="reel-placeholder" style="display:none">
+          <div class="reel-placeholder-icon">🎬</div>
+          <div class="reel-placeholder-txt">
+            צור סרטון שואוריל עם Kling AI או Luma Dream Machine<br />
+            ושמור אותו כ-<strong>showreel.mp4</strong> בתיקיית האתר
+          </div>
+        </div>
+      </div>
+      <div class="reel-cta reveal d3">
+        <p>מוכן לסשן הבא שלך?</p>
+        <a href="#book" class="btn-gold">הזמן צילום ←</a>
+      </div>
+    </div>
+  </section>
 
   <!-- Gallery -->
   <section id="gallery" aria-label="גלריית עבודות" style="position:relative;overflow:hidden">
@@ -2667,6 +2806,59 @@
   buildGallery();
   // Apply tilt to initial gallery items
   document.querySelectorAll('.mi').forEach(applyTilt);
+
+  /* ===== HERO VIDEO BACKGROUND ===== */
+  (function(){
+    const heroVid = document.getElementById('hero-video');
+    const heroEl  = document.getElementById('hero');
+    if (!heroVid) return;
+    // If video loads successfully → show it and mark section
+    heroVid.addEventListener('canplay', () => {
+      heroVid.classList.add('loaded');
+      heroEl.classList.add('has-video');
+    }, {once: true});
+    // If video errors (file missing) → stay with image, remove element
+    heroVid.addEventListener('error', () => {
+      heroVid.remove();
+    }, {once: true});
+  })();
+
+  /* ===== SHOWREEL VIDEO ===== */
+  (function(){
+    const vid       = document.getElementById('reel-video');
+    const playBtn   = document.getElementById('reel-play-btn');
+    const placeholder = document.getElementById('reel-placeholder');
+    if (!vid) return;
+
+    // Check if video source loads
+    vid.addEventListener('error', () => {
+      // No showreel.mp4 — show placeholder, hide player elements
+      vid.style.display = 'none';
+      if (playBtn) playBtn.style.display = 'none';
+      if (placeholder) placeholder.style.display = 'flex';
+    }, {once: true});
+
+    vid.addEventListener('loadedmetadata', () => {
+      // Video file found — show everything normally
+      if (placeholder) placeholder.style.display = 'none';
+    }, {once: true});
+
+    // Play/pause toggle via play button
+    if (playBtn) {
+      playBtn.addEventListener('click', () => {
+        playBtn.classList.add('hidden');
+        vid.play();
+        vid.controls = true;
+      });
+    }
+    // If user pauses, show play button again
+    vid.addEventListener('pause', () => {
+      if (playBtn) playBtn.classList.remove('hidden');
+    });
+    vid.addEventListener('play', () => {
+      if (playBtn) playBtn.classList.add('hidden');
+    });
+  })();
   </script>
 </body>
 </html>
