@@ -23,6 +23,11 @@
   <!-- Deny permission to sensitive browser APIs -->
   <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
 
+  <!-- Preload critical images -->
+  <link rel="preload" as="image" href="gallery/lir_05.webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="gallery/lir_01.webp" />
+  <link rel="preload" as="image" href="gallery/lir_03.webp" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -177,7 +182,7 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background-image: url('gallery/lir_05.jpg');
+      background-image: url('gallery/lir_05.webp');
       background-size: cover; background-position: center 40%;
       will-change: transform;
     }
@@ -435,7 +440,7 @@
     #why { position: relative; padding: 120px 52px; overflow: hidden; }
     .why-bg {
       position: absolute; inset: 0;
-      background-image: url('gallery/lir_09.jpg');
+      background-image: url('gallery/lir_09.webp');
       background-size: cover; background-position: center;
       background-attachment: fixed;
       filter: brightness(.12) saturate(.3);
@@ -565,7 +570,7 @@
     #cta { position: relative; padding: 160px 52px; text-align: center; overflow: hidden; }
     .cta-bg {
       position: absolute; inset: 0;
-      background-image: url('gallery/lir_12.jpg');
+      background-image: url('gallery/lir_12.webp');
       background-size: cover; background-position: center;
       background-attachment: fixed;
       filter: brightness(.14) saturate(.4);
@@ -1306,9 +1311,9 @@
       </div>
     </div>
     <div class="hero-strip">
-      <div class="strip-img"><img src="gallery/lir_01.jpg" alt="ספורט" loading="eager"/></div>
-      <div class="strip-img"><img src="gallery/lir_03.jpg" alt="אקשן" loading="eager"/></div>
-      <div class="strip-img"><img src="gallery/lir_07.jpg" alt="כדורגל" loading="eager"/></div>
+      <div class="strip-img"><img src="gallery/lir_01.webp" alt="ספורט" loading="eager"/></div>
+      <div class="strip-img"><img src="gallery/lir_03.webp" alt="אקשן" loading="eager"/></div>
+      <div class="strip-img"><img src="gallery/lir_07.webp" alt="כדורגל" loading="eager"/></div>
     </div>
     <div class="hero-scroll">
       <span class="scroll-txt">גלול</span>
@@ -1443,7 +1448,7 @@
   <section id="about" style="position:relative;overflow:hidden">
     <span class="section-wm" aria-hidden="true">LIR</span>
     <div class="about-img-wrap reveal">
-      <img class="about-img" src="gallery/lir_06.jpg" alt="ליר צלם" />
+      <img class="about-img" src="gallery/lir_06.webp" alt="ליר צלם" />
       <div class="about-badge">
         <div class="about-badge-n">5+</div>
         <div class="about-badge-t">שנות ניסיון</div>
@@ -1883,58 +1888,58 @@
   // ===== PHOTOS — תמונות אמיתיות מהאינסטגרם של ליר =====
   const PHOTOS = [
     // כדורגל
-    {src:'gallery/lir_01.jpg', cat:'football', alt:'מכבי תל אביב — חגיגת גול'},
-    {src:'gallery/lir_02.jpg', cat:'football', alt:'מכבי תל אביב — שליטה בכדור'},
-    {src:'gallery/lir_03.jpg', cat:'football', alt:'מכבי תל אביב — אימון'},
-    {src:'gallery/lir_04.jpg', cat:'football', alt:'כדורגל — הרמת חולצה'},
-    {src:'gallery/lir_05.jpg', cat:'football', alt:'כדורגל — אקשן'},
-    {src:'gallery/lir_06.jpg', cat:'football', alt:'הפועל — שליטה בכדור'},
-    {src:'gallery/lir_08.jpg', cat:'football', alt:'כדורגל — חגיגה'},
-    {src:'gallery/lir_12.jpg', cat:'football', alt:'כדורגל — קרב על הכדור'},
+    {src:'gallery/lir_01.webp', cat:'football', alt:'מכבי תל אביב — חגיגת גול'},
+    {src:'gallery/lir_02.webp', cat:'football', alt:'מכבי תל אביב — שליטה בכדור'},
+    {src:'gallery/lir_03.webp', cat:'football', alt:'מכבי תל אביב — אימון'},
+    {src:'gallery/lir_04.webp', cat:'football', alt:'כדורגל — הרמת חולצה'},
+    {src:'gallery/lir_05.webp', cat:'football', alt:'כדורגל — אקשן'},
+    {src:'gallery/lir_06.webp', cat:'football', alt:'הפועל — שליטה בכדור'},
+    {src:'gallery/lir_08.webp', cat:'football', alt:'כדורגל — חגיגה'},
+    {src:'gallery/lir_12.webp', cat:'football', alt:'כדורגל — קרב על הכדור'},
     // כללי
-    {src:'gallery/lir_09.jpg', cat:'general',  alt:'אופניים — אירוע ספורט'},
+    {src:'gallery/lir_09.webp', cat:'general',  alt:'אופניים — אירוע ספורט'},
     // תמונות חדשות
-    {src:'gallery/lir_21.jpg', cat:'football', alt:'שחקן רץ עם כדור'},
-    {src:'gallery/lir_23.jpg', cat:'football', alt:'בעיטה על שער'},
-    {src:'gallery/lir_24.jpg', cat:'football', alt:'שחקן בשער'},
-    {src:'gallery/lir_25.jpg', cat:'football', alt:'שחקן ביתר חוגג'},
-    {src:'gallery/lir_26.jpg', cat:'football', alt:'שחקן ביתר מנופף'},
-    {src:'gallery/lir_27.jpg', cat:'football', alt:'שחקן עם כדור'},
-    {src:'gallery/lir_28.jpg', cat:'football', alt:'שחקנים קרב'},
-    {src:'gallery/lir_29.jpg', cat:'football', alt:'בעיטת עקרב'},
-    {src:'gallery/lir_30.jpg', cat:'football', alt:'שחקנים חוגגים'},
-    {src:'gallery/lir_31.jpg', cat:'football', alt:'שחקנים נגד שחקן'},
-    {src:'gallery/lir_32.jpg', cat:'football', alt:'שחקן מניף ידיים'},
-    {src:'gallery/lir_33.jpg', cat:'football', alt:'נבחרת נוער כדורגל'},
-    {src:'gallery/lir_34.jpg', cat:'football', alt:'שחקן בועט חזק'},
-    {src:'gallery/lir_35.jpg', cat:'football', alt:'בעיטת עקרב'},
-    {src:'gallery/lir_36.jpg', cat:'football', alt:'שחקנים חוגגים'},
-    {src:'gallery/lir_37.jpg', cat:'football', alt:'שחקן בועט'},
-    {src:'gallery/lir_38.jpg', cat:'football', alt:'שחקן בורח'},
-    {src:'gallery/lir_39.jpg', cat:'football', alt:'שחקן בועט'},
-    {src:'gallery/lir_40.jpg', cat:'football', alt:'שחקן עם כדור'},
-    {src:'gallery/lir_41.jpg', cat:'football', alt:'שחקן חוגג שער'},
-    {src:'gallery/lir_42.jpg', cat:'football', alt:'שחקן בועט'},
-    {src:'gallery/lir_43.jpg', cat:'football', alt:'שחקנות נוער'},
-    {src:'gallery/lir_44.jpg', cat:'football', alt:'שחקן חוגג שער'},
-    {src:'gallery/lir_45.jpg', cat:'football', alt:'שחקן עם כדור'},
-    {src:'gallery/lir_46.jpg', cat:'football', alt:'קרב על הכדור'},
-    {src:'gallery/lir_48.jpg', cat:'football', alt:'שחקן חוגג'},
-    {src:'gallery/lir_49.jpg', cat:'football', alt:'שחקנים חוגגים'},
-    {src:'gallery/lir_50.jpg', cat:'football', alt:'שחקן בועט'},
-    {src:'gallery/lir_51.jpg', cat:'football', alt:'שחקן עם כדור'},
-    {src:'gallery/lir_52.jpg', cat:'football', alt:'שחקני נוער'},
-    {src:'gallery/lir_53.jpg', cat:'football', alt:'נבחרת נשים'},
-    {src:'gallery/lir_54.jpg', cat:'football', alt:'שחקן חוגג שער'},
-    {src:'gallery/lir_55.jpg', cat:'football', alt:'שחקן עם כדור'},
-    {src:'gallery/lir_56.jpg', cat:'football', alt:'קרב על הכדור'},
-    {src:'gallery/lir_57.jpg', cat:'football', alt:'נבחרת נוער'},
-    {src:'gallery/lir_58.jpg', cat:'football', alt:'קבוצת כדורגל'},
-    {src:'gallery/lir_60.jpg', cat:'football', alt:'שחקן עם כדור'},
-    {src:'gallery/lir_61.jpg', cat:'football', alt:'שחקן בועט'},
-    {src:'gallery/lir_66.jpg', cat:'general',  alt:'שחקן כדורסל'},
-    {src:'gallery/lir_67.jpg', cat:'general',  alt:'דאנק כדורסל'},
-    {src:'gallery/lir_68.jpg', cat:'general',  alt:'כדורסל נוער'},
+    {src:'gallery/lir_21.webp', cat:'football', alt:'שחקן רץ עם כדור'},
+    {src:'gallery/lir_23.webp', cat:'football', alt:'בעיטה על שער'},
+    {src:'gallery/lir_24.webp', cat:'football', alt:'שחקן בשער'},
+    {src:'gallery/lir_25.webp', cat:'football', alt:'שחקן ביתר חוגג'},
+    {src:'gallery/lir_26.webp', cat:'football', alt:'שחקן ביתר מנופף'},
+    {src:'gallery/lir_27.webp', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_28.webp', cat:'football', alt:'שחקנים קרב'},
+    {src:'gallery/lir_29.webp', cat:'football', alt:'בעיטת עקרב'},
+    {src:'gallery/lir_30.webp', cat:'football', alt:'שחקנים חוגגים'},
+    {src:'gallery/lir_31.webp', cat:'football', alt:'שחקנים נגד שחקן'},
+    {src:'gallery/lir_32.webp', cat:'football', alt:'שחקן מניף ידיים'},
+    {src:'gallery/lir_33.webp', cat:'football', alt:'נבחרת נוער כדורגל'},
+    {src:'gallery/lir_34.webp', cat:'football', alt:'שחקן בועט חזק'},
+    {src:'gallery/lir_35.webp', cat:'football', alt:'בעיטת עקרב'},
+    {src:'gallery/lir_36.webp', cat:'football', alt:'שחקנים חוגגים'},
+    {src:'gallery/lir_37.webp', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_38.webp', cat:'football', alt:'שחקן בורח'},
+    {src:'gallery/lir_39.webp', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_40.webp', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_41.webp', cat:'football', alt:'שחקן חוגג שער'},
+    {src:'gallery/lir_42.webp', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_43.webp', cat:'football', alt:'שחקנות נוער'},
+    {src:'gallery/lir_44.webp', cat:'football', alt:'שחקן חוגג שער'},
+    {src:'gallery/lir_45.webp', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_46.webp', cat:'football', alt:'קרב על הכדור'},
+    {src:'gallery/lir_48.webp', cat:'football', alt:'שחקן חוגג'},
+    {src:'gallery/lir_49.webp', cat:'football', alt:'שחקנים חוגגים'},
+    {src:'gallery/lir_50.webp', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_51.webp', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_52.webp', cat:'football', alt:'שחקני נוער'},
+    {src:'gallery/lir_53.webp', cat:'football', alt:'נבחרת נשים'},
+    {src:'gallery/lir_54.webp', cat:'football', alt:'שחקן חוגג שער'},
+    {src:'gallery/lir_55.webp', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_56.webp', cat:'football', alt:'קרב על הכדור'},
+    {src:'gallery/lir_57.webp', cat:'football', alt:'נבחרת נוער'},
+    {src:'gallery/lir_58.webp', cat:'football', alt:'קבוצת כדורגל'},
+    {src:'gallery/lir_60.webp', cat:'football', alt:'שחקן עם כדור'},
+    {src:'gallery/lir_61.webp', cat:'football', alt:'שחקן בועט'},
+    {src:'gallery/lir_66.webp', cat:'general',  alt:'שחקן כדורסל'},
+    {src:'gallery/lir_67.webp', cat:'general',  alt:'דאנק כדורסל'},
+    {src:'gallery/lir_68.webp', cat:'general',  alt:'כדורסל נוער'},
   ];
 
   // Category labels in Hebrew
@@ -2531,4 +2536,5 @@
   </script>
 </body>
 </html>
+
 
