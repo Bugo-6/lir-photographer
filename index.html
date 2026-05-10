@@ -1561,7 +1561,6 @@
           <button class="fbtn" data-f="football">כדורגל</button>
           <button class="fbtn" data-f="basketball">כדורסל</button>
           <button class="fbtn" data-f="campaign">קמפיינים</button>
-          <button class="fbtn" data-f="general">כללי</button>
         </div>
         <div class="gal-cnt reveal d3">מציג <b id="pcnt">50</b> תמונות</div>
       </div>
@@ -2102,8 +2101,6 @@
     {src:'gallery/lir_06.webp', cat:'football', alt:'הפועל — שליטה בכדור'},
     {src:'gallery/lir_08.webp', cat:'football', alt:'כדורגל — חגיגה'},
     {src:'gallery/lir_12.webp', cat:'football', alt:'כדורגל — קרב על הכדור'},
-    // כללי
-    {src:'gallery/lir_09.webp', cat:'general',  alt:'אופניים — אירוע ספורט'},
     // תמונות חדשות
     {src:'gallery/lir_21.webp', cat:'football', alt:'שחקן רץ עם כדור'},
     {src:'gallery/lir_23.webp', cat:'football', alt:'בעיטה על שער'},
@@ -2169,7 +2166,6 @@
     football:   'כדורגל',
     basketball: 'כדורסל',
     campaign:   'קמפיין',
-    general:    'כללי',
     all:        'הכל'
   };
 
@@ -2184,7 +2180,7 @@
   const lbCnt = document.getElementById('lb-cnt');
 
   // Whitelist for filter values — prevents malicious data-f injection
-  const ALLOWED_FILTERS = new Set(['all', 'football', 'basketball', 'campaign', 'general']);
+  const ALLOWED_FILTERS = new Set(['all', 'football', 'basketball', 'campaign']);
   const PREVIEW_COUNT   = 15;
   let   showAll         = false;
 
