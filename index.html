@@ -2621,16 +2621,12 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
       hideLoader(); return;
     }
-    let saved = null;
-    try { saved = localStorage.getItem('lir-flash-ok'); } catch(e) {}
-    if (saved === '1'){ cameraIntro(); return; }
     const c = document.getElementById('lconsent');
     c.classList.add('show');
     // No answer — quietly skip to the site without flashes
     const auto = setTimeout(hideLoader, 8000);
     document.getElementById('lc-yes').addEventListener('click', () => {
       clearTimeout(auto);
-      try { localStorage.setItem('lir-flash-ok', '1'); } catch(e) {}
       c.classList.remove('show');
       initAudio();
       cameraIntro();
