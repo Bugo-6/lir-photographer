@@ -2624,7 +2624,6 @@
     let saved = null;
     try { saved = localStorage.getItem('lir-flash-ok'); } catch(e) {}
     if (saved === '1'){ cameraIntro(); return; }
-    if (saved === '0'){ hideLoader(); return; }
     const c = document.getElementById('lconsent');
     c.classList.add('show');
     // No answer — quietly skip to the site without flashes
@@ -2638,7 +2637,6 @@
     });
     document.getElementById('lc-no').addEventListener('click', () => {
       clearTimeout(auto);
-      try { localStorage.setItem('lir-flash-ok', '0'); } catch(e) {}
       hideLoader();
     });
   }
