@@ -516,55 +516,69 @@
       font-size: 0.9375rem; line-height: 1.85;
       color: rgba(232,232,240,.62); margin-bottom: 20px; max-width: 420px;
     }
-    .why-nums { display: flex; gap: 48px; margin-top: 36px; }
+    .why-nums {
+      display: flex; gap: 0; margin-top: 48px;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .why-nums > div {
+      flex: 1; padding: 22px 28px;
+      border-right: 1px solid rgba(255,255,255,.1);
+    }
+    .why-nums > div:last-child { border-right: none; }
     .wn-n {
-      font-family: var(--font-display); font-size: 3.75rem;
-      font-weight: 400; color: var(--gold); line-height: 1; letter-spacing: .02em;
+      font-family: var(--font-display); font-size: clamp(2.25rem, 4vw, 3.25rem);
+      font-weight: 400; color: var(--white); line-height: 1; letter-spacing: .03em;
     }
     .wn-l {
-      font-family: var(--font-ui); font-size: 0.6875rem;
-      font-weight: 600; letter-spacing: .1em;
-      color: var(--muted); margin-top: 4px;
+      font-family: var(--font-ui); font-size: 0.5625rem;
+      font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--gold); margin-top: 6px;
     }
-    .why-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+    /* Editorial reasons list — replaces identical card grid */
+    .why-cards { border-top: 1px solid rgba(255,255,255,.08); }
     .wcard {
-      background: rgba(14,14,20,.88);
-      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      padding: 42px 32px; position: relative; overflow: hidden;
-      transition: border-color .4s, background .4s;
+      display: grid;
+      grid-template-columns: 5ch 1fr 1fr;
+      gap: 0 48px;
+      align-items: baseline;
+      padding: 32px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      transition: border-color .35s;
     }
-    .wcard::before {
-      content:''; position: absolute;
-      top: 0; right: 0; left: 0; height: 2px;
-      background: linear-gradient(270deg, var(--gold), transparent);
-      transform: scaleX(0); transform-origin: right;
-      transition: transform .55s var(--ease);
-    }
-    .wcard:hover { border-color: rgba(201,168,76,.28); background: rgba(20,20,28,.96); }
-    .wcard:hover::before { transform: scaleX(1); }
-    .wcard-icon { font-size: 2.125rem; margin-bottom: 22px; display: block; }
-    .wcard-big {
-      font-family: var(--font-display); font-size: 3.25rem;
-      font-weight: 400; color: var(--gold); line-height: 1; letter-spacing: .03em;
-      margin-bottom: 12px; display: block;
+    .wcard:hover { border-color: rgba(201,168,76,.22); }
+    .wcard:hover .wcard-num { color: var(--gold); }
+    .wcard-num {
+      font-family: var(--font-display);
+      font-size: 1rem; letter-spacing: .12em;
+      color: rgba(232,232,240,.2);
+      transition: color .35s; align-self: start; padding-top: 4px;
     }
     .wcard-title {
-      font-family: var(--font-ui); font-size: 1.125rem;
+      font-family: var(--font-ui); font-size: clamp(1.125rem, 2.2vw, 1.5rem);
       font-weight: 800; letter-spacing: var(--ls-tight);
-      color: var(--light); margin-bottom: 10px;
+      color: var(--light); line-height: 1.15;
     }
-    .wcard-body { font-size: 0.8125rem; line-height: var(--lh-loose); color: rgba(232,232,240,.5); }
-    .why-bigq { text-align: center; padding-top: 80px; }
+    .wcard-body { font-size: 0.875rem; line-height: 1.8; color: rgba(232,232,240,.48); max-width: 38ch; }
+    /* hide old icon/big fields — kept in HTML for safety */
+    .wcard-icon, .wcard-big { display: none; }
+    .why-bigq {
+      padding-top: 100px; padding-bottom: 20px;
+      display: grid; grid-template-columns: 1fr max-content;
+      align-items: end; gap: 48px;
+    }
     .why-bigq p {
       font-family: var(--font-ui);
-      font-size: clamp(2rem, 5vw, 4.25rem);
+      font-size: clamp(2.5rem, 6vw, 5.5rem);
       font-weight: 900; font-style: normal;
       letter-spacing: var(--ls-tighter);
-      color: var(--light); line-height: 1.05;
+      color: var(--light); line-height: .98;
     }
-    .why-bigq em { font-style: normal; color: var(--gold); }
-    .why-bigq-line { width: 48px; height: 1px; background: var(--gold); opacity: .5; margin: 28px auto 0; }
+    .why-bigq em { font-style: normal; color: var(--gold); display: block; }
+    .why-bigq-line {
+      width: 1px; height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+      opacity: .45; margin: 0;
+    }
 
     /* ===== ABOUT ===== */
     #about {
@@ -892,7 +906,6 @@
     /* ===== RESPONSIVE ===== */
     @media(max-width:1200px){
       .masonry{columns:3}
-      .why-cards{grid-template-columns:repeat(2,1fr)}
     }
     @media(max-width:900px){
       #navbar{padding:18px 24px}
@@ -905,6 +918,11 @@
       .gal-head{padding:0 20px 36px}
       .why-grid{grid-template-columns:1fr;gap:40px}
       #why{padding:80px 24px}
+      .wcard{grid-template-columns:4ch 1fr;grid-template-rows:auto auto;row-gap:10px}
+      .wcard-body{grid-column:2}
+      .why-bigq{grid-template-columns:1fr;gap:24px}
+      .why-bigq-line{width:48px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+      .why-nums > div{padding:16px 20px}
       #about{grid-template-columns:1fr;padding:80px 24px}
       .about-img-wrap{order:1}
       .about-text{order:2}
@@ -915,8 +933,12 @@
     @media(max-width:600px){
       .masonry{columns:2;column-gap:5px}
       .mi{margin-bottom:5px}
-      .why-cards{grid-template-columns:1fr}
       .hero-btns{flex-direction:column;align-items:flex-start}
+      .wcard{grid-template-columns:1fr;gap:8px}
+      .wcard-num{display:none}
+      .why-nums{flex-direction:column}
+      .why-nums > div{border-right:none;border-bottom:1px solid rgba(255,255,255,.1)}
+      .why-nums > div:last-child{border-bottom:none}
     }
 
     /* ===== IMAGE PROTECTION ===== */
@@ -1058,14 +1080,8 @@
     /* Stat label upgrade */
     .wn-l { letter-spacing: .2em; text-transform: uppercase; font-size: 0.625rem; }
 
-    /* 8 — Cards: lift + gradient top border */
-    .wcard { transition: border-color .4s, background .4s, transform .45s var(--ease); }
-    .wcard:hover { transform: translateY(-6px); }
-    .wcard-big {
-      background: linear-gradient(135deg, var(--gold) 30%, #f0d878 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    /* 8 — Cards: row hover transition */
+    .wcard { transition: border-color .35s; }
 
     /* 9 — Hero: deeper overlay + subtle vignette */
     .hero-grad {
@@ -1657,32 +1673,28 @@
       </div>
       <div class="why-cards">
         <div class="wcard reveal">
-          <span class="wcard-icon">⚡</span>
-          <span class="wcard-big">1350</span>
-          <div class="wcard-title">תמונות לסשן</div>
-          <p class="wcard-body">לעולם לא תפספס את הרגע. אנחנו מספקים מאות תמונות ברזולוציה גבוהה מכל סשן — כך שתמיד יהיה לך את הרגע המושלם.</p>
+          <span class="wcard-num">01</span>
+          <div class="wcard-title">כמות שלא מתפשרת על איכות</div>
+          <p class="wcard-body">900 עד 1,350 תמונות בכל סשן. לא בשביל להרשים בנתון — בגלל שרגע המשחק מגיע פעם אחת, ואני לא מפספס אותו.</p>
         </div>
         <div class="wcard reveal d1">
-          <span class="wcard-icon">📸</span>
-          <span class="wcard-big">פרו</span>
-          <div class="wcard-title">ציוד מקצועי</div>
-          <p class="wcard-body">Canon ברמה הגבוהה והחדשה ביותר, עם עדשות טלה מקצועיות. מהירות צילום קיצונית שתופסת תנועה שרוב הצלמים פשוט מפספסים.</p>
+          <span class="wcard-num">02</span>
+          <div class="wcard-title">ציוד Canon ברמה הגבוהה ביותר</div>
+          <p class="wcard-body">עדשות טלה מקצועיות שקולטות תנועה שרוב הצלמים פשוט לא יכולים לתפוס. לא ציוד — גישה.</p>
         </div>
         <div class="wcard reveal d2">
-          <span class="wcard-icon">🎯</span>
-          <span class="wcard-big">100%</span>
-          <div class="wcard-title">מומחה ספורט</div>
-          <p class="wcard-body">שנים שמוקדשות אך ורק לצילום ספורט — אנחנו קוראים את המשחק, מצפים לרגע ומתמקמים בדיוק לפני שזה קורה.</p>
+          <span class="wcard-num">03</span>
+          <div class="wcard-title">קוראים את המשחק לפני שהוא קורה</div>
+          <p class="wcard-body">חמש שנים, מעל 800 משחקים. אני מבין דינמיקת ספורט — מתמקם בדיוק ברגע שלפני, לא שנייה אחריו.</p>
         </div>
         <div class="wcard reveal d3">
-          <span class="wcard-icon">💎</span>
-          <span class="wcard-big">הכי</span>
-          <div class="wcard-title">שווה את הכסף</div>
-          <p class="wcard-body">תוצאות פרימיום במחירים תחרותיים. מחירים שקופים, חבילות גמישות — ואפס פשרות על המוצר הסופי.</p>
+          <span class="wcard-num">04</span>
+          <div class="wcard-title">מחיר תחרותי, ביצוע פרימיום</div>
+          <p class="wcard-body">שקיפות מלאה במחירים, אפס הפתעות. מה שאתה רואה בתיק העבודות — זה בדיוק מה שאתה מקבל.</p>
         </div>
       </div>
       <div class="why-bigq reveal">
-        <p>"כל ספורטאי ראוי לתמונות<br /><em>טובות כמו המשחק שלו."</em></p>
+        <p>כל ספורטאי ראוי לתמונות<br /><em>טובות כמו המשחק שלו.</em></p>
         <div class="why-bigq-line"></div>
       </div>
     </div>
@@ -1714,8 +1726,8 @@
         <span class="atag">טורנירים</span>
       </div>
       <div class="about-socials reveal d4">
-        <a href="https://www.instagram.com/lir.photographer/" target="_blank" class="soc-link">📸 אינסטגרם</a>
-        <a href="https://wa.me/972505527855" target="_blank" class="soc-link">💬 וואטסאפ</a>
+        <a href="https://www.instagram.com/lir.photographer/" target="_blank" class="soc-link">אינסטגרם ↗</a>
+        <a href="https://wa.me/972505527855" target="_blank" class="soc-link">וואטסאפ ↗</a>
       </div>
     </div>
   </section>
@@ -1726,7 +1738,7 @@
       <div class="booking-head">
         <div class="eyebrow reveal">— קבע צילום</div>
         <h2 class="stitle reveal d1" id="booking-title">קבע <em>צילום</em></h2>
-        <p class="booking-desc reveal d2">בחר את הפרטים שלך ונחזור אליך מיד לאישור 📸</p>
+        <p class="booking-desc reveal d2">בחר את הפרטים שלך ונחזור אליך מיד לאישור.</p>
       </div>
 
       <form class="booking-form reveal d2" id="booking-form" novalidate aria-label="טופס הזמנת צילום">
@@ -1831,7 +1843,7 @@
       <p class="cta-sub reveal d2">הזמן סשן צילום היום. בואו נתפוס רגעים שיישארו לנצח.</p>
       <div class="cta-btns reveal d3">
         <a href="https://wa.me/972505527855?text=היי%20ליר!%20אני%20רוצה%20להזמין%20סשן%20צילום." target="_blank" class="btn-wa">📲 הזמן דרך וואטסאפ</a>
-        <a href="https://www.instagram.com/lir.photographer/" target="_blank" class="btn-ig">📸 עקוב באינסטגרם</a>
+        <a href="https://www.instagram.com/lir.photographer/" target="_blank" class="btn-ig">עקוב באינסטגרם ↗</a>
       </div>
     </div>
   </section>
