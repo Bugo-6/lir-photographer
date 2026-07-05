@@ -138,6 +138,32 @@
       color: var(--muted); opacity: 0; animation: fin .6s .8s forwards;
     }
     @keyframes fin { to { opacity: 1; } }
+    /* Camera intro — paparazzi burst */
+    .lflash {
+      position: absolute; inset: 0; background: #fff;
+      opacity: 0; pointer-events: none; z-index: 3;
+    }
+    .lflash.on { animation: flashPop .22s ease-out; }
+    @keyframes flashPop { 0% { opacity: .85; } 100% { opacity: 0; } }
+    .lcam {
+      position: absolute; width: clamp(90px, 13vw, 150px);
+      color: #2b2b34; opacity: 0; z-index: 2;
+      transition: transform .6s var(--ease), opacity .45s;
+    }
+    .lcam svg { width: 100%; height: auto; display: block; }
+    .lcam-l { left: 0; transform: translateX(-115%) rotate(10deg); }
+    .lcam-r { right: 0; transform: translateX(115%) rotate(-10deg) scaleX(-1); }
+    #loader.cams-in .lcam { opacity: 1; }
+    #loader.cams-in .lcam-l { transform: translateX(14%) rotate(6deg); }
+    #loader.cams-in .lcam-r { transform: translateX(-14%) rotate(-6deg) scaleX(-1); }
+    #loader.cams-in .lcam.lc2 { transition-delay: .12s; }
+    .cam-blink {
+      animation: camBlink 1.1s infinite steps(1);
+    }
+    @keyframes camBlink { 0%, 60% { fill: var(--gold); } 61%, 100% { fill: #3a3a44; } }
+    @media (prefers-reduced-motion: reduce) {
+      .lcam, .lflash { display: none; }
+    }
 
     /* ===== NAVBAR ===== */
     #navbar {
@@ -1510,6 +1536,47 @@
 
   <!-- Loader -->
   <div id="loader">
+    <div class="lflash"></div>
+    <div class="lcam lcam-l" style="top:24%">
+      <svg viewBox="0 0 120 80" fill="currentColor" aria-hidden="true">
+        <rect x="6" y="20" width="108" height="54" rx="8"/>
+        <rect x="38" y="9" width="32" height="15" rx="3"/>
+        <circle cx="60" cy="47" r="21" fill="#0a0a0c"/>
+        <circle cx="60" cy="47" r="14"/>
+        <circle cx="60" cy="47" r="6" fill="#0a0a0c"/>
+        <circle class="cam-blink" cx="100" cy="31" r="4"/>
+      </svg>
+    </div>
+    <div class="lcam lcam-l lc2" style="top:62%">
+      <svg viewBox="0 0 120 80" fill="currentColor" aria-hidden="true">
+        <rect x="6" y="20" width="108" height="54" rx="8"/>
+        <rect x="38" y="9" width="32" height="15" rx="3"/>
+        <circle cx="60" cy="47" r="21" fill="#0a0a0c"/>
+        <circle cx="60" cy="47" r="14"/>
+        <circle cx="60" cy="47" r="6" fill="#0a0a0c"/>
+        <circle class="cam-blink" cx="100" cy="31" r="4"/>
+      </svg>
+    </div>
+    <div class="lcam lcam-r" style="top:20%">
+      <svg viewBox="0 0 120 80" fill="currentColor" aria-hidden="true">
+        <rect x="6" y="20" width="108" height="54" rx="8"/>
+        <rect x="38" y="9" width="32" height="15" rx="3"/>
+        <circle cx="60" cy="47" r="21" fill="#0a0a0c"/>
+        <circle cx="60" cy="47" r="14"/>
+        <circle cx="60" cy="47" r="6" fill="#0a0a0c"/>
+        <circle class="cam-blink" cx="100" cy="31" r="4"/>
+      </svg>
+    </div>
+    <div class="lcam lcam-r lc2" style="top:58%">
+      <svg viewBox="0 0 120 80" fill="currentColor" aria-hidden="true">
+        <rect x="6" y="20" width="108" height="54" rx="8"/>
+        <rect x="38" y="9" width="32" height="15" rx="3"/>
+        <circle cx="60" cy="47" r="21" fill="#0a0a0c"/>
+        <circle cx="60" cy="47" r="14"/>
+        <circle cx="60" cy="47" r="6" fill="#0a0a0c"/>
+        <circle class="cam-blink" cx="100" cy="31" r="4"/>
+      </svg>
+    </div>
     <div class="loader-logo"><span>L</span><span>I</span><span>R</span></div>
     <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
     <div class="loader-sub">צילום ספורט ואקשן מקצועי</div>
@@ -2485,13 +2552,60 @@
     });
   });
 
-  // Loader
+  // Loader — camera intro
+  let loaderDone = false;
   function hideLoader(){
+    if (loaderDone) return;
+    loaderDone = true;
     document.getElementById('loader').classList.add('hide');
     document.body.classList.remove('loading');
   }
-  window.addEventListener('load',()=>setTimeout(hideLoader,2100));
-  setTimeout(hideLoader,4000);
+  // Synthesized shutter click (Web Audio — silent if browser blocks autoplay)
+  let audioCtx = null;
+  function initAudio(){
+    if (audioCtx) return;
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume().catch(()=>{});
+    } catch(e) {}
+  }
+  ['pointerdown','keydown','touchstart'].forEach(ev =>
+    window.addEventListener(ev, initAudio, { once: true, passive: true }));
+  function shutterClick(){
+    if (!audioCtx || audioCtx.state !== 'running') return;
+    const sr = audioCtx.sampleRate;
+    const buf = audioCtx.createBuffer(1, sr * 0.07, sr);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++)
+      d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, 4);
+    const src = audioCtx.createBufferSource();
+    src.buffer = buf;
+    const g = audioCtx.createGain();
+    g.gain.value = 0.3;
+    src.connect(g); g.connect(audioCtx.destination);
+    src.start();
+  }
+  function cameraIntro(){
+    if (loaderDone) return;
+    const loader = document.getElementById('loader');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      hideLoader(); return;
+    }
+    initAudio();
+    loader.classList.add('cams-in');
+    const flash = loader.querySelector('.lflash');
+    [450, 750, 1000, 1350, 1600, 1900].forEach(ms => setTimeout(() => {
+      if (loaderDone) return;
+      flash.classList.remove('on');
+      void flash.offsetWidth;
+      flash.classList.add('on');
+      shutterClick();
+    }, ms));
+    setTimeout(() => loader.classList.remove('cams-in'), 2250);
+    setTimeout(hideLoader, 2850);
+  }
+  window.addEventListener('load', () => setTimeout(cameraIntro, 1500));
+  setTimeout(hideLoader, 7000);
 
   // ===== LEGAL MODALS =====
   function openLegal(id) {
