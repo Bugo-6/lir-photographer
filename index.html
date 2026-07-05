@@ -138,6 +138,28 @@
       color: var(--muted); opacity: 0; animation: fin .6s .8s forwards;
     }
     @keyframes fin { to { opacity: 1; } }
+    /* Flash consent — epilepsy safety */
+    .lconsent {
+      position: absolute; bottom: clamp(28px, 7vh, 70px); left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      opacity: 0; visibility: hidden; transition: opacity .5s;
+      z-index: 4; text-align: center; width: max-content; max-width: 90vw;
+    }
+    .lconsent.show { opacity: 1; visibility: visible; }
+    .lconsent p {
+      font-family: var(--font-ui); font-size: 0.75rem;
+      color: rgba(232,232,240,.55); letter-spacing: .05em; line-height: 1.6;
+    }
+    .lconsent-btns { display: flex; gap: 10px; }
+    .lconsent button {
+      font-family: var(--font-ui); font-size: 0.75rem; font-weight: 700;
+      padding: 10px 26px; border-radius: 2px; cursor: pointer;
+      letter-spacing: .04em; transition: opacity .25s;
+    }
+    .lconsent button:hover { opacity: .82; }
+    #lc-yes { background: var(--gold); border: 1px solid var(--gold); color: var(--black); }
+    #lc-no { background: none; border: 1px solid rgba(255,255,255,.22); color: rgba(232,232,240,.6); }
     /* Camera intro — paparazzi burst */
     .lflash {
       position: absolute; inset: 0; background: #fff;
@@ -1560,6 +1582,13 @@
     <div class="loader-logo"><span>L</span><span>I</span><span>R</span></div>
     <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
     <div class="loader-sub">צילום ספורט ואקשן מקצועי</div>
+    <div class="lconsent" id="lconsent">
+      <p>הפתיח כולל הבזקי אור מהירים — לא מומלץ לרגישים לאפילפסיה</p>
+      <div class="lconsent-btns">
+        <button id="lc-yes" type="button">הפעל פתיח</button>
+        <button id="lc-no" type="button">דלג</button>
+      </div>
+    </div>
   </div>
 
   <!-- Navbar -->
@@ -2568,9 +2597,6 @@
   function cameraIntro(){
     if (loaderDone) return;
     const loader = document.getElementById('loader');
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-      hideLoader(); return;
-    }
     initAudio();
     loader.classList.add('cams-in');
     const flash = loader.querySelector('.lflash');
@@ -2588,8 +2614,37 @@
     setTimeout(() => loader.classList.remove('cams-in'), 2500);
     setTimeout(hideLoader, 3100);
   }
-  window.addEventListener('load', () => setTimeout(cameraIntro, 1500));
-  setTimeout(hideLoader, 7000);
+  let consentShown = false;
+  function setupIntroConsent(){
+    if (loaderDone || consentShown) return;
+    consentShown = true;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+      hideLoader(); return;
+    }
+    let saved = null;
+    try { saved = localStorage.getItem('lir-flash-ok'); } catch(e) {}
+    if (saved === '1'){ cameraIntro(); return; }
+    if (saved === '0'){ hideLoader(); return; }
+    const c = document.getElementById('lconsent');
+    c.classList.add('show');
+    // No answer — quietly skip to the site without flashes
+    const auto = setTimeout(hideLoader, 8000);
+    document.getElementById('lc-yes').addEventListener('click', () => {
+      clearTimeout(auto);
+      try { localStorage.setItem('lir-flash-ok', '1'); } catch(e) {}
+      c.classList.remove('show');
+      initAudio();
+      cameraIntro();
+    });
+    document.getElementById('lc-no').addEventListener('click', () => {
+      clearTimeout(auto);
+      try { localStorage.setItem('lir-flash-ok', '0'); } catch(e) {}
+      hideLoader();
+    });
+  }
+  window.addEventListener('load', () => setTimeout(setupIntroConsent, 1400));
+  setTimeout(setupIntroConsent, 5000);
+  setTimeout(hideLoader, 15000);
 
   // ===== LEGAL MODALS =====
   function openLegal(id) {
