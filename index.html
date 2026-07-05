@@ -143,21 +143,36 @@
       position: absolute; inset: 0; background: #fff;
       opacity: 0; pointer-events: none; z-index: 3;
     }
-    .lflash.on { animation: flashPop .22s ease-out; }
-    @keyframes flashPop { 0% { opacity: .85; } 100% { opacity: 0; } }
+    .lflash.on { animation: flashPop .28s ease-out; }
+    @keyframes flashPop { 0% { opacity: .95; } 100% { opacity: 0; } }
     .lcam {
-      position: absolute; width: clamp(240px, 32vw, 460px);
+      position: absolute; bottom: 0;
+      width: clamp(200px, 26vw, 400px);
       opacity: 0; z-index: 2;
       mix-blend-mode: screen; /* black photo background melts into the loader */
-      transition: transform .65s var(--ease), opacity .5s;
+      transition: transform .7s var(--ease), opacity .55s;
       pointer-events: none;
     }
     .lcam img { width: 100%; height: auto; display: block; }
-    .lcam-l { left: 0; top: 58%; transform: translate(-110%, -50%) rotate(5deg); }
-    .lcam-r { right: 0; top: 22%; transform: translate(110%, -50%) rotate(-5deg); }
+    .lcam-l { left: 1%; transform: translateY(105%); }
+    .lcam-r { right: 1%; transform: translateY(105%); }
     #loader.cams-in .lcam { opacity: 1; }
-    #loader.cams-in .lcam-l { transform: translate(-8%, -50%) rotate(2deg); }
-    #loader.cams-in .lcam-r { transform: translate(8%, -50%) rotate(-2deg); }
+    #loader.cams-in .lcam-l { transform: translateY(8%); }
+    #loader.cams-in .lcam-r { transform: translateY(6%); }
+    /* Flash burst firing out of each lens */
+    .lens-burst {
+      position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%;
+      background: radial-gradient(circle, #fff 0%, rgba(255,255,255,.45) 38%, transparent 68%);
+      opacity: 0; pointer-events: none;
+      transform: translate(-50%, -50%) scale(.4);
+    }
+    .lcam-r .lens-burst { left: 50%; top: 52%; }
+    .lcam-l .lens-burst { left: 42%; top: 26%; }
+    .lens-burst.on { animation: burstPop .32s ease-out; }
+    @keyframes burstPop {
+      0% { opacity: 1; transform: translate(-50%, -50%) scale(.5); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(3); }
+    }
     @media (prefers-reduced-motion: reduce) {
       .lcam, .lflash { display: none; }
     }
@@ -1536,9 +1551,11 @@
     <div class="lflash"></div>
     <div class="lcam lcam-l">
       <img src="gallery/cam-sony.png" alt="" aria-hidden="true" />
+      <span class="lens-burst"></span>
     </div>
     <div class="lcam lcam-r">
       <img src="gallery/cam-canon.png" alt="" aria-hidden="true" />
+      <span class="lens-burst"></span>
     </div>
     <div class="loader-logo"><span>L</span><span>I</span><span>R</span></div>
     <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
@@ -2557,15 +2574,19 @@
     initAudio();
     loader.classList.add('cams-in');
     const flash = loader.querySelector('.lflash');
-    [450, 750, 1000, 1350, 1600, 1900].forEach(ms => setTimeout(() => {
+    const bursts = loader.querySelectorAll('.lens-burst');
+    [500, 800, 1050, 1400, 1650, 1950, 2150].forEach((ms, i) => setTimeout(() => {
       if (loaderDone) return;
+      const burst = bursts[i % bursts.length];
+      burst.classList.remove('on');
       flash.classList.remove('on');
       void flash.offsetWidth;
+      burst.classList.add('on');
       flash.classList.add('on');
       shutterClick();
     }, ms));
-    setTimeout(() => loader.classList.remove('cams-in'), 2250);
-    setTimeout(hideLoader, 2850);
+    setTimeout(() => loader.classList.remove('cams-in'), 2500);
+    setTimeout(hideLoader, 3100);
   }
   window.addEventListener('load', () => setTimeout(cameraIntro, 1500));
   setTimeout(hideLoader, 7000);
