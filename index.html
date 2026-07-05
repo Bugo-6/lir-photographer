@@ -534,51 +534,54 @@
       font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
       color: var(--gold); margin-top: 6px;
     }
-    /* Editorial reasons list — replaces identical card grid */
-    .why-cards { border-top: 1px solid rgba(255,255,255,.08); }
+    /* Reasons — stacked block rows */
+    .why-cards { margin-top: 72px; border-top: 1px solid rgba(255,255,255,.07); }
     .wcard {
-      display: grid;
-      grid-template-columns: 5ch 1fr 1fr;
-      gap: 0 48px;
-      align-items: baseline;
-      padding: 32px 0;
-      border-bottom: 1px solid rgba(255,255,255,.08);
-      transition: border-color .35s;
+      display: block !important;
+      padding: 44px 0;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      cursor: default;
     }
-    .wcard:hover { border-color: rgba(201,168,76,.22); }
-    .wcard:hover .wcard-num { color: var(--gold); }
+    .wcard-top { display: block; }
     .wcard-num {
-      font-family: var(--font-display);
-      font-size: 1rem; letter-spacing: .12em;
-      color: rgba(232,232,240,.2);
-      transition: color .35s; align-self: start; padding-top: 4px;
+      display: block;
+      font-family: var(--font-display); font-size: 0.625rem;
+      letter-spacing: .35em; color: rgba(232,232,240,.2);
+      margin-bottom: 10px;
+      transition: color .3s;
     }
+    .wcard:hover .wcard-num { color: var(--gold); }
     .wcard-title {
-      font-family: var(--font-ui); font-size: clamp(1.125rem, 2.2vw, 1.5rem);
-      font-weight: 800; letter-spacing: var(--ls-tight);
-      color: var(--light); line-height: 1.15;
+      display: block;
+      font-family: var(--font-ui);
+      font-size: clamp(1.625rem, 3.2vw, 2.5rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--white);
+      margin-bottom: 14px;
+      transition: color .3s;
     }
-    .wcard-body { font-size: 0.875rem; line-height: 1.8; color: rgba(232,232,240,.48); max-width: 38ch; }
-    /* hide old icon/big fields — kept in HTML for safety */
+    .wcard:hover .wcard-title { color: rgba(232,232,240,.85); }
+    .wcard-body {
+      display: block;
+      font-size: 0.875rem; line-height: 1.85;
+      color: rgba(232,232,240,.42);
+    }
     .wcard-icon, .wcard-big { display: none; }
+    /* Closing quote — centred */
     .why-bigq {
-      padding-top: 100px; padding-bottom: 20px;
-      display: grid; grid-template-columns: 1fr max-content;
-      align-items: end; gap: 48px;
+      padding-top: 96px; padding-bottom: 16px;
+      border-top: 1px solid rgba(255,255,255,.07); margin-top: 0;
+      text-align: center;
     }
     .why-bigq p {
       font-family: var(--font-ui);
-      font-size: clamp(2.5rem, 6vw, 5.5rem);
-      font-weight: 900; font-style: normal;
-      letter-spacing: var(--ls-tighter);
-      color: var(--light); line-height: .98;
+      font-size: clamp(2.25rem, 5.5vw, 5rem);
+      font-weight: 900; letter-spacing: -0.03em;
+      color: var(--white); line-height: .97;
+      margin: 0 auto;
     }
-    .why-bigq em { font-style: normal; color: var(--gold); display: block; }
-    .why-bigq-line {
-      width: 1px; height: 120px;
-      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-      opacity: .45; margin: 0;
-    }
+    .why-bigq em { font-style: normal; color: var(--gold); }
+    .why-bigq-line { display: none; }
 
     /* ===== ABOUT ===== */
     #about {
@@ -918,10 +921,8 @@
       .gal-head{padding:0 20px 36px}
       .why-grid{grid-template-columns:1fr;gap:40px}
       #why{padding:80px 24px}
-      .wcard{grid-template-columns:4ch 1fr;grid-template-rows:auto auto;row-gap:10px}
-      .wcard-body{grid-column:2}
-      .why-bigq{grid-template-columns:1fr;gap:24px}
-      .why-bigq-line{width:48px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent)}
+      .wcard{padding:32px 0}
+      .why-bigq{padding-top:64px}
       .why-nums > div{padding:16px 20px}
       #about{grid-template-columns:1fr;padding:80px 24px}
       .about-img-wrap{order:1}
@@ -934,7 +935,7 @@
       .masonry{columns:2;column-gap:5px}
       .mi{margin-bottom:5px}
       .hero-btns{flex-direction:column;align-items:flex-start}
-      .wcard{grid-template-columns:1fr;gap:8px}
+      .wcard{padding:24px 0}
       .wcard-num{display:none}
       .why-nums{flex-direction:column}
       .why-nums > div{border-right:none;border-bottom:1px solid rgba(255,255,255,.1)}
@@ -1081,7 +1082,7 @@
     .wn-l { letter-spacing: .2em; text-transform: uppercase; font-size: 0.625rem; }
 
     /* 8 — Cards: row hover transition */
-    .wcard { transition: border-color .35s; }
+    .wcard { transition: border-color .35s var(--ease); }
 
     /* 9 — Hero: deeper overlay + subtle vignette */
     .hero-grad {
@@ -1675,22 +1676,22 @@
         <div class="wcard reveal">
           <span class="wcard-num">01</span>
           <div class="wcard-title">כמות שלא מתפשרת על איכות</div>
-          <p class="wcard-body">900 עד 1,350 תמונות בכל סשן. לא בשביל להרשים בנתון — בגלל שרגע המשחק מגיע פעם אחת, ואני לא מפספס אותו.</p>
+          <p class="wcard-body">900 עד 1,350 תמונות בכל סשן. לא בשביל להרשים בנתון, בגלל שרגע המשחק מגיע פעם אחת ואני לא מפספס אותו.</p>
         </div>
         <div class="wcard reveal d1">
           <span class="wcard-num">02</span>
           <div class="wcard-title">ציוד Canon ברמה הגבוהה ביותר</div>
-          <p class="wcard-body">עדשות טלה מקצועיות שקולטות תנועה שרוב הצלמים פשוט לא יכולים לתפוס. לא ציוד — גישה.</p>
+          <p class="wcard-body">עדשות טלה מקצועיות שקולטות תנועה שרוב הצלמים פשוט לא יכולים לתפוס. לא ציוד, גישה.</p>
         </div>
         <div class="wcard reveal d2">
           <span class="wcard-num">03</span>
           <div class="wcard-title">קוראים את המשחק לפני שהוא קורה</div>
-          <p class="wcard-body">חמש שנים, מעל 800 משחקים. אני מבין דינמיקת ספורט — מתמקם בדיוק ברגע שלפני, לא שנייה אחריו.</p>
+          <p class="wcard-body">חמש שנים, מעל 800 משחקים. אני מבין דינמיקת ספורט, מתמקם בדיוק ברגע שלפני, לא שנייה אחריו.</p>
         </div>
         <div class="wcard reveal d3">
           <span class="wcard-num">04</span>
           <div class="wcard-title">מחיר תחרותי, ביצוע פרימיום</div>
-          <p class="wcard-body">שקיפות מלאה במחירים, אפס הפתעות. מה שאתה רואה בתיק העבודות — זה בדיוק מה שאתה מקבל.</p>
+          <p class="wcard-body">שקיפות מלאה במחירים, אפס הפתעות. מה שאתה רואה בתיק העבודות זה בדיוק מה שאתה מקבל.</p>
         </div>
       </div>
       <div class="why-bigq reveal">
